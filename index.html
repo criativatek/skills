@@ -13,9 +13,9 @@
   <div class="wrap">
     <span class="badge">CriativaTek · Setup do ambiente de desenvolvimento</span>
     <h1>Guia de instalação — MCP, Plugins &amp; Skills</h1>
-    <p>Tudo o que precisas para preparar o Claude Code num projeto Laravel do zero:
-       servidores <strong>MCP</strong>, plugins do Claude Code, skills e pacotes Composer
-       essenciais. Cada bloco tem descrição, comando pronto a copiar e o que verificar a seguir.</p>
+    <p>Tudo o que precisas para preparar o Claude Code em qualquer projeto:
+       servidores <strong>MCP</strong>, plugins e skills. Cada bloco tem descrição,
+       comando pronto a copiar e o que verificar a seguir.</p>
   </div>
 </header>
 
@@ -27,9 +27,8 @@
     <a href="#prereq">0 · Pré-requisitos</a>
     <a href="#mcp">1 · Servidores MCP</a>
     <a href="#plugins">2 · Plugins &amp; Skills</a>
-    <a href="#composer">3 · Pacotes Composer</a>
-    <a href="#verificar">4 · Verificar tudo</a>
-    <a href="#problemas">5 · Problemas comuns</a>
+    <a href="#verificar">3 · Verificar tudo</a>
+    <a href="#problemas">4 · Problemas comuns</a>
   </nav>
 
   <main>
@@ -45,13 +44,9 @@
         <p class="desc">Corre num terminal (PowerShell ou Bash). Cada linha deve devolver uma versão.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># Node.js 20+ (necessário para servidores MCP e Vite)</span>
+<pre><span class="cmt"># Node.js 20+ (necessário para servidores MCP)</span>
 node --version
 npm --version
-
-<span class="cmt"># PHP 8.2+ e Composer (projetos Laravel)</span>
-php --version
-composer --version
 
 <span class="cmt"># Claude Code CLI</span>
 claude --version</pre>
@@ -81,23 +76,21 @@ claude --version</pre>
 
       <!-- Laravel Boost -->
       <div class="card">
-        <h3>Laravel Boost <span class="tag rec">recomendado em projetos Laravel</span></h3>
+        <h3>Laravel Boost <span class="tag">só para Laravel</span></h3>
         <p class="desc">Servidor MCP oficial do Laravel. Dá ao Claude conhecimento das rotas,
-          modelos, migrations, config e docs da versão exata que usas. Indispensável num projeto Laravel + Filament + Livewire.</p>
+          modelos, migrations, config e docs da versão exata que usas.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># instala no projeto (corre na raiz do projeto)</span>
+<pre><span class="cmt"># corre na raiz do projeto Laravel</span>
 composer require laravel/boost --dev
 php artisan boost:install</pre>
         </div>
-        <p class="desc" style="margin-top:10px">O <code class="inl">boost:install</code> regista o servidor MCP automaticamente no Claude Code.</p>
       </div>
 
       <!-- Context7 -->
       <div class="card">
         <h3>Context7 <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Injeta documentação <em>atualizada</em> de bibliotecas (Laravel, Filament,
-          Livewire, Tailwind, Vue, React…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.</p>
+        <p class="desc">Injeta documentação <em>atualizada</em> de qualquer biblioteca (Tailwind, Vue, React, Laravel, Node…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre>claude mcp add --transport http context7 https://mcp.context7.com/mcp -s user</pre>
@@ -195,12 +188,10 @@ php artisan boost:install</pre>
       <!-- Skills de desenvolvimento -->
       <div class="card">
         <h3>Skills de desenvolvimento <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Apoio a código — Laravel, PHP, arquitetura e construção de funcionalidades. Copia o bloco todo de uma vez:</p>
+        <p class="desc">Arquitetura, qualidade e produtividade — aplicam-se a qualquer projeto. Copia o bloco todo de uma vez:</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>npx skills add https://github.com/jeffallan/claude-skills --skill laravel-specialist
-npx skills add https://github.com/jeffallan/claude-skills --skill php-pro
-npx skills add https://github.com/jeffallan/claude-skills --skill architecture-designer -g
+<pre>npx skills add https://github.com/jeffallan/claude-skills --skill architecture-designer -g
 npx skills add https://github.com/jeffallan/claude-skills --skill feature-forge -g
 npx skills add https://github.com/vercel-labs/skills --skill find-skills -g
 npx skills add https://github.com/mattpocock/skills --skill improve-codebase-architecture
@@ -233,9 +224,7 @@ npx skills add https://github.com/subsy/ralph-tui --skill ralph-tui-prd -g</pre>
         </div>
         <table>
           <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
-          <tr><td>laravel-specialist</td><td>Boas práticas, convenções e padrões Laravel</td><td><a href="https://github.com/jeffallan/claude-skills" target="_blank" rel="noopener">jeffallan/claude-skills</a></td></tr>
-          <tr><td>php-pro</td><td>PHP moderno — tipagem, padrões, performance</td><td>jeffallan/claude-skills</td></tr>
-          <tr><td>architecture-designer <code class="inl">-g</code></td><td>Desenho de arquitetura — módulos, fronteiras, trade-offs <em style="color:var(--warn)">· sobrepõe-se a codebase-design; escolhe uma</em></td><td>jeffallan/claude-skills</td></tr>
+          <tr><td>architecture-designer <code class="inl">-g</code></td><td>Desenho de arquitetura — módulos, fronteiras, trade-offs <em style="color:var(--warn)">· sobrepõe-se a codebase-design; escolhe uma</em></td><td><a href="https://github.com/jeffallan/claude-skills" target="_blank" rel="noopener">jeffallan/claude-skills</a></td></tr>
           <tr><td>feature-forge <code class="inl">-g</code></td><td>Funcionalidades ponta-a-ponta, do requisito ao código + testes</td><td>jeffallan/claude-skills</td></tr>
           <tr><td>find-skills <code class="inl">-g</code></td><td>Descobrir e instalar outras skills</td><td><a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">vercel-labs/skills</a></td></tr>
           <tr><td>improve-codebase-architecture</td><td>Melhorar arquitetura de código existente</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
@@ -312,6 +301,19 @@ npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
         </table>
       </div>
 
+      <!-- Skills específicas por stack -->
+      <div class="card">
+        <h3>Skills específicas por stack <span class="tag opt">conforme o projeto</span></h3>
+        <p class="desc">Instala só as que fazem sentido para a linguagem/framework do projeto:</p>
+        <table>
+          <tr><th>Stack</th><th>Skill</th><th>Comando</th></tr>
+          <tr><td>PHP / Laravel</td><td>laravel-specialist</td><td><code class="inl">npx skills add https://github.com/jeffallan/claude-skills --skill laravel-specialist</code></td></tr>
+          <tr><td>PHP</td><td>php-pro</td><td><code class="inl">npx skills add https://github.com/jeffallan/claude-skills --skill php-pro</code></td></tr>
+          <tr><td>SQL / BD</td><td>sql-optimization-patterns</td><td><code class="inl">npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns -g</code></td></tr>
+          <tr><td>Playwright</td><td>playwright-cli</td><td><code class="inl">npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli</code></td></tr>
+        </table>
+      </div>
+
       <!-- Skills built-in -->
       <div class="card">
         <h3>Skills já disponíveis no Claude Code</h3>
@@ -326,51 +328,9 @@ npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
       </div>
     </section>
 
-    <!-- COMPOSER -->
-    <section id="composer">
-      <h2>3 · Pacotes Composer (Laravel)</h2>
-      <p class="lead">Pacotes típicos num projeto Laravel da CriativaTek. Corre todos na raiz do projeto.</p>
-
-      <div class="card">
-        <h3>Dependências de produção <span class="tag rec">núcleo</span></h3>
-        <p class="desc">Backoffice (Filament), frontend reativo (Livewire) e máquina de estados.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>composer require filament/filament livewire/livewire spatie/laravel-model-states
-
-<span class="cmt"># painel de administração em /adm</span>
-php artisan filament:install --panels</pre>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Ferramentas de desenvolvimento <span class="tag">qualidade</span></h3>
-        <p class="desc">Formatação, análise estática e debugging — alinham o código e apanham erros cedo.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>composer require --dev \
-  laravel/boost \
-  laravel/pint \
-  larastan/larastan \
-  rector/rector \
-  barryvdh/laravel-ide-helper \
-  barryvdh/laravel-debugbar</pre>
-        </div>
-        <table>
-          <tr><th>Pacote</th><th>O que faz</th></tr>
-          <tr><td><code class="inl">laravel/boost</code></td><td>MCP server do Laravel para o Claude Code (ver secção 1)</td></tr>
-          <tr><td><code class="inl">laravel/pint</code></td><td>Formatador de código (PSR-12). Correr: <code class="inl">./vendor/bin/pint</code></td></tr>
-          <tr><td><code class="inl">larastan/larastan</code></td><td>Análise estática (PHPStan para Laravel)</td></tr>
-          <tr><td><code class="inl">rector/rector</code></td><td>Refactoring automático — upgrades de PHP e Laravel</td></tr>
-          <tr><td><code class="inl">laravel-ide-helper</code></td><td>Autocomplete de modelos/facades no editor</td></tr>
-          <tr><td><code class="inl">laravel-debugbar</code></td><td>Barra de debug (queries, timings) em dev</td></tr>
-        </table>
-      </div>
-    </section>
-
     <!-- VERIFICAR -->
     <section id="verificar">
-      <h2>4 · Verificar tudo</h2>
+      <h2>3 · Verificar tudo</h2>
       <p class="lead">Checklist final depois de instalar — confirma que cada peça responde.</p>
       <ol class="steps">
         <li>
@@ -383,23 +343,12 @@ php artisan filament:install --panels</pre>
           <div class="codeblock"><button class="copy">Copiar</button><pre>npx skills list</pre></div>
           Lista as skills instaladas no projeto e globalmente.
         </li>
-        <li>
-          <h4>Laravel responde</h4>
-          <div class="codeblock"><button class="copy">Copiar</button><pre>php artisan about</pre></div>
-          Deve mostrar a versão do Laravel e do PHP sem erros.
-        </li>
-        <li>
-          <h4>Qualidade estática</h4>
-          <div class="codeblock"><button class="copy">Copiar</button><pre>./vendor/bin/pint --test
-./vendor/bin/phpstan analyse</pre></div>
-          Sem erros → ambiente pronto.
-        </li>
       </ol>
     </section>
 
     <!-- PROBLEMAS -->
     <section id="problemas">
-      <h2>5 · Problemas comuns</h2>
+      <h2>4 · Problemas comuns</h2>
       <div class="card">
         <table>
           <tr><th>Sintoma</th><th>Solução</th></tr>
@@ -415,10 +364,6 @@ php artisan filament:install --panels</pre>
           <tr>
             <td>GitHub MCP dá 401</td>
             <td>Token inválido/expirado. Gera novo PAT com scopes <code class="inl">repo</code> e <code class="inl">read:org</code>.</td>
-          </tr>
-          <tr>
-            <td><code class="inl">boost:install</code> falha em headless</td>
-            <td>Corre <code class="inl">php artisan boost:install --no-interaction</code>. Se persistir, adiciona o MCP manualmente via <code class="inl">claude mcp add</code>.</td>
           </tr>
           <tr>
             <td>Quero remover um servidor MCP</td>
