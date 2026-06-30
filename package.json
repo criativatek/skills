@@ -1,0 +1,13 @@
+{
+  "name": "skills-criativatek",
+  "version": "1.0.0",
+  "description": "Guia de setup para programadores CriativaTek — MCP, Plugins, Skills e Pacotes",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

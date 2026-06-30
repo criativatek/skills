@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CriativaTek · Guia de setup — MCP, Plugins &amp; Skills</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="badge">CriativaTek · Setup do ambiente de desenvolvimento</span>
+    <h1>Guia de instalação — MCP, Plugins &amp; Skills</h1>
+    <p>Tudo o que precisas para preparar o Claude Code num projeto Laravel do zero:
+       servidores <strong>MCP</strong>, plugins do Claude Code, skills e pacotes Composer
+       essenciais. Cada bloco tem descrição, comando pronto a copiar e o que verificar a seguir.</p>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="layout">
+
+  <nav class="toc">
+    <strong>Nesta página</strong>
+    <a href="#prereq">0 · Pré-requisitos</a>
+    <a href="#mcp">1 · Servidores MCP</a>
+    <a href="#plugins">2 · Plugins &amp; Skills</a>
+    <a href="#composer">3 · Pacotes Composer</a>
+    <a href="#verificar">4 · Verificar tudo</a>
+    <a href="#problemas">5 · Problemas comuns</a>
+  </nav>
+
+  <main>
+
+    <!-- PRÉ-REQUISITOS -->
+    <section id="prereq">
+      <h2>0 · Pré-requisitos</h2>
+      <p class="lead">Confirma que tens as ferramentas base antes de instalar o resto.
+        Os comandos abaixo apenas <em>verificam a versão</em> — se algum falhar, instala essa ferramenta primeiro.</p>
+
+      <div class="card">
+        <h3>Verificar o que já tens</h3>
+        <p class="desc">Corre num terminal (PowerShell ou Bash). Cada linha deve devolver uma versão.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># Node.js 20+ (necessário para servidores MCP e Vite)</span>
+node --version
+npm --version
+
+<span class="cmt"># PHP 8.2+ e Composer (projetos Laravel)</span>
+php --version
+composer --version
+
+<span class="cmt"># Claude Code CLI</span>
+claude --version</pre>
+        </div>
+        <div class="note">
+          <strong>Falta o Claude Code?</strong> Instala com
+          <code class="inl">npm install -g @anthropic-ai/claude-code</code> e autentica com
+          <code class="inl">claude</code> (segue o login no browser).
+        </div>
+      </div>
+    </section>
+
+    <!-- MCP -->
+    <section id="mcp">
+      <h2>1 · Servidores MCP</h2>
+      <p class="lead">MCP (<em>Model Context Protocol</em>) liga o Claude a ferramentas externas
+        — ficheiros, documentação, browser, base de dados. Instala-se com
+        <code class="inl">claude mcp add</code>. Usa <code class="inl">-s user</code> para ficar
+        disponível em <strong>todos os projetos</strong>, ou <code class="inl">-s project</code>
+        (gera <code class="inl">.mcp.json</code> partilhável) só neste.</p>
+
+      <div class="note">
+        <strong>Sintaxe geral:</strong>
+        <code class="inl">claude mcp add &lt;nome&gt; [opções] -- &lt;comando&gt;</code> para servidores locais,
+        ou <code class="inl">claude mcp add --transport http &lt;nome&gt; &lt;url&gt;</code> para remotos.
+      </div>
+
+      <!-- Laravel Boost -->
+      <div class="card">
+        <h3>Laravel Boost <span class="tag rec">recomendado em projetos Laravel</span></h3>
+        <p class="desc">Servidor MCP oficial do Laravel. Dá ao Claude conhecimento das rotas,
+          modelos, migrations, config e docs da versão exata que usas. Indispensável num projeto Laravel + Filament + Livewire.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># instala no projeto (corre na raiz do projeto)</span>
+composer require laravel/boost --dev
+php artisan boost:install</pre>
+        </div>
+        <p class="desc" style="margin-top:10px">O <code class="inl">boost:install</code> regista o servidor MCP automaticamente no Claude Code.</p>
+      </div>
+
+      <!-- Context7 -->
+      <div class="card">
+        <h3>Context7 <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Injeta documentação <em>atualizada</em> de bibliotecas (Laravel, Filament,
+          Livewire, Tailwind, Vue, React…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http context7 https://mcp.context7.com/mcp -s user</pre>
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <div class="card">
+        <h3>GitHub <span class="tag">útil</span></h3>
+        <p class="desc">Ler/abrir issues e PRs, navegar repositórios e rever código direto do GitHub.
+          Requer um token (<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">cria um PAT aqui</a>).</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
+  -H "Authorization: Bearer SEU_GITHUB_TOKEN" -s user</pre>
+        </div>
+      </div>
+
+      <!-- MySQL -->
+      <div class="card">
+        <h3>MySQL <span class="tag rec">recomendado em projetos com BD</span></h3>
+        <p class="desc">Liga o Claude diretamente à base de dados do projeto — inspecionar tabelas,
+          correr queries de leitura. Define as credenciais da tua BD local.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add mysql -s project \
+  -e MYSQL_HOST=127.0.0.1 -e MYSQL_PORT=3306 \
+  -e MYSQL_USER=root -e MYSQL_PASS= -e MYSQL_DB=nome_da_bd \
+  -- npx -y @benborla29/mcp-server-mysql</pre>
+        </div>
+        <div class="note warn">
+          Aponta para a BD <strong>local</strong>, nunca produção. De preferência usa um utilizador
+          só de leitura para evitar escritas acidentais.
+        </div>
+      </div>
+
+      <!-- Sentry -->
+      <div class="card">
+        <h3>Sentry <span class="tag">produção</span></h3>
+        <p class="desc">Deixa o Claude ver erros e issues de produção para diagnóstico.
+          Autentica via OAuth no browser ao ligar.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http sentry https://mcp.sentry.dev/mcp -s user</pre>
+        </div>
+      </div>
+
+      <!-- Playwright -->
+      <div class="card">
+        <h3>Playwright <span class="tag">útil</span></h3>
+        <p class="desc">Controla um browser real — abrir páginas, clicar, preencher formulários e
+          tirar screenshots. Ótimo para validar UI e backoffice.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add playwright -s user -- npx -y @playwright/mcp@latest</pre>
+        </div>
+      </div>
+
+      <!-- Filesystem -->
+      <div class="card">
+        <h3>Filesystem <span class="tag opt">opcional</span></h3>
+        <p class="desc">Acesso de leitura/escrita a uma pasta específica fora do projeto atual
+          (ex.: partilhar ficheiros entre projetos). Ajusta o caminho final.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add filesystem -s user -- npx -y @modelcontextprotocol/server-filesystem D:\HERD</pre>
+        </div>
+      </div>
+
+      <!-- Sequential Thinking -->
+      <div class="card">
+        <h3>Sequential Thinking <span class="tag opt">opcional</span></h3>
+        <p class="desc">Dá ao Claude um espaço estruturado para raciocínio passo-a-passo em problemas
+          complexos (modelação de dados, máquinas de estados, arquitetura).</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add sequential-thinking -s user -- npx -y @modelcontextprotocol/server-sequential-thinking</pre>
+        </div>
+      </div>
+
+      <div class="note warn">
+        <strong>Depois de adicionar:</strong> reinicia o Claude Code e corre
+        <code class="inl">claude mcp list</code> para confirmar o estado <code class="inl">✓ connected</code> de cada servidor.
+      </div>
+    </section>
+
+    <!-- PLUGINS & SKILLS -->
+    <section id="plugins">
+      <h2>2 · Plugins &amp; Skills do Claude Code</h2>
+      <p class="lead">Skills adicionam comandos especializados ao Claude Code. Instalam-se via
+        <code class="inl">npx skills add</code>. Sem flag → instala <em>neste projeto</em>;
+        com <code class="inl">-g</code> → instala <strong>globalmente</strong> (todos os projetos).
+        Depois de instalar, reinicia o Claude Code e invoca cada skill com <code class="inl">/</code>.</p>
+
+      <!-- Skills de desenvolvimento -->
+      <div class="card">
+        <h3>Skills de desenvolvimento <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Apoio a código — Laravel, PHP, arquitetura e construção de funcionalidades. Copia o bloco todo de uma vez:</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/jeffallan/claude-skills --skill laravel-specialist
+npx skills add https://github.com/jeffallan/claude-skills --skill php-pro
+npx skills add https://github.com/jeffallan/claude-skills --skill architecture-designer -g
+npx skills add https://github.com/jeffallan/claude-skills --skill feature-forge -g
+npx skills add https://github.com/vercel-labs/skills --skill find-skills -g
+npx skills add https://github.com/mattpocock/skills --skill improve-codebase-architecture
+npx skills add https://github.com/mattpocock/skills --skill codebase-design
+npx skills add https://github.com/softaworks/agent-toolkit --skill mermaid-diagrams -g
+npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli
+npx skills add https://github.com/currents-dev/playwright-best-practices-skill --skill playwright-best-practices -g
+npx skills add https://github.com/github/awesome-copilot --skill playwright-generate-test
+npx skills add https://github.com/github/awesome-copilot --skill playwright-explore-website
+npx skills add https://github.com/github/awesome-copilot --skill playwright-automation-fill-in-form
+npx skills add https://github.com/github/awesome-copilot --skill git-commit -g
+npx skills add https://github.com/github/awesome-copilot --skill refactor -g
+npx skills add https://github.com/mattpocock/skills --skill tdd -g
+npx skills add https://github.com/mattpocock/skills --skill diagnose -g
+npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns -g
+npx skills add https://github.com/upstash/context7 --skill context7-cli
+npx skills add https://github.com/anthropics/skills --skill webapp-testing -g
+npx skills add https://github.com/obra/superpowers --skill writing-plans -g
+npx skills add https://github.com/obra/superpowers --skill executing-plans -g
+npx skills add https://github.com/obra/superpowers --skill subagent-driven-development -g
+npx skills add https://github.com/obra/superpowers --skill dispatching-parallel-agents -g
+npx skills add https://github.com/obra/superpowers --skill using-git-worktrees -g
+npx skills add https://github.com/obra/superpowers --skill verification-before-completion -g
+npx skills add https://github.com/obra/superpowers --skill finishing-a-development-branch -g
+npx skills add https://github.com/obra/superpowers --skill requesting-code-review -g
+npx skills add https://github.com/obra/superpowers --skill brainstorming -g
+npx skills add https://github.com/obra/superpowers --skill systematic-debugging -g
+npx skills add https://github.com/obra/superpowers --skill using-superpowers -g
+npx skills add https://github.com/subsy/ralph-tui --skill ralph-tui-prd -g</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
+          <tr><td>laravel-specialist</td><td>Boas práticas, convenções e padrões Laravel</td><td><a href="https://github.com/jeffallan/claude-skills" target="_blank" rel="noopener">jeffallan/claude-skills</a></td></tr>
+          <tr><td>php-pro</td><td>PHP moderno — tipagem, padrões, performance</td><td>jeffallan/claude-skills</td></tr>
+          <tr><td>architecture-designer <code class="inl">-g</code></td><td>Desenho de arquitetura — módulos, fronteiras, trade-offs <em style="color:var(--warn)">· sobrepõe-se a codebase-design; escolhe uma</em></td><td>jeffallan/claude-skills</td></tr>
+          <tr><td>feature-forge <code class="inl">-g</code></td><td>Funcionalidades ponta-a-ponta, do requisito ao código + testes</td><td>jeffallan/claude-skills</td></tr>
+          <tr><td>find-skills <code class="inl">-g</code></td><td>Descobrir e instalar outras skills</td><td><a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">vercel-labs/skills</a></td></tr>
+          <tr><td>improve-codebase-architecture</td><td>Melhorar arquitetura de código existente</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
+          <tr><td>codebase-design <span class="tag rec">preferida</span></td><td>Módulos profundos — muito comportamento atrás de uma interface pequena e testável</td><td>mattpocock/skills</td></tr>
+          <tr><td>mermaid-diagrams <code class="inl">-g</code></td><td>Gerar diagramas Mermaid (arquitetura, fluxos, ERDs)</td><td><a href="https://github.com/softaworks/agent-toolkit" target="_blank" rel="noopener">softaworks/agent-toolkit</a></td></tr>
+          <tr><td>playwright-cli</td><td>Automação de browser via Playwright CLI (testes E2E, screenshots)</td><td><a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener">microsoft/playwright-cli</a></td></tr>
+          <tr><td>playwright-best-practices <code class="inl">-g</code></td><td>Boas práticas para testes Playwright robustos e estáveis</td><td><a href="https://github.com/currents-dev/playwright-best-practices-skill" target="_blank" rel="noopener">currents-dev</a></td></tr>
+          <tr><td>playwright-generate-test</td><td>Gerar testes Playwright a partir de cenários <em style="color:var(--warn)">· sobrepõe-se a playwright-explore-website</em></td><td><a href="https://github.com/github/awesome-copilot" target="_blank" rel="noopener">github/awesome-copilot</a></td></tr>
+          <tr><td>playwright-explore-website</td><td>Exploração automática de sites e geração de casos de teste</td><td>github/awesome-copilot</td></tr>
+          <tr><td>playwright-automation-fill-in-form</td><td>Automação de preenchimento de formulários com Playwright</td><td>github/awesome-copilot</td></tr>
+          <tr><td>git-commit <code class="inl">-g</code></td><td>Gerar mensagens de commit a partir das alterações</td><td>github/awesome-copilot</td></tr>
+          <tr><td>refactor <code class="inl">-g</code></td><td>Refatorar código com segurança, preservando o comportamento</td><td>github/awesome-copilot</td></tr>
+          <tr><td>tdd <code class="inl">-g</code></td><td>Test-driven development — escrever o teste antes do código</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
+          <tr><td>diagnose <code class="inl">-g</code></td><td>Diagnosticar bugs e falhas de forma sistemática</td><td>mattpocock/skills</td></tr>
+          <tr><td>sql-optimization-patterns <code class="inl">-g</code></td><td>Padrões de otimização SQL — índices, queries N+1, performance</td><td><a href="https://github.com/wshobson/agents" target="_blank" rel="noopener">wshobson/agents</a></td></tr>
+          <tr><td>context7-cli</td><td>Docs atualizadas via CLI Context7 (complementa o MCP da secção 1)</td><td><a href="https://github.com/upstash/context7" target="_blank" rel="noopener">upstash/context7</a></td></tr>
+          <tr><td>webapp-testing <code class="inl">-g</code></td><td>Testar aplicações web de ponta a ponta</td><td><a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a></td></tr>
+          <tr><td>writing-plans <code class="inl">-g</code></td><td>Escrever planos de implementação estruturados</td><td><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a></td></tr>
+          <tr><td>executing-plans <code class="inl">-g</code></td><td>Executar planos passo-a-passo</td><td>obra/superpowers</td></tr>
+          <tr><td>subagent-driven-development <code class="inl">-g</code></td><td>Desenvolvimento orientado por subagentes</td><td>obra/superpowers</td></tr>
+          <tr><td>dispatching-parallel-agents <code class="inl">-g</code></td><td>Despachar agentes em paralelo para tarefas independentes</td><td>obra/superpowers</td></tr>
+          <tr><td>using-git-worktrees <code class="inl">-g</code></td><td>Trabalhar com git worktrees em paralelo</td><td>obra/superpowers</td></tr>
+          <tr><td>verification-before-completion <code class="inl">-g</code></td><td>Verificar o trabalho antes de o dar por concluído</td><td>obra/superpowers</td></tr>
+          <tr><td>finishing-a-development-branch <code class="inl">-g</code></td><td>Fechar uma branch de desenvolvimento corretamente</td><td>obra/superpowers</td></tr>
+          <tr><td>requesting-code-review <code class="inl">-g</code></td><td>Pedir revisão de código de forma estruturada</td><td>obra/superpowers</td></tr>
+          <tr><td>brainstorming <code class="inl">-g</code></td><td>Gerar e explorar ideias de forma estruturada</td><td>obra/superpowers</td></tr>
+          <tr><td>systematic-debugging <code class="inl">-g</code></td><td>Debugging sistemático <em style="color:var(--warn)">· sobrepõe-se a diagnose (mattpocock)</em></td><td>obra/superpowers</td></tr>
+          <tr><td>using-superpowers <code class="inl">-g</code></td><td>Meta-skill para orquestrar as restantes skills superpowers</td><td>obra/superpowers</td></tr>
+          <tr><td>ralph-tui-prd <code class="inl">-g</code></td><td>Gerar PRD (documento de requisitos de produto)</td><td><a href="https://github.com/subsy/ralph-tui" target="_blank" rel="noopener">subsy/ralph-tui</a></td></tr>
+        </table>
+      </div>
+
+      <!-- Skills de conteúdo -->
+      <div class="card">
+        <h3>Skills de conteúdo / marketing <span class="tag">conteúdo</span></h3>
+        <p class="desc">Texto de marketing, copy de conversão e SEO. Copia o bloco todo de uma vez:</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/vyralcontent/content-skills --skill viral-captions-and-ctas
+npx skills add https://github.com/coreyhaines31/marketingskills --skill copywriting
+npx skills add https://github.com/coreyhaines31/marketingskills --skill seo-audit -g
+npx skills add https://github.com/coreyhaines31/marketingskills --skill social-content -g
+npx skills add https://github.com/coreyhaines31/marketingskills --skill content-strategy -g</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
+          <tr><td>viral-captions-and-ctas</td><td>Legendas, texto no ecrã, hashtags e CTAs para vídeos</td><td><a href="https://github.com/vyralcontent/content-skills" target="_blank" rel="noopener">vyralcontent/content-skills</a></td></tr>
+          <tr><td>copywriting</td><td>Copy para homepages, landing e páginas de conversão</td><td><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">coreyhaines31/marketingskills</a></td></tr>
+          <tr><td>seo-audit <code class="inl">-g</code></td><td>Auditoria de SEO e melhorias de pesquisa</td><td>coreyhaines31/marketingskills</td></tr>
+          <tr><td>social-content <code class="inl">-g</code></td><td>Criar conteúdo para redes sociais</td><td>coreyhaines31/marketingskills</td></tr>
+          <tr><td>content-strategy <code class="inl">-g</code></td><td>Estratégia de conteúdo — planeamento e calendário editorial</td><td>coreyhaines31/marketingskills</td></tr>
+        </table>
+      </div>
+
+      <!-- Skills de design -->
+      <div class="card">
+        <h3>Skills de design <span class="tag">design</span></h3>
+        <p class="desc">Polimento de UI, estética de nível agência e artefactos visuais. Copia o bloco todo de uma vez:</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/pbakaus/impeccable --skill polish -g
+npx skills add https://github.com/leonxlnx/taste-skill --skill high-end-visual-design
+npx skills add https://github.com/leonxlnx/taste-skill --skill full-output-enforcement -g
+npx skills add https://github.com/leonxlnx/taste-skill --skill redesign-existing-projects -g
+npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
+          <tr><td>polish <code class="inl">-g</code></td><td>Polimento final de interfaces — espaçamento, alinhamento, detalhe</td><td><a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">pbakaus/impeccable</a></td></tr>
+          <tr><td>high-end-visual-design</td><td>Estética de agência — tipografia, ícones, espaçamento, movimento</td><td><a href="https://github.com/leonxlnx/taste-skill" target="_blank" rel="noopener">leonxlnx/taste-skill</a></td></tr>
+          <tr><td>full-output-enforcement <code class="inl">-g</code></td><td>Garantir entregas completas, sem cortar resultados a meio</td><td>leonxlnx/taste-skill</td></tr>
+          <tr><td>redesign-existing-projects <code class="inl">-g</code></td><td>Redesenhar interfaces de projetos já existentes</td><td>leonxlnx/taste-skill</td></tr>
+          <tr><td>canvas-design</td><td>Artefactos visuais "qualidade de museu" em PDF/PNG</td><td><a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a></td></tr>
+        </table>
+      </div>
+
+      <!-- Skills built-in -->
+      <div class="card">
+        <h3>Skills já disponíveis no Claude Code</h3>
+        <p class="desc">Algumas capacidades são <em>skills</em> nativas — invocas com <code class="inl">/</code>:</p>
+        <table>
+          <tr><th>Skill</th><th>Para quê</th></tr>
+          <tr><td><code class="inl">/init</code></td><td>Gerar o <code class="inl">CLAUDE.md</code> com a documentação do projeto</td></tr>
+          <tr><td><code class="inl">/code-review</code></td><td>Rever o diff atual à procura de bugs e simplificações</td></tr>
+          <tr><td><code class="inl">/security-review</code></td><td>Revisão de segurança das alterações da branch</td></tr>
+          <tr><td><code class="inl">/deep-research</code></td><td>Investigação multi-fonte com verificação e fontes citadas</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- COMPOSER -->
+    <section id="composer">
+      <h2>3 · Pacotes Composer (Laravel)</h2>
+      <p class="lead">Pacotes típicos num projeto Laravel da CriativaTek. Corre todos na raiz do projeto.</p>
+
+      <div class="card">
+        <h3>Dependências de produção <span class="tag rec">núcleo</span></h3>
+        <p class="desc">Backoffice (Filament), frontend reativo (Livewire) e máquina de estados.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>composer require filament/filament livewire/livewire spatie/laravel-model-states
+
+<span class="cmt"># painel de administração em /adm</span>
+php artisan filament:install --panels</pre>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Ferramentas de desenvolvimento <span class="tag">qualidade</span></h3>
+        <p class="desc">Formatação, análise estática e debugging — alinham o código e apanham erros cedo.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>composer require --dev \
+  laravel/boost \
+  laravel/pint \
+  larastan/larastan \
+  rector/rector \
+  barryvdh/laravel-ide-helper \
+  barryvdh/laravel-debugbar</pre>
+        </div>
+        <table>
+          <tr><th>Pacote</th><th>O que faz</th></tr>
+          <tr><td><code class="inl">laravel/boost</code></td><td>MCP server do Laravel para o Claude Code (ver secção 1)</td></tr>
+          <tr><td><code class="inl">laravel/pint</code></td><td>Formatador de código (PSR-12). Correr: <code class="inl">./vendor/bin/pint</code></td></tr>
+          <tr><td><code class="inl">larastan/larastan</code></td><td>Análise estática (PHPStan para Laravel)</td></tr>
+          <tr><td><code class="inl">rector/rector</code></td><td>Refactoring automático — upgrades de PHP e Laravel</td></tr>
+          <tr><td><code class="inl">laravel-ide-helper</code></td><td>Autocomplete de modelos/facades no editor</td></tr>
+          <tr><td><code class="inl">laravel-debugbar</code></td><td>Barra de debug (queries, timings) em dev</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- VERIFICAR -->
+    <section id="verificar">
+      <h2>4 · Verificar tudo</h2>
+      <p class="lead">Checklist final depois de instalar — confirma que cada peça responde.</p>
+      <ol class="steps">
+        <li>
+          <h4>MCP ligado</h4>
+          <div class="codeblock"><button class="copy">Copiar</button><pre>claude mcp list</pre></div>
+          Cada servidor deve aparecer com <code class="inl">✓ connected</code>.
+        </li>
+        <li>
+          <h4>Skills instaladas</h4>
+          <div class="codeblock"><button class="copy">Copiar</button><pre>npx skills list</pre></div>
+          Lista as skills instaladas no projeto e globalmente.
+        </li>
+        <li>
+          <h4>Laravel responde</h4>
+          <div class="codeblock"><button class="copy">Copiar</button><pre>php artisan about</pre></div>
+          Deve mostrar a versão do Laravel e do PHP sem erros.
+        </li>
+        <li>
+          <h4>Qualidade estática</h4>
+          <div class="codeblock"><button class="copy">Copiar</button><pre>./vendor/bin/pint --test
+./vendor/bin/phpstan analyse</pre></div>
+          Sem erros → ambiente pronto.
+        </li>
+      </ol>
+    </section>
+
+    <!-- PROBLEMAS -->
+    <section id="problemas">
+      <h2>5 · Problemas comuns</h2>
+      <div class="card">
+        <table>
+          <tr><th>Sintoma</th><th>Solução</th></tr>
+          <tr>
+            <td>MCP fica <code class="inl">✗ failed</code></td>
+            <td>Confirma que o <code class="inl">npx</code> funciona; em Windows pode ser preciso
+                <code class="inl">cmd /c npx ...</code>. Vê logs com <code class="inl">claude --debug</code>.</td>
+          </tr>
+          <tr>
+            <td><code class="inl">claude</code> não é reconhecido</td>
+            <td>Reinstala global: <code class="inl">npm install -g @anthropic-ai/claude-code</code> e reabre o terminal.</td>
+          </tr>
+          <tr>
+            <td>GitHub MCP dá 401</td>
+            <td>Token inválido/expirado. Gera novo PAT com scopes <code class="inl">repo</code> e <code class="inl">read:org</code>.</td>
+          </tr>
+          <tr>
+            <td><code class="inl">boost:install</code> falha em headless</td>
+            <td>Corre <code class="inl">php artisan boost:install --no-interaction</code>. Se persistir, adiciona o MCP manualmente via <code class="inl">claude mcp add</code>.</td>
+          </tr>
+          <tr>
+            <td>Quero remover um servidor MCP</td>
+            <td><code class="inl">claude mcp remove &lt;nome&gt;</code></td>
+          </tr>
+          <tr>
+            <td>Ver detalhe de um servidor MCP</td>
+            <td><code class="inl">claude mcp get &lt;nome&gt;</code></td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    CriativaTek · Guia de setup para programadores · pt-PT
+  </div>
+</footer>
+
+</body>
+</html>
