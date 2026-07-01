@@ -68,6 +68,11 @@ section > .lead { color: var(--fg-dim); margin: 0 0 22px }
 .copy:hover { color: var(--fg); border-color: var(--accent) }
 .copy.ok { color: var(--accent-2); border-color: var(--accent-2) }
 
+.codeblock.sm { margin: 2px 0 }
+.codeblock.sm pre { padding: 8px 44px 8px 10px; font-size: .8rem }
+.codeblock.sm .copy { top: 4px; right: 4px; padding: 3px 8px; font-size: .68rem }
+table.cmd-table td { vertical-align: middle }
+
 .note {
   border-left: 3px solid var(--accent); background: var(--bg-soft);
   padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; color: var(--fg-dim); font-size: .92rem;
