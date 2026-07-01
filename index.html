@@ -27,6 +27,8 @@
     <a href="#prereq">0 · Pré-requisitos</a>
     <a href="#mcp">1 · Servidores MCP</a>
     <a href="#plugins">2 · Plugins &amp; Skills</a>
+    <a href="#graphify" class="sub">↳ Graphify</a>
+    <a href="#browser-harness" class="sub">↳ Browser Harness</a>
     <a href="#verificar">3 · Verificar tudo</a>
     <a href="#problemas">4 · Problemas comuns</a>
   </nav>
@@ -55,6 +57,38 @@ claude --version</pre>
           <strong>Falta o Claude Code?</strong> Instala com
           <code class="inl">npm install -g @anthropic-ai/claude-code</code> e autentica com
           <code class="inl">claude</code> (segue o login no browser).
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Caveman <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Faz o Claude Code responder em estilo comprimido ("caveman" — sem artigos,
+          sem palavras de preenchimento, telegráfico) para cortar drasticamente os tokens de output,
+          mantendo código, paths e URLs intactos. <strong>Instala-se uma vez, globalmente</strong> —
+          fica ativo em todas as conversas, em todos os projetos.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add JuliusBrussee/caveman
+claude plugin install caveman@caveman</pre>
+        </div>
+        <div class="note">
+          <strong>Confirmar que ficou ativo:</strong> abre o Claude Code, escreve <code class="inl">/caveman</code>
+          e confirma respostas curtas, ou verifica <code class="inl">[CAVEMAN]</code> a laranja na statusline.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>CodeBurn <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Dashboard local (terminal) que lê os logs de sessão e mostra custo/tokens gastos por
+          projeto, modelo e tarefa, em 31 ferramentas diferentes (Claude Code, Cursor, Codex, Gemini…). Corre
+          100% local — sem API key, nada sai da máquina. Usa-se para acompanhar o gasto em IA por
+          projeto/cliente da CriativaTek.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx codeburn</pre>
+        </div>
+        <div class="note">
+          Corre em qualquer pasta — não precisa de instalação prévia nem de estar dentro de um projeto específico.
         </div>
       </div>
     </section>
@@ -146,6 +180,67 @@ php artisan boost:install</pre>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre>claude mcp add playwright -s user -- npx -y @playwright/mcp@latest</pre>
+        </div>
+      </div>
+
+      <!-- Chrome DevTools -->
+      <div class="card">
+        <h3>Chrome DevTools <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Oficial da equipa do Chrome. Complementa o Playwright: onde o Playwright serve para
+          <em>automação/testes E2E</em>, este é para <strong>debugging e performance</strong> — grava traces de
+          performance, corre auditorias Lighthouse, inspeciona pedidos de rede, tira heap snapshots de memória
+          e lê a consola, tudo no Chrome real.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add chrome-devtools -s user -- npx -y chrome-devtools-mcp@latest</pre>
+        </div>
+        <div class="note">
+          Não precisa de API key. As ferramentas de performance enviam opcionalmente URLs à Google CrUX API —
+          para desativar, acrescenta <code class="inl">--no-performance-crux</code> ao fim do comando acima.
+        </div>
+      </div>
+
+      <!-- Firecrawl -->
+      <div class="card">
+        <h3>Firecrawl <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Web scraping e crawling estruturado — extrai páginas em markdown/JSON,
+          rastreia sites inteiros (<code class="inl">crawl</code>, <code class="inl">map</code>), tira dados
+          estruturados com LLM (<code class="inl">extract</code>) e até lê PDFs. Diferente do
+          <code class="inl">WebFetch</code> nativo (uma página, resumida): aqui é o site todo, com dados limpos e reutilizáveis.
+          Útil para ingerir documentação externa, concorrência ou conteúdo para as skills de marketing.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http firecrawl https://mcp.firecrawl.dev/v2/mcp -s user</pre>
+        </div>
+        <div class="note">
+          <strong>Tier gratuito:</strong> <code class="inl">scrape</code>, <code class="inl">search</code> e
+          <code class="inl">interact</code> funcionam sem API key (com rate-limit). Para <code class="inl">crawl</code>,
+          <code class="inl">extract</code> e <code class="inl">monitor</code> precisas de uma
+          <a href="https://www.firecrawl.dev/app/api-keys" target="_blank" rel="noopener">API key</a> — usa o endpoint
+          <code class="inl">https://mcp.firecrawl.dev/SEU_API_KEY/v2/mcp</code> em vez do de cima.
+        </div>
+      </div>
+
+      <!-- 21st.dev Magic -->
+      <div class="card">
+        <h3>21st.dev Magic <span class="tag opt">opcional — pago</span></h3>
+        <p class="desc">Gera componentes React/Tailwind prontos a partir de prompts em linguagem natural,
+          dentro do próprio Claude Code (<code class="inl">/ui ...</code>) — puxando de uma biblioteca curada
+          de componentes reais em <a href="https://21st.dev/community/components" target="_blank" rel="noopener">21st.dev/community/components</a>,
+          em vez de gerar UI do zero. Sobrepõe-se um pouco ao UI/UX Pro Max (secção 2): aquele dá guidelines/paletas,
+          este dá componentes já feitos.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx @21st-dev/cli@latest install claude --api-key SUA_CHAVE</pre>
+        </div>
+        <p class="desc" style="margin:10px 0 4px">Exemplo de utilização depois de instalado:</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>/ui cria uma secção de pricing com 3 planos, destaque no plano do meio, estilo minimalista</pre>
+        </div>
+        <div class="note warn">
+          Tier gratuito é muito limitado (~5 pedidos/mês) — depois passa a $20/mês. Chave em
+          <a href="https://21st.dev/magic/console" target="_blank" rel="noopener">21st.dev/magic/console</a>.
         </div>
       </div>
 
@@ -301,6 +396,24 @@ npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
         </table>
       </div>
 
+      <!-- UI/UX Pro Max -->
+      <div class="card">
+        <h3>UI/UX Pro Max <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Base de dados de design pesquisável para o Claude consultar ao construir interfaces:
+          67 estilos de UI, 161 paletas de cores, 57 pares de fontes, 99 guidelines de UX e 25 tipos de gráficos,
+          mais um gerador de design system e verificações de acessibilidade (contraste, ARIA, touch targets).
+          <em style="color:var(--warn)">Sobrepõe-se ao bloco "Skills de design" acima — usa esta quando quiseres
+          decisões de design mais sistemáticas/orientadas por dados; usa as outras para polimento final.</em></p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npm install -g ui-ux-pro-max-cli
+uipro init --ai claude</pre>
+        </div>
+        <p class="desc" style="margin:8px 0 0">
+          Repositório: <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener">nextlevelbuilder/ui-ux-pro-max-skill</a>
+        </p>
+      </div>
+
       <!-- Skills específicas por stack -->
       <div class="card">
         <h3>Skills específicas por stack <span class="tag opt">conforme o projeto</span></h3>
@@ -311,7 +424,103 @@ npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
           <tr><td>PHP</td><td>php-pro</td><td><code class="inl">npx skills add https://github.com/jeffallan/claude-skills --skill php-pro</code></td></tr>
           <tr><td>SQL / BD</td><td>sql-optimization-patterns</td><td><code class="inl">npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns -g</code></td></tr>
           <tr><td>Playwright</td><td>playwright-cli</td><td><code class="inl">npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli</code></td></tr>
+          <tr><td>Vídeo / motion graphics (Remotion)</td><td>remotion <span class="tag">oficial</span></td><td><code class="inl">npx skills add remotion-dev/skills</code></td></tr>
+          <tr><td>React / animações UI</td><td>framer-motion <span class="tag opt">biblioteca, não skill</span></td><td><code class="inl">npm i framer-motion</code> — sem skill dedicada estável ainda; usa o <a href="#mcp">Context7</a> para docs atualizadas</td></tr>
         </table>
+      </div>
+
+      <!-- Graphify -->
+      <div class="card" id="graphify">
+        <h3>Graphify <span class="tag rec">recomendado em codebases grandes</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Constrói um <em>knowledge graph</em> do projeto (código, schemas SQL, scripts, docs, diagramas) e ensina
+          o Claude a <strong>consultar o grafo antes de fazer grep</strong> ficheiro a ficheiro — reduz drasticamente os tokens
+          gastos a explorar codebases grandes. <strong>Não segue o padrão <code class="inl">npx skills add</code></strong> acima:
+          é uma ferramenta Python, instalada à parte, em dois passos distintos.</p>
+
+        <div class="note">
+          <strong>Como funciona:</strong> instala-se a ferramenta <strong>uma vez, de forma global</strong> (fica disponível
+          em todos os projetos). Depois, <strong>em cada projeto</strong> onde a queiras usar, corre-se o comando que gera o
+          grafo — o resultado fica gravado dentro desse próprio repositório.
+        </div>
+
+        <ol class="steps">
+          <li>
+            <h4>Instalar a ferramenta <span style="color:var(--fg-dim); font-weight:400">— uma vez, global</span></h4>
+            <p class="desc" style="margin:0 0 8px">Escolhe um gestor de pacotes Python. <code class="inl">uv</code> é o recomendado pelo projeto.</p>
+            <div class="codeblock">
+              <button class="copy">Copiar</button>
+<pre><span class="cmt"># instalar o CLI (escolhe um)</span>
+uv tool install graphifyy
+<span class="cmt"># pipx install graphifyy</span>
+<span class="cmt"># pip install graphifyy</span>
+
+<span class="cmt"># registar a skill no Claude Code, Cursor, etc.</span>
+graphify install</pre>
+            </div>
+            <div class="note">
+              Isto liga o comando <code class="inl">/graphify</code> no Claude Code. Se <code class="inl">graphify</code> não
+              for reconhecido depois de instalar com <code class="inl">uv</code>, corre <code class="inl">uv tool update-shell</code>
+              e reabre o terminal.
+            </div>
+          </li>
+          <li>
+            <h4>Gerar o grafo <span style="color:var(--fg-dim); font-weight:400">— dentro de cada projeto</span></h4>
+            <p class="desc" style="margin:0 0 8px">Dentro do Claude Code, na raiz do projeto que queres mapear:</p>
+            <div class="codeblock">
+              <button class="copy">Copiar</button>
+<pre><span class="cmt">/graphify .</span>
+
+<span class="cmt"># para atualizar só os ficheiros que mudaram</span>
+<span class="cmt">/graphify . --update</span></pre>
+            </div>
+            <div class="note warn">
+              Faz <strong>commit</strong> da pasta <code class="inl">graphify-out/</code> ao repositório (exceto
+              <code class="inl">graphify-out/cost.json</code>, que é só local) — assim toda a equipa arranca com o mesmo mapa
+              em vez de o gerar cada um por si.
+            </div>
+          </li>
+        </ol>
+
+        <table>
+          <tr><th>Ficheiro gerado</th><th>Para quê</th></tr>
+          <tr><td><code class="inl">graphify-out/graph.html</code></td><td>Visualização interativa do grafo (abrir no browser)</td></tr>
+          <tr><td><code class="inl">graphify-out/GRAPH_REPORT.md</code></td><td>Resumo dos conceitos-chave e perguntas sugeridas</td></tr>
+          <tr><td><code class="inl">graphify-out/graph.json</code></td><td>Dados do grafo, para consulta programática</td></tr>
+        </table>
+
+        <p class="desc" style="margin:14px 0 0">
+          Repositório: <a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a>
+        </p>
+      </div>
+
+      <!-- Browser Harness -->
+      <div class="card" id="browser-harness">
+        <h3>Browser Harness <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Liga o Claude diretamente ao teu Chrome real via CDP (Chrome DevTools Protocol), sem abstração —
+          quando falta alguma capacidade, é o <strong>próprio agente que escreve o código necessário</strong> em runtime
+          e vai guardando "skills" por site (fluxos, seletores). Complementa o Playwright/Chrome DevTools MCP: usa-o
+          quando esses se arrastam em sites difíceis ou fluxos muito específicos. Também não segue o padrão
+          <code class="inl">npx skills add</code> — instala-se via Python (<code class="inl">uv</code>).</p>
+
+        <div class="note">
+          <strong>Como instalar:</strong> cola este pedido diretamente numa conversa do Claude Code (não é um comando de terminal):
+        </div>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>Instala ou atualiza o browser-harness para a versão estável mais recente com uv usando
+Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao meu browser.</pre>
+        </div>
+        <p class="desc" style="margin:8px 0 0">Depois, ativa o modo remoto de debug no Chrome e aceita a ligação quando pedido.</p>
+
+        <div class="note warn">
+          Não precisa de API key para uso local (liga-se diretamente ao teu Chrome via
+          <code class="inl">--remote-debugging-port</code>). Existe uma cloud opcional da Browser Use (tier gratuito,
+          3 browsers em simultâneo) só se precisares de correr sem Chrome local.
+        </div>
+
+        <p class="desc" style="margin:14px 0 0">
+          Repositório: <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener">browser-use/browser-harness</a>
+        </p>
       </div>
 
       <!-- Skills built-in -->
