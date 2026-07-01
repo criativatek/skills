@@ -33,8 +33,8 @@
       <a href="#plugins" class="btn btn-ghost">Ver skills disponíveis</a>
     </div>
     <div class="hero-stats" id="heroStats">
-      <div class="stat"><strong data-count="11">0</strong><span>servidores MCP</span></div>
-      <div class="stat"><strong data-count="42">0</strong><span>skills prontas</span></div>
+      <div class="stat"><strong data-count="12">0</strong><span>servidores MCP</span></div>
+      <div class="stat"><strong data-count="45">0</strong><span>skills prontas</span></div>
       <div class="stat"><strong data-count="4">0</strong><span>categorias</span></div>
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
@@ -53,6 +53,8 @@
     <a href="#plugins">2 · Plugins &amp; Skills</a>
     <a href="#graphify" class="sub">↳ Graphify</a>
     <a href="#browser-harness" class="sub">↳ Browser Harness</a>
+    <a href="#gstack" class="sub">↳ gstack</a>
+    <a href="#manifest" class="sub">↳ Manifest</a>
     <a href="#verificar">3 · Verificar tudo</a>
     <a href="#problemas">4 · Problemas comuns</a>
   </nav>
@@ -98,6 +100,39 @@ claude plugin install caveman@caveman</pre>
         <div class="note">
           <strong>Confirmar que ficou ativo:</strong> abre o Claude Code, escreve <code class="inl">/caveman</code>
           e confirma respostas curtas, ou verifica <code class="inl">[CAVEMAN]</code> a laranja na statusline.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Ponytail <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Plugin que força a solução mais simples que funciona — questiona se a tarefa
+          precisa mesmo de existir (YAGNI), prefere stdlib/nativo a dependências novas, e corta
+          abstrações especulativas antes de escrever código. Complementa o Caveman: aquele comprime a
+          <em>resposta</em>, este comprime a <em>solução</em>.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail</pre>
+        </div>
+        <div class="note">
+          <strong>Confirmar que ficou ativo:</strong> escreve <code class="inl">/ponytail-help</code>
+          ou verifica <code class="inl">[PONYTAIL]</code> na statusline.
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Codex (plugin) <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Liga o Codex CLI da OpenAI ao Claude Code como sub-agente de resgate — usa-se
+          quando o Claude fica bloqueado 2× seguidas na mesma tarefa (debugging teimoso, segunda opinião
+          de implementação). Não substitui o fluxo normal, é só para quando este empanca.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add openai/codex-plugin-cc
+claude plugin install codex@openai-codex</pre>
+        </div>
+        <div class="note warn">
+          Instável em sandbox Windows — evita modo autónomo, corre em conversa interativa. Se falhar,
+          aplica o fix diretamente em vez de insistir.
         </div>
       </div>
 
@@ -265,6 +300,18 @@ php artisan boost:install</pre>
         <div class="note warn">
           Tier gratuito é muito limitado (~5 pedidos/mês) — depois passa a $20/mês. Chave em
           <a href="https://21st.dev/magic/console" target="_blank" rel="noopener">21st.dev/magic/console</a>.
+        </div>
+      </div>
+
+      <!-- Browser Tools -->
+      <div class="card">
+        <h3>Browser Tools <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Screenshots, consola, erros de rede e auditorias (acessibilidade, performance,
+          SEO, boas práticas) diretamente do browser real — mais leve que o Chrome DevTools MCP para
+          checks rápidos de QA visual.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add browser-tools -s user -- npx -y @agentdeskai/browser-tools-mcp@latest</pre>
         </div>
       </div>
 
@@ -557,6 +604,57 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
 
         <p class="desc" style="margin:14px 0 0">
           Repositório: <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener">browser-use/browser-harness</a>
+        </p>
+      </div>
+
+      <!-- gstack -->
+      <div class="card" id="gstack">
+        <h3>gstack <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Suite grande de skills para todo o ciclo de engenharia com IA — browser headless
+          rápido (<code class="inl">/browse</code>, mais leve que Playwright/Chrome DevTools MCP para QA
+          e dogfooding), revisão de planos por perfis (CEO, design, eng, devex), ship/deploy
+          (<code class="inl">/ship</code>, <code class="inl">/land-and-deploy</code>, <code class="inl">/canary</code>),
+          debugging sistemático (<code class="inl">/investigate</code>), pentesting autónomo
+          (<code class="inl">/shannon</code>) e uma memória persistente local (<code class="inl">/setup-gbrain</code>)
+          que o browser e as outras skills gstack consultam entre sessões. Um repositório, um instalador.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
+cd ~/.claude/skills/gstack && ./setup</pre>
+        </div>
+        <div class="note warn">
+          Sobrepõe-se ao Playwright MCP e ao Browser Harness acima para tarefas de browser — usa o
+          gstack para QA/dogfooding rápido do dia a dia, e Playwright/Browser Harness quando precisas de
+          testes E2E formais ou de um site que resiste à automação normal.
+        </div>
+        <p class="desc" style="margin:14px 0 0">
+          Repositório: <a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener">garrytan/gstack</a>
+        </p>
+      </div>
+
+      <!-- Manifest -->
+      <div class="card" id="manifest">
+        <h3>Manifest <span class="tag opt">opcional</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Router de modelos open-source para agentes — recebe os pedidos do Claude Code (ou
+          qualquer harness OpenAI/Anthropic-compatible) e encaminha cada query para o modelo mais barato/adequado
+          entre 300+ modelos de 18 fornecedores, com fallback automático se um falhar. Útil para cortar custo em
+          contas com muitos providers ou modelos locais (Ollama, LM Studio). Não segue o padrão
+          <code class="inl">npx skills add</code> — corre em Docker, self-hosted.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>bash <(curl -sSL https://raw.githubusercontent.com/mnfst/manifest/main/docker/install.sh)</pre>
+        </div>
+        <div class="note">
+          Depois de instalado, abre <code class="inl">http://localhost:2099</code> e cria a conta admin (a primeira
+          conta criada). Aponta o Claude Code para o endpoint <code class="inl">/auto</code> em vez de gerir chaves
+          de cada provider individualmente.
+        </div>
+        <div class="note warn">
+          Existe também versão cloud sem instalação em <a href="https://app.manifest.build" target="_blank" rel="noopener">app.manifest.build</a> —
+          mais simples de configurar, mas sem acesso a modelos locais e menos controlo/privacidade.
+        </div>
+        <p class="desc" style="margin:14px 0 0">
+          Repositório: <a href="https://github.com/mnfst/manifest" target="_blank" rel="noopener">mnfst/manifest</a>
         </p>
       </div>
 
