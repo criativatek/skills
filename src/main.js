@@ -128,7 +128,7 @@ var searchCount = document.getElementById('searchCount')
 var priorityChips = document.querySelectorAll('[data-filter-priority]')
 var categoryChips = document.querySelectorAll('[data-filter-cat]')
 var allCards = Array.from(document.querySelectorAll('main .card'))
-var filterableSections = ['prereq', 'mcp', 'plugins', 'infra', 'problemas']
+var filterableSections = ['prereq', 'mcp', 'plugins', 'problemas']
 
 var filterState = { query: '', priority: 'all', category: 'all' }
 

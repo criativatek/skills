@@ -34,8 +34,8 @@
     </div>
     <div class="hero-stats" id="heroStats">
       <div class="stat"><strong data-count="12">0</strong><span>servidores MCP</span></div>
-      <div class="stat"><strong data-count="45">0</strong><span>skills prontas</span></div>
-      <div class="stat"><strong data-count="4">0</strong><span>categorias</span></div>
+      <div class="stat"><strong data-count="44">0</strong><span>skills prontas</span></div>
+      <div class="stat"><strong data-count="3">0</strong><span>categorias</span></div>
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
   </div>
@@ -62,7 +62,6 @@
       <button type="button" class="chip" data-filter-cat="prereq" aria-pressed="false">Configuração</button>
       <button type="button" class="chip" data-filter-cat="mcp" aria-pressed="false">MCP</button>
       <button type="button" class="chip" data-filter-cat="plugins" aria-pressed="false">Skills</button>
-      <button type="button" class="chip" data-filter-cat="infra" aria-pressed="false">Infraestrutura</button>
     </div>
     <span class="search-count" id="searchCount" aria-live="polite"></span>
   </div>
@@ -81,9 +80,8 @@
     <a href="#graphify" class="sub">↳ Graphify</a>
     <a href="#browser-harness" class="sub">↳ Browser Harness</a>
     <a href="#gstack" class="sub">↳ gstack</a>
-    <a href="#infra">4 · Infraestrutura IA</a>
-    <a href="#verificar">5 · Verificar tudo</a>
-    <a href="#problemas">6 · Problemas comuns</a>
+    <a href="#verificar">4 · Verificar tudo</a>
+    <a href="#problemas">5 · Problemas comuns</a>
   </nav>
 
   <main>
@@ -691,44 +689,9 @@ cd ~/.claude/skills/gstack && ./setup</pre>
       <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
-    <!-- INFRAESTRUTURA IA -->
-    <section id="infra">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>4 · Infraestrutura IA</h2>
-      <p class="lead">Ferramentas para quem constrói produtos de IA (não são MCP nem skills do Claude Code —
-        não se instalam <em>dentro</em> do Claude Code, correm à parte da tua aplicação).</p>
-
-      <!-- Manifest -->
-      <div class="card" id="manifest">
-        <h3>Manifest <span class="tag opt">opcional</span> <span class="tag opt">instalação diferente</span></h3>
-        <p class="desc">Router de modelos open-source para agentes — recebe os pedidos do Claude Code (ou
-          qualquer harness OpenAI/Anthropic-compatible) e encaminha cada query para o modelo mais barato/adequado
-          entre 300+ modelos de 18 fornecedores, com fallback automático se um falhar. Útil para cortar custo em
-          contas com muitos providers ou modelos locais (Ollama, LM Studio). Não segue o padrão
-          <code class="inl">npx skills add</code> — corre em Docker, self-hosted.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre><span class="cmt"># self-hosted via Docker</span>
-bash &lt;(curl -sSL https://raw.githubusercontent.com/mnfst/manifest/main/docker/install.sh)</pre>
-        </div>
-        <div class="note">
-          Depois de instalado, abre <code class="inl">http://localhost:2099</code> e cria a conta admin (a primeira
-          conta criada). Aponta o Claude Code para o endpoint <code class="inl">/auto</code> em vez de gerir chaves
-          de cada provider individualmente.
-        </div>
-        <div class="note warn">
-          Existe também versão cloud sem instalação em <a href="https://app.manifest.build" target="_blank" rel="noopener">app.manifest.build</a> —
-          mais simples de configurar, mas sem acesso a modelos locais e menos controlo/privacidade.
-        </div>
-        <p class="desc" style="margin:14px 0 0">
-          Repositório: <a href="https://github.com/mnfst/manifest" target="_blank" rel="noopener">mnfst/manifest</a>
-        </p>
-      </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
-    </section>
-
     <!-- VERIFICAR -->
     <section id="verificar">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>5 · Verificar tudo</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>4 · Verificar tudo</h2>
       <p class="lead">Checklist final depois de instalar — confirma que cada peça responde.</p>
       <ol class="steps">
         <li>
@@ -746,7 +709,7 @@ bash &lt;(curl -sSL https://raw.githubusercontent.com/mnfst/manifest/main/docker
 
     <!-- PROBLEMAS -->
     <section id="problemas">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>6 · Problemas comuns</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>5 · Problemas comuns</h2>
       <div class="card">
         <table>
           <tr><th>Sintoma</th><th>Solução</th></tr>

@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1 — 2026-07-02
+- Removido o Manifest do guia.
+
 ## 1.1.0 — 2026-07-01
 - Adicionado Manifest (router de modelos open-source) à secção de Plugins & Skills.
 
