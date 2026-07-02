@@ -34,7 +34,7 @@
     </div>
     <div class="hero-stats" id="heroStats">
       <div class="stat"><strong data-count="12">0</strong><span>servidores MCP</span></div>
-      <div class="stat"><strong data-count="44">0</strong><span>skills prontas</span></div>
+      <div class="stat"><strong data-count="45">0</strong><span>skills prontas</span></div>
       <div class="stat"><strong data-count="3">0</strong><span>categorias</span></div>
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
@@ -187,6 +187,122 @@ claude plugin install codex@openai-codex</pre>
         </div>
         <div class="note">
           Corre em qualquer pasta — não precisa de instalação prévia nem de estar dentro de um projeto específico.
+        </div>
+      </div>
+
+      <div class="card" id="orquestracao">
+        <h3>Orquestração de modelos <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Configura o Claude Code para delegar automaticamente a subagentes com o modelo certo
+          para cada tipo de tarefa — pesquisa rápida em Haiku, implementação em Sonnet, decisões difíceis em
+          Opus, revisão final em Fable — em vez de correr tudo no modelo principal. Reduz custo (tarefas
+          simples não gastam Opus/Fable) e melhora a qualidade (a revisão final usa sempre um modelo
+          independente e forte).</p>
+
+        <ol class="steps">
+          <li>
+            <h4>Criar os 4 subagentes <span style="color:var(--fg-dim); font-weight:400">— global, uma vez</span></h4>
+            <p class="desc" style="margin:0 0 8px">Corre num terminal Bash (Git Bash no Windows, ou Terminal no macOS/Linux). Fica disponível em todos os projetos.</p>
+            <div class="codeblock">
+              <button class="copy">Copiar</button>
+<pre>mkdir -p ~/.claude/agents
+
+cat > ~/.claude/agents/explorer.md &lt;&lt;'MD'
+---
+name: explorer
+description: Usa proativamente este agente para procurar ficheiros, localizar referências, mapear dependências, compreender a estrutura do projeto e recolher contexto sem alterar código.
+model: haiku
+effort: low
+tools: Read, Glob, Grep
+maxTurns: 25
+---
+Explora rapidamente o projeto e devolve apenas informação concreta e relevante.
+Não escrevas nem alteres código.
+MD
+
+cat > ~/.claude/agents/implementer.md &lt;&lt;'MD'
+---
+name: implementer
+description: Usa proativamente este agente para implementar funcionalidades, corrigir problemas, refatorar código, criar testes e concluir tarefas normais de desenvolvimento.
+model: sonnet
+effort: medium
+permissionMode: acceptEdits
+maxTurns: 100
+---
+Implementa a solução de forma autónoma e consistente com a arquitetura existente.
+Não interrompas para pedir confirmação sobre decisões técnicas reversíveis.
+MD
+
+cat > ~/.claude/agents/architect.md &lt;&lt;'MD'
+---
+name: architect
+description: Usa proativamente este agente antes de decisões de arquitetura, alterações entre vários módulos, migrações importantes, integrações complexas, problemas de desempenho ou erros cuja causa não seja evidente.
+model: opus
+effort: high
+tools: Read, Glob, Grep, Bash
+disallowedTools: Write, Edit
+maxTurns: 50
+---
+Age como arquiteto de software sénior — analisa causa raiz, impacto entre módulos, riscos e alternativas.
+Produz uma recomendação concreta para o agente implementador. Não alteres diretamente os ficheiros.
+MD
+
+cat > ~/.claude/agents/reviewer.md &lt;&lt;'MD'
+---
+name: reviewer
+description: Usa proativamente este agente depois de alterações importantes e antes de considerar o trabalho concluído. Faz uma revisão independente e profunda da implementação.
+model: fable
+effort: high
+tools: Read, Glob, Grep, Bash
+disallowedTools: Write, Edit
+maxTurns: 60
+---
+Faz uma revisão final independente — funcionalidade, segurança, desempenho, testes, casos limite.
+Apresenta problemas concretos com prioridade. Não alteres diretamente os ficheiros.
+MD</pre>
+            </div>
+            <table>
+              <tr><th>Subagente</th><th>Modelo</th><th>Effort</th><th>Quando é usado</th></tr>
+              <tr><td>explorer</td><td>Haiku</td><td>low</td><td>Pesquisas rápidas — ficheiros, referências, dependências</td></tr>
+              <tr><td>implementer</td><td>Sonnet</td><td>medium</td><td>Escrever código, testes, corrigir erros</td></tr>
+              <tr><td>architect</td><td>Opus</td><td>high</td><td>Decisões de arquitetura, bugs difíceis</td></tr>
+              <tr><td>reviewer</td><td>Fable</td><td>high</td><td>Revisão final antes de dar por concluído</td></tr>
+            </table>
+          </li>
+          <li>
+            <h4>Dizer ao Claude Code quando usar cada um <span style="color:var(--fg-dim); font-weight:400">— CLAUDE.md global</span></h4>
+            <p class="desc" style="margin:0 0 8px">Acrescenta isto a <code class="inl">~/.claude/CLAUDE.md</code> (cria o ficheiro se não existir). Não apagues o que já lá tiveres — só acrescenta ao fim.</p>
+            <div class="codeblock" data-raw>
+              <button class="copy">Copiar</button>
+<pre>## Orquestração de modelos
+
+Trabalha autonomamente até o objetivo estar concluído. Usa os subagentes especializados
+em `~/.claude/agents/` conforme o tipo de tarefa, em vez de fazer tudo com o modelo principal.
+
+## Equipa
+
+| Subagente | Modelo | Effort | Quando usar |
+|---|---|---|---|
+| `explorer` | Haiku | low | Pesquisas rápidas — localizar ficheiros, referências, dependências, mapear a estrutura do projeto. Não altera código. |
+| `implementer` | Sonnet | medium | Escrever código, editar ficheiros, criar/atualizar testes, corrigir erros encontrados. |
+| `architect` | Opus | high | Antes de decisões de arquitetura, alterações entre vários módulos, migrações importantes, integrações complexas, problemas de desempenho, ou quando a causa de um erro não é óbvia. Só analisa — não altera ficheiros. |
+| `reviewer` | Fable | high | Depois de alterações importantes, antes de dar o trabalho por concluído. Revisão final independente. Só analisa — não altera ficheiros. |
+
+## Regras de delegação
+
+- Usa `explorer` para qualquer pesquisa ou levantamento de contexto antes de escrever código.
+- Usa `architect` antes de decisões estruturais ou quando a abordagem não é óbvia — não avances com uma mudança grande sem passar por aqui primeiro.
+- Usa `implementer` para o trabalho de implementação em si.
+- Usa `reviewer` antes de fechar qualquer tarefa não-trivial. Depois da revisão, corrige autonomamente os problemas relevantes que encontrar.
+- Não peças confirmação para decisões técnicas reversíveis.
+- Corre testes, lint e análise estática antes de dar uma tarefa por concluída.
+- Termina só quando a implementação estiver funcional e revista.</pre>
+            </div>
+          </li>
+        </ol>
+
+        <div class="note warn">
+          Reinicia a sessão do Claude Code depois de criar estes ficheiros — o <code class="inl">CLAUDE.md</code>
+          só é lido no arranque de cada sessão nova, não a meio de uma conversa já em curso.
         </div>
       </div>
       <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>

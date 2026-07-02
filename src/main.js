@@ -6,11 +6,14 @@ var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 document.querySelectorAll('.copy').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var pre = btn.parentElement.querySelector('pre')
-    var text = pre.textContent
-      .split('\n')
-      .map(function (line) { return line.replace(/\s+$/, '') })
-      .filter(function (line) { return line.trim() !== '' && line.trim().charAt(0) !== '#' })
-      .join('\n')
+    var raw = btn.parentElement.hasAttribute('data-raw')
+    var text = raw
+      ? pre.textContent.replace(/\s+$/, '')
+      : pre.textContent
+          .split('\n')
+          .map(function (line) { return line.replace(/\s+$/, '') })
+          .filter(function (line) { return line.trim() !== '' && line.trim().charAt(0) !== '#' })
+          .join('\n')
     navigator.clipboard.writeText(text).then(function () {
       var old = btn.textContent
       btn.textContent = '✓ Copiado'
