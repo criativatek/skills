@@ -29,7 +29,7 @@
        servidores <strong>MCP</strong>, plugins e skills. Cada bloco tem descrição,
        comando pronto a copiar e o que verificar a seguir.</p>
     <div class="hero-cta">
-      <a href="#prereq" class="btn btn-primary">Começar instalação</a>
+      <a href="#comecar" class="btn btn-primary">Começar instalação</a>
       <a href="#plugins" class="btn btn-ghost">Ver skills disponíveis</a>
     </div>
     <div class="hero-stats" id="heroStats">
@@ -39,8 +39,34 @@
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
   </div>
-  <a class="scroll-cue" href="#prereq" aria-label="Ir para o conteúdo"><span></span></a>
+  <a class="scroll-cue" href="#comecar" aria-label="Ir para o conteúdo"><span></span></a>
 </header>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap toolbar-inner">
+    <label class="search-box" for="siteSearch">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="siteSearch" aria-label="Pesquisar comandos, MCP e skills" placeholder="Pesquisar comandos, MCP, skills… ex: laravel, sql, dark mode" autocomplete="off">
+      <kbd class="search-kbd">/</kbd>
+    </label>
+    <div class="filter-group" role="group" aria-label="Filtrar por prioridade">
+      <span class="filter-label">Prioridade</span>
+      <button type="button" class="chip is-active" data-filter-priority="all" aria-pressed="true">Todos</button>
+      <button type="button" class="chip chip-req" data-filter-priority="req" aria-pressed="false">Obrigatório</button>
+      <button type="button" class="chip chip-rec" data-filter-priority="rec" aria-pressed="false">Recomendado</button>
+      <button type="button" class="chip chip-opt" data-filter-priority="opt" aria-pressed="false">Opcional</button>
+    </div>
+    <div class="filter-group" role="group" aria-label="Filtrar por categoria">
+      <span class="filter-label">Categoria</span>
+      <button type="button" class="chip is-active" data-filter-cat="all" aria-pressed="true">Todas</button>
+      <button type="button" class="chip" data-filter-cat="prereq" aria-pressed="false">Configuração</button>
+      <button type="button" class="chip" data-filter-cat="mcp" aria-pressed="false">MCP</button>
+      <button type="button" class="chip" data-filter-cat="plugins" aria-pressed="false">Skills</button>
+      <button type="button" class="chip" data-filter-cat="infra" aria-pressed="false">Infraestrutura</button>
+    </div>
+    <span class="search-count" id="searchCount" aria-live="polite"></span>
+  </div>
+</div>
 
 <div class="wrap">
 <div class="layout">
@@ -48,20 +74,36 @@
   <nav class="toc">
     <i class="toc-indicator" aria-hidden="true"></i>
     <strong>Nesta página</strong>
-    <a href="#prereq">0 · Pré-requisitos</a>
-    <a href="#mcp">1 · Servidores MCP</a>
-    <a href="#plugins">2 · Plugins &amp; Skills</a>
+    <a href="#comecar">★ Por onde começar</a>
+    <a href="#prereq">1 · Pré-requisitos</a>
+    <a href="#mcp">2 · Servidores MCP</a>
+    <a href="#plugins">3 · Plugins &amp; Skills</a>
     <a href="#graphify" class="sub">↳ Graphify</a>
     <a href="#browser-harness" class="sub">↳ Browser Harness</a>
-    <a href="#verificar">3 · Verificar tudo</a>
-    <a href="#problemas">4 · Problemas comuns</a>
+    <a href="#infra">4 · Infraestrutura IA</a>
+    <a href="#verificar">5 · Verificar tudo</a>
+    <a href="#problemas">6 · Problemas comuns</a>
   </nav>
 
   <main>
 
+    <!-- POR ONDE COMEÇAR -->
+    <section id="comecar" class="rank-section">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>0 · Por onde começar</h2>
+      <p class="lead">Se só tiveres 10 minutos, fica-te por estas <strong>6 prioridades</strong> — ordenadas por impacto. Clica para ir direto ao bloco. O resto do guia fica para quando precisares.</p>
+      <ol class="rank-list">
+        <li><a href="#caveman" data-jump><span class="rank-n">1</span><span class="rank-body"><strong>Caveman</strong><span class="tag req">obrigatório</span><em>Corta drasticamente os tokens de output do Claude Code.</em></span></a></li>
+        <li><a href="#codeburn" data-jump><span class="rank-n">2</span><span class="rank-body"><strong>CodeBurn</strong><span class="tag req">obrigatório</span><em>Acompanha o custo/tokens gastos por projeto e modelo.</em></span></a></li>
+        <li><a href="#context7" data-jump><span class="rank-n">3</span><span class="rank-body"><strong>Context7</strong><span class="tag rec">recomendado</span><em>Documentação sempre atualizada diretamente no contexto.</em></span></a></li>
+        <li><a href="#chrome-devtools" data-jump><span class="rank-n">4</span><span class="rank-body"><strong>Chrome DevTools</strong><span class="tag rec">recomendado</span><em>Debug e performance no Chrome real.</em></span></a></li>
+        <li><a href="#skills-dev" data-jump><span class="rank-n">5</span><span class="rank-body"><strong>Skills de desenvolvimento</strong><span class="tag rec">recomendado</span><em>Arquitetura, TDD e produtividade num só bloco de comandos.</em></span></a></li>
+        <li><a href="#uiuxpromax" data-jump><span class="rank-n">6</span><span class="rank-body"><strong>UI/UX Pro Max</strong><span class="tag rec">recomendado</span><em>Decisões de design sistemáticas, orientadas por dados.</em></span></a></li>
+      </ol>
+    </section>
+
     <!-- PRÉ-REQUISITOS -->
     <section id="prereq">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>0 · Pré-requisitos</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>1 · Pré-requisitos</h2>
       <p class="lead">Confirma que tens as ferramentas base antes de instalar o resto.
         Os comandos abaixo apenas <em>verificam a versão</em> — se algum falhar, instala essa ferramenta primeiro.</p>
 
@@ -84,7 +126,7 @@ claude --version</pre>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="caveman">
         <h3>Caveman <span class="tag req">obrigatório</span></h3>
         <p class="desc">Faz o Claude Code responder em estilo comprimido ("caveman" — sem artigos,
           sem palavras de preenchimento, telegráfico) para cortar drasticamente os tokens de output,
@@ -101,7 +143,7 @@ claude plugin install caveman@caveman</pre>
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" id="codeburn">
         <h3>CodeBurn <span class="tag req">obrigatório</span></h3>
         <p class="desc">Dashboard local (terminal) que lê os logs de sessão e mostra custo/tokens gastos por
           projeto, modelo e tarefa, em 31 ferramentas diferentes (Claude Code, Cursor, Codex, Gemini…). Corre
@@ -115,11 +157,12 @@ claude plugin install caveman@caveman</pre>
           Corre em qualquer pasta — não precisa de instalação prévia nem de estar dentro de um projeto específico.
         </div>
       </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- MCP -->
     <section id="mcp">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>1 · Servidores MCP</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>2 · Servidores MCP</h2>
       <p class="lead">MCP (<em>Model Context Protocol</em>) liga o Claude a ferramentas externas
         — ficheiros, documentação, browser, base de dados. Instala-se com
         <code class="inl">claude mcp add</code>. Usa <code class="inl">-s user</code> para ficar
@@ -146,7 +189,7 @@ php artisan boost:install</pre>
       </div>
 
       <!-- Context7 -->
-      <div class="card">
+      <div class="card" id="context7">
         <h3>Context7 <span class="tag rec">recomendado</span></h3>
         <p class="desc">Injeta documentação <em>atualizada</em> de qualquer biblioteca (Tailwind, Vue, React, Laravel, Node…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.</p>
         <div class="codeblock">
@@ -208,7 +251,7 @@ php artisan boost:install</pre>
       </div>
 
       <!-- Chrome DevTools -->
-      <div class="card">
+      <div class="card" id="chrome-devtools">
         <h3>Chrome DevTools <span class="tag rec">recomendado</span></h3>
         <p class="desc">Oficial da equipa do Chrome. Complementa o Playwright: onde o Playwright serve para
           <em>automação/testes E2E</em>, este é para <strong>debugging e performance</strong> — grava traces de
@@ -272,7 +315,8 @@ php artisan boost:install</pre>
       <div class="card">
         <h3>Filesystem <span class="tag opt">opcional</span></h3>
         <p class="desc">Acesso de leitura/escrita a uma pasta específica fora do projeto atual
-          (ex.: partilhar ficheiros entre projetos). Ajusta o caminho final.</p>
+          (ex.: partilhar ficheiros entre projetos). Substitui <code class="inl">D:\HERD</code> abaixo
+          pelo caminho da pasta que queres partilhar.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre>claude mcp add filesystem -s user -- npx -y @modelcontextprotocol/server-filesystem D:\HERD</pre>
@@ -294,18 +338,19 @@ php artisan boost:install</pre>
         <strong>Depois de adicionar:</strong> reinicia o Claude Code e corre
         <code class="inl">claude mcp list</code> para confirmar o estado <code class="inl">✓ connected</code> de cada servidor.
       </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- PLUGINS & SKILLS -->
     <section id="plugins">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.44 7.85c-.05.32.06.65.29.88l1.57 1.57a2.4 2.4 0 0 1 0 3.4l-1.61 1.61a.98.98 0 0 1-.84.28c-.47-.07-.8-.48-.97-.93a2.5 2.5 0 1 0-3.21 3.21c.45.17.86.5.93.97a.98.98 0 0 1-.28.84l-1.61 1.61a2.4 2.4 0 0 1-3.4 0l-1.57-1.57a1.03 1.03 0 0 0-.88-.29c-.49.07-.84.5-1.02.97a2.5 2.5 0 1 1-3.24-3.24c.47-.18.9-.53.97-1.02a1.03 1.03 0 0 0-.29-.88L1.9 13.7a2.4 2.4 0 0 1 0-3.4l1.61-1.61c.24-.24.58-.35.92-.3.51.07.88.53 1.07 1.01a2.5 2.5 0 1 0 3.26-3.26c-.48-.19-.93-.56-1.01-1.07-.05-.34.06-.68.3-.92l1.53-1.52a2.4 2.4 0 0 1 3.4 0l1.57 1.57c.23.23.56.34.88.29.49-.07.84-.5 1.02-.97a2.5 2.5 0 1 1 3.24 3.24c-.47.18-.9.53-.97 1.02Z"/></svg>2 · Plugins &amp; Skills do Claude Code</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.44 7.85c-.05.32.06.65.29.88l1.57 1.57a2.4 2.4 0 0 1 0 3.4l-1.61 1.61a.98.98 0 0 1-.84.28c-.47-.07-.8-.48-.97-.93a2.5 2.5 0 1 0-3.21 3.21c.45.17.86.5.93.97a.98.98 0 0 1-.28.84l-1.61 1.61a2.4 2.4 0 0 1-3.4 0l-1.57-1.57a1.03 1.03 0 0 0-.88-.29c-.49.07-.84.5-1.02.97a2.5 2.5 0 1 1-3.24-3.24c.47-.18.9-.53.97-1.02a1.03 1.03 0 0 0-.29-.88L1.9 13.7a2.4 2.4 0 0 1 0-3.4l1.61-1.61c.24-.24.58-.35.92-.3.51.07.88.53 1.07 1.01a2.5 2.5 0 1 0 3.26-3.26c-.48-.19-.93-.56-1.01-1.07-.05-.34.06-.68.3-.92l1.53-1.52a2.4 2.4 0 0 1 3.4 0l1.57 1.57c.23.23.56.34.88.29.49-.07.84-.5 1.02-.97a2.5 2.5 0 1 1 3.24 3.24c-.47.18-.9.53-.97 1.02Z"/></svg>3 · Plugins &amp; Skills do Claude Code</h2>
       <p class="lead">Skills adicionam comandos especializados ao Claude Code. Instalam-se via
         <code class="inl">npx skills add</code>. Sem flag → instala <em>neste projeto</em>;
         com <code class="inl">-g</code> → instala <strong>globalmente</strong> (todos os projetos).
         Depois de instalar, reinicia o Claude Code e invoca cada skill com <code class="inl">/</code>.</p>
 
       <!-- Skills de desenvolvimento -->
-      <div class="card">
+      <div class="card" id="skills-dev">
         <h3>Skills de desenvolvimento <span class="tag rec">recomendado</span></h3>
         <p class="desc">Arquitetura, qualidade e produtividade — aplicam-se a qualquer projeto. Copia o bloco todo de uma vez:</p>
         <div class="codeblock">
@@ -421,7 +466,7 @@ npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
       </div>
 
       <!-- UI/UX Pro Max -->
-      <div class="card">
+      <div class="card" id="uiuxpromax">
         <h3>UI/UX Pro Max <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
         <p class="desc">Base de dados de design pesquisável para o Claude consultar ao construir interfaces:
           67 estilos de UI, 161 paletas de cores, 57 pares de fontes, 99 guidelines de UX e 25 tipos de gráficos,
@@ -505,10 +550,10 @@ graphify install</pre>
             <p class="desc" style="margin:0 0 8px">Dentro do Claude Code, na raiz do projeto que queres mapear:</p>
             <div class="codeblock">
               <button class="copy">Copiar</button>
-<pre><span class="cmt">/graphify .</span>
+<pre>/graphify .
 
-<span class="cmt"># para atualizar só os ficheiros que mudaram</span>
-<span class="cmt">/graphify . --update</span></pre>
+<span class="cmt"># para atualizar só os ficheiros que mudaram, usa:</span>
+<span class="cmt"># /graphify . --update</span></pre>
             </div>
             <div class="note warn">
               Faz <strong>commit</strong> da pasta <code class="inl">graphify-out/</code> ao repositório (exceto
@@ -572,11 +617,42 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
           <tr><td><code class="inl">/deep-research</code></td><td>Investigação multi-fonte com verificação e fontes citadas</td></tr>
         </table>
       </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
+    </section>
+
+    <!-- INFRAESTRUTURA IA -->
+    <section id="infra">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>4 · Infraestrutura IA</h2>
+      <p class="lead">Ferramentas para quem constrói produtos de IA (não são MCP nem skills do Claude Code —
+        não se instalam <em>dentro</em> do Claude Code, correm à parte da tua aplicação).</p>
+
+      <!-- Manifest.build -->
+      <div class="card">
+        <h3>Manifest.build <span class="tag opt">opcional</span></h3>
+        <p class="desc">Model router para agentes e apps de IA — encaminha cada pedido ao modelo mais adequado
+          entre <strong>300+ modelos e 18+ providers</strong> (OpenAI, Anthropic, Google, DeepSeek, locais…),
+          com fallback automático se um modelo falhar e controlo/limites de gasto. Funciona como
+          <strong>substituto direto da API da OpenAI</strong> — muda só o endpoint. Não liga ao Claude Code:
+          é para a tua própria aplicação de IA falar com vários providers através de um único ponto.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># self-hosted via Docker</span>
+bash &lt;(curl -sSL https://raw.githubusercontent.com/mnfst/manifest/main/docker/install.sh)</pre>
+        </div>
+        <div class="note">
+          Depois de instalado fica disponível em <code class="inl">http://localhost:2099</code>. Preferes não
+          instalar nada? Usa a versão cloud em <a href="https://app.manifest.build" target="_blank" rel="noopener">app.manifest.build</a>.
+        </div>
+        <p class="desc" style="margin:8px 0 0">
+          Repositório: <a href="https://github.com/mnfst/manifest" target="_blank" rel="noopener">mnfst/manifest</a>
+        </p>
+      </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- VERIFICAR -->
     <section id="verificar">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>3 · Verificar tudo</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>5 · Verificar tudo</h2>
       <p class="lead">Checklist final depois de instalar — confirma que cada peça responde.</p>
       <ol class="steps">
         <li>
@@ -594,7 +670,7 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
 
     <!-- PROBLEMAS -->
     <section id="problemas">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>4 · Problemas comuns</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>6 · Problemas comuns</h2>
       <div class="card">
         <table>
           <tr><th>Sintoma</th><th>Solução</th></tr>
@@ -621,6 +697,7 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
           </tr>
         </table>
       </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
   </main>
