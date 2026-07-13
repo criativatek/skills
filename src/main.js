@@ -134,6 +134,7 @@ var allCards = Array.from(document.querySelectorAll('main .card'))
 var filterableSections = ['prereq', 'mcp', 'plugins', 'problemas']
 
 var filterState = { query: '', priority: 'all', category: 'all' }
+var wasFilterActive = false
 
 function normalize (s) { return (s || '').toLowerCase() }
 
@@ -203,6 +204,16 @@ function applyFilters () {
       ? totalVisible + (totalVisible === 1 ? ' resultado' : ' resultados')
       : ''
   }
+
+  // Pesquisar/filtrar a partir do hero deixa os resultados fora do ecrã sem isto —
+  // dá a impressão de que a pesquisa "não faz nada".
+  if (anyFilterActive && !wasFilterActive) {
+    var toolbar = document.getElementById('toolbar')
+    if (toolbar && toolbar.getBoundingClientRect().top > 20) {
+      toolbar.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+    }
+  }
+  wasFilterActive = anyFilterActive
 }
 
 function resetFilters () {
