@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0 — 2026-07-13
+- Adicionado GBrain (memória persistente local) como obrigatório à secção de Pré-requisitos.
+
 ## 1.1.1 — 2026-07-02
 - Removido o Manifest do guia.
 

@@ -305,6 +305,54 @@ em `~/.claude/agents/` conforme o tipo de tarefa, em vez de fazer tudo com o mod
           só é lido no arranque de cada sessão nova, não a meio de uma conversa já em curso.
         </div>
       </div>
+
+      <div class="card" id="gbrain">
+        <h3>GBrain <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Memória persistente local (RAG) que fica disponível entre sessões e projetos —
+          poupa tokens porque o Claude deixa de precisar de reexplicar contexto ou reler o código todo
+          em cada conversa nova. Pesquisa semântica sobre código e notas via <code class="inl">gbrain search</code>
+          / <code class="inl">gbrain code-def</code>, registado como MCP para o agente consultar diretamente.
+          Requer o <a href="#gstack">gstack</a> instalado (secção 3).</p>
+
+        <ol class="steps">
+          <li>
+            <h4>Correr o assistente de instalação</h4>
+            <p class="desc" style="margin:0 0 8px">Dentro do Claude Code, com o gstack já instalado:</p>
+            <div class="codeblock">
+              <button class="copy">Copiar</button>
+<pre>/setup-gbrain</pre>
+            </div>
+            <div class="note">
+              Escolhe <strong>PGLite local</strong> para uso a solo (sem contas, ~30s, cérebro isolado
+              só nesta máquina) — Supabase/remoto só compensam se quiseres partilhar a memória entre
+              várias máquinas ou com a equipa.
+            </div>
+          </li>
+          <li>
+            <h4>Configurar a chave de embeddings</h4>
+            <p class="desc" style="margin:0 0 8px">Necessária para pesquisa semântica — usa uma destas antes de correr o assistente:</p>
+            <div class="codeblock">
+              <button class="copy">Copiar</button>
+<pre><span class="cmt"># recomendado para código</span>
+export VOYAGE_API_KEY=pa-...
+
+<span class="cmt"># alternativas</span>
+export OPENAI_API_KEY=sk-...
+export ZEROENTROPY_API_KEY=ze-...</pre>
+            </div>
+            <div class="note warn">
+              Sem nenhuma chave, o <code class="inl">/setup-gbrain</code> deixa avançar na mesma
+              (<code class="inl">--no-embedding</code>) mas fica sem pesquisa semântica até configurares uma.
+            </div>
+          </li>
+        </ol>
+
+        <div class="note">
+          <strong>Confirmar que ficou ativo:</strong> <code class="inl">claude mcp list</code> deve mostrar
+          <code class="inl">gbrain ✓ Connected</code>. Reinicia o Claude Code para os tools
+          <code class="inl">mcp__gbrain__*</code> ficarem disponíveis.
+        </div>
+      </div>
       <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
