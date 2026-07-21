@@ -484,26 +484,48 @@ php artisan boost:install</pre>
         </div>
       </div>
 
-      <!-- 21st.dev Magic -->
-      <div class="card">
-        <h3>21st.dev Magic <span class="tag opt">opcional — pago</span></h3>
-        <p class="desc">Gera componentes React/Tailwind prontos a partir de prompts em linguagem natural,
-          dentro do próprio Claude Code (<code class="inl">/ui ...</code>) — puxando de uma biblioteca curada
-          de componentes reais em <a href="https://21st.dev/community/components" target="_blank" rel="noopener">21st.dev/community/components</a>,
-          em vez de gerar UI do zero. Sobrepõe-se um pouco ao UI/UX Pro Max (secção 2): aquele dá guidelines/paletas,
-          este dá componentes já feitos.</p>
+      <!-- 21st.dev -->
+      <div class="card" id="vinteprimeiro">
+        <h3>21st.dev <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Busca semântica sobre uma biblioteca curada de componentes React/Tailwind, temas e
+          templates reais (<a href="https://21st.dev/community/components" target="_blank" rel="noopener">21st.dev/community/components</a>),
+          mais lookup de logos SVG por nome. Serve para o agente <strong>ver referências reais antes de escrever
+          UI nova</strong>, em vez de inventar do zero — é o antídoto directo para o «AI slop» visual.
+          Complementa o UI/UX Pro Max (secção 3): aquele dá guidelines e paletas, este dá componentes já feitos.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>npx @21st-dev/cli@latest install claude --api-key SUA_CHAVE</pre>
+<pre>claude mcp add --scope user --transport http 21st https://21st.dev/api/mcp --header "x-api-key: SUA_CHAVE"</pre>
         </div>
-        <p class="desc" style="margin:10px 0 4px">Exemplo de utilização depois de instalado:</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>/ui cria uma secção de pricing com 3 planos, destaque no plano do meio, estilo minimalista</pre>
+        <div class="note">
+          <strong>Tier gratuito:</strong> busca semântica e lookup de logos são <em>ilimitados</em>;
+          instalar código de componentes está limitado a <strong>2 por dia</strong>. Pro
+          (<a href="https://21st.dev/pricing" target="_blank" rel="noopener">$20/mês</a>) só é preciso se
+          bateres nesse limite com frequência. Chave em
+          <a href="https://21st.dev/settings" target="_blank" rel="noopener">21st.dev/settings</a>.
         </div>
         <div class="note warn">
-          Tier gratuito é muito limitado (~5 pedidos/mês) — depois passa a $20/mês. Chave em
-          <a href="https://21st.dev/magic/console" target="_blank" rel="noopener">21st.dev/magic/console</a>.
+          A chave fica em claro no <code class="inl">~/.claude.json</code> — não commitar esse ficheiro.
+          Para componentes shadcn continua a usar o MCP oficial do shadcn (grátis, sem limite de instalações).
+        </div>
+      </div>
+
+      <!-- shadcn -->
+      <div class="card" id="shadcn">
+        <h3>shadcn <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Dá ao agente acesso directo ao registo do <a href="https://ui.shadcn.com" target="_blank" rel="noopener">shadcn/ui</a>:
+          listar componentes, blocos e templates, procurar por nome ou função, e instalar em linguagem
+          natural («adiciona um formulário de login»). Sem API key e sem limite de instalações —
+          é o par natural do 21st.dev acima: <strong>21st para descobrir referências, shadcn para instalar</strong>.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># corre na raiz do projeto (precisa de components.json)</span>
+npx shadcn@latest mcp init --client claude</pre>
+        </div>
+        <div class="note">
+          Ao contrário dos MCP acima, este é <strong>por projeto</strong> — escreve o
+          <code class="inl">.mcp.json</code> na raiz e lê os registos de
+          <code class="inl">components.json</code>. Repete o comando em cada projeto que use shadcn.
+          Registos privados autenticam-se por variáveis em <code class="inl">.env.local</code>.
         </div>
       </div>
 
@@ -516,6 +538,30 @@ php artisan boost:install</pre>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre>claude mcp add browser-tools -s user -- npx -y @agentdeskai/browser-tools-mcp@latest</pre>
+        </div>
+      </div>
+
+      <!-- Higgsfield -->
+      <div class="card" id="higgsfield">
+        <h3>Higgsfield <span class="tag opt">opcional — conteúdo</span></h3>
+        <p class="desc">Geração de imagem e vídeo AI a partir do agente — Veo 3, Kling 3.0, Nano Banana Pro
+          e outros modelos, num único endpoint. Para criativos de anúncios, b-roll, product shots e motion.
+          Não é uma ferramenta de programação: só interessa a quem trabalha em marketing/conteúdo.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --scope user --transport http higgsfield https://mcp.higgsfield.ai/mcp</pre>
+        </div>
+        <div class="note">
+          <strong>Sem API key</strong> — autentica por OAuth no browser à primeira utilização. Corre
+          <code class="inl">/mcp</code> → <code class="inl">higgsfield</code> → <em>Authenticate</em>, e
+          reinicia a sessão. Tier gratuito: 10 créditos/dia. Planos desde
+          <a href="https://higgsfield.ai/pricing" target="_blank" rel="noopener">$15/mês</a> (200 créditos);
+          Plus $39/mês (1.000) para volume a sério. Referência de custo: Veo 3 de 8s com áudio ≈ 58 créditos,
+          Kling 3.0 de 8s a 720p ≈ 14.
+        </div>
+        <div class="note warn">
+          Se já o tiveres adicionado como connector no claude.ai, <strong>não corras o comando acima</strong> —
+          ficam dois registos do mesmo servidor e é fácil autenticar um e ver o outro a falhar. Escolhe um só.
         </div>
       </div>
 
