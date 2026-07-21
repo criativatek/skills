@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.3.0 — 2026-07-21
+## 1.4.0 — 2026-07-22
+- Adicionado o Banana (skill de geração de imagem via Gemini/Nano Banana, 500 img/dia grátis).
+  Inclui nota Windows: precisa de symlink `python3.exe` porque os scripts chamam `python3`.
 - `framer-motion` → `motion` na tabela de stacks (novo nome do pacote, import `motion/react`).
 - Adicionado o Higgsfield (geração de imagem/vídeo AI, OAuth sem API key) como opcional para
   quem trabalha em conteúdo. Avisa sobre o duplicado se já existir o connector no claude.ai.

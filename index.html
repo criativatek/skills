@@ -697,6 +697,40 @@ npx skills add https://github.com/coreyhaines31/marketingskills --skill content-
         </table>
       </div>
 
+      <!-- Banana (geração de imagem) -->
+      <div class="card" id="banana">
+        <h3>Banana — geração de imagem <span class="tag">conteúdo</span></h3>
+        <p class="desc">Skill que põe o Claude como <strong>director criativo</strong>: interpreta a intenção,
+          escolhe o domínio (cinema, produto, retrato, logo, UI…), constrói o prompt pela fórmula de 5 componentes
+          da Google e chama os modelos de imagem Gemini (Nano Banana). Texto-para-imagem, edição, sessões
+          multi-turno, batch e presets de marca. Complementa o <a href="#higgsfield">Higgsfield</a> (secção 2):
+          <strong>Banana para imagem, Higgsfield para vídeo</strong>.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># clona e copia a skill para ~/.claude/skills/banana (lê o install.sh antes de correr)</span>
+git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
+cd banana-claude &amp;&amp; ./install.sh</pre>
+        </div>
+        <p class="desc" style="margin:10px 0 4px">Depois, chave grátis da Google e variável de ambiente:</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre><span class="cmt"># chave grátis: https://aistudio.google.com/apikey</span>
+setx GOOGLE_AI_API_KEY "a_tua_chave"</pre>
+        </div>
+        <div class="note">
+          <strong>Tier grátis absurdo:</strong> 500 imagens/dia no Google AI Studio. Pago (com a tua chave):
+          Nano Banana ≈ $0.039/img, Nano Banana Pro ≈ $0.134 (até 2K) / $0.24 (4K), Imagen 4 Fast ≈ $0.02.
+          Scripts em Python stdlib — sem <code class="inl">pip install</code>. O MCP é opcional; há fallback
+          direto à API REST do Gemini.
+        </div>
+        <div class="note warn">
+          <strong>Windows:</strong> os scripts chamam <code class="inl">python3</code>, que não existe por
+          defeito — cria um symlink uma vez:
+          <code class="inl">New-Item -ItemType SymbolicLink -Path "$HOME\.bun\bin\python3.exe" -Target (Get-Command python).Source</code>
+          (precisa de Developer Mode). Sem isto a skill falha com <code class="inl">python3: not found</code>.
+        </div>
+      </div>
+
       <!-- Skills de design -->
       <div class="card">
         <h3>Skills de design <span class="tag">design</span></h3>
