@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3.0 — 2026-07-21
+- `framer-motion` → `motion` na tabela de stacks (novo nome do pacote, import `motion/react`).
 - Adicionado o Higgsfield (geração de imagem/vídeo AI, OAuth sem API key) como opcional para
   quem trabalha em conteúdo. Avisa sobre o duplicado se já existir o connector no claude.ai.
 - Adicionado o MCP do shadcn (registo de componentes, sem API key). Nota: é por projeto,
