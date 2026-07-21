@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.1 — 2026-07-22
+- Fix: correcção da claim do Banana. A API de imagem do Gemini **não tem tier grátis** — é paga
+  por defeito (sem billing devolve `429 · limit: 0`, verificado end-to-end). O «500 img/dia grátis»
+  é só do AI Studio web, não da API. Nota clarificada + link para activar billing.
+
 ## 1.4.0 — 2026-07-22
 - Adicionado o Banana (skill de geração de imagem via Gemini/Nano Banana, 500 img/dia grátis).
   Inclui nota Windows: precisa de symlink `python3.exe` porque os scripts chamam `python3`.

@@ -717,11 +717,19 @@ cd banana-claude &amp;&amp; ./install.sh</pre>
 <pre><span class="cmt"># chave grátis: https://aistudio.google.com/apikey</span>
 setx GOOGLE_AI_API_KEY "a_tua_chave"</pre>
         </div>
+        <div class="note warn">
+          <strong>A API de imagem do Gemini NÃO tem tier grátis</strong> — é paga por defeito. O «500 imagens/dia
+          grátis» é só do <a href="https://aistudio.google.com" target="_blank" rel="noopener">AI Studio web</a>
+          (o site), não da API que esta skill usa. Sem <em>billing</em> activo no projeto Google, cada geração
+          devolve <code class="inl">429 · limit: 0</code>. Activa billing em
+          <a href="https://console.cloud.google.com/billing" target="_blank" rel="noopener">console.cloud.google.com/billing</a>.
+        </div>
         <div class="note">
-          <strong>Tier grátis absurdo:</strong> 500 imagens/dia no Google AI Studio. Pago (com a tua chave):
-          Nano Banana ≈ $0.039/img, Nano Banana Pro ≈ $0.134 (até 2K) / $0.24 (4K), Imagen 4 Fast ≈ $0.02.
-          Scripts em Python stdlib — sem <code class="inl">pip install</code>. O MCP é opcional; há fallback
-          direto à API REST do Gemini.
+          Preço por imagem (com billing): Nano Banana (<code class="inl">gemini-2.5-flash-image</code>) ≈ $0.039,
+          Nano Banana Pro (<code class="inl">gemini-3.1-flash-image</code>, default) ≈ $0.134 até 2K / $0.24 a 4K,
+          Imagen 4 Fast ≈ $0.02. <code class="inl">gemini-2.5-flash-image</code> desliga a 2 out 2026 — o default
+          já aponta para o sucessor. Scripts em Python stdlib (sem <code class="inl">pip install</code>); MCP
+          opcional, com fallback direto à API REST.
         </div>
         <div class="note warn">
           <strong>Windows:</strong> os scripts chamam <code class="inl">python3</code>, que não existe por
