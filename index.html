@@ -1197,17 +1197,39 @@ git log --all --diff-filter=A --name-only --pretty=format: | Sort-Object -Unique
         <table>
           <tr><th>Sintoma</th><th>Causa e solução</th></tr>
           <tr>
-            <td><code class="inl">npx</code> falha com <code class="inl">Class extends value undefined is not a constructor or null</code></td>
-            <td>Não é a cache nem o pacote: é uma <strong>árvore do Node incoerente</strong>. Acontece com o
-                nvm do Herd quando uma pasta de versão (ex.: <code class="inl">nvm\v20.20.2</code>) foi
-                sobreposta por binários de outra versão — o <code class="inl">node.exe</code> lá dentro é
-                de outra major, e o <code class="inl">minizlib</code> do npm rebenta no
-                <code class="inl">require</code>. Confirma com
-                <code class="inl">&amp; "$env:USERPROFILE\.config\herd\bin\nvm\v20.20.2\node.exe" --version</code>:
-                se não devolver 20.x, é isso. Contorna correndo o comando com outra versão
-                (<code class="inl">nvm use 22.23.1</code>), ou reinstala a versão do nvm.
-                <strong>Parte também o Chrome DevTools MCP e tudo o que arranque por
-                <code class="inl">npx</code>.</strong></td>
+            <td><code class="inl">npx</code>, <code class="inl">npm install -g</code> ou
+                <code class="inl">claude update</code> falham com
+                <code class="inl">Class extends value undefined is not a constructor or null</code></td>
+            <td>Não é a cache nem o pacote: é uma <strong>árvore do Node incoerente</strong>. Acontece com
+                o nvm do Herd quando uma pasta de versão (ex.: <code class="inl">nvm\v20.20.2</code>) foi
+                sobreposta por binários de outra major — o <code class="inl">node.exe</code> lá dentro não
+                é da versão que o nome diz, e o <code class="inl">minizlib</code> do npm rebenta no
+                <code class="inl">require</code>.<br><br>
+                <strong>Parte toda a camada de rede do npm</strong>, não só o
+                <code class="inl">npx</code>: <code class="inl">npm view</code>,
+                <code class="inl">npm install -g</code>, <code class="inl">claude update</code> e todos os
+                MCP que arrancam por <code class="inl">npx</code> (Chrome DevTools, Playwright, MySQL).
+                Só os comandos offline (<code class="inl">npm --version</code>,
+                <code class="inl">npm run build</code>) continuam a passar — o que faz parecer que o npm
+                está bom.<br><br>
+                <strong>Diagnosticar:</strong>
+                <code class="inl">&amp; "$env:USERPROFILE\.config\herd\bin\nvm\v20.20.2\node.exe" --version</code>
+                — se não devolver 20.x, é isto.<br>
+                <strong>Corrigir:</strong> <code class="inl">nvm use 22.23.1</code> (ou outra versão
+                íntegra). Reversível com <code class="inl">nvm use</code> da anterior.</td>
+          </tr>
+          <tr>
+            <td>Mudei de versão com <code class="inl">nvm use</code> e o <code class="inl">claude</code>
+                desapareceu do PATH</td>
+            <td>No nvm-windows os <strong>pacotes globais do npm são por versão</strong>: cada
+                <code class="inl">nvm\vX.Y.Z\</code> tem o seu <code class="inl">node_modules</code>.
+                Trocar de versão órfã todos os globais de uma vez — <code class="inl">claude</code>,
+                <code class="inl">codex</code>, <code class="inl">gemini</code>,
+                <code class="inl">codeburn</code>. Não se perdem, deixam de estar no PATH.<br><br>
+                Lista o que ficou para trás e reinstala na versão nova:
+                <code class="inl">Get-ChildItem "$env:USERPROFILE\.config\herd\bin\nvm\v&lt;antiga&gt;\node_modules" -Directory</code>
+                e depois <code class="inl">npm install -g &lt;pacotes&gt;</code>.
+                Aproveita para actualizar — é a mesma operação.</td>
           </tr>
           <tr>
             <td>Os subagentes ignoram o <code class="inl">model:</code> dos ficheiros</td>

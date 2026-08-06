@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.0.2 — 2026-08-06
+- Problemas comuns: a entrada do `Class extends value undefined` estava incompleta. Não parte só o
+  `npx` — parte **toda a camada de rede do npm**: `npm view`, `npm install -g`, `claude update` e
+  todos os MCP que arrancam por `npx`. Os comandos offline continuam a passar, o que faz parecer
+  que o npm está bom.
+- Problemas comuns: entrada nova para a armadilha da correcção. No nvm-windows os pacotes globais
+  são **por versão** — `nvm use` órfã o `claude`, `codex`, `gemini` e `codeburn` de uma só vez, e
+  o `claude` sai do PATH. Com o comando para listar o que ficou para trás e reinstalar.
+
 ## 2.0.1 — 2026-08-06
 - CI: `actions/checkout` e `actions/setup-node` de v4 para v5. O runner já avisava que o Node 20
   destas actions está deprecado e a ser forçado para Node 24 — o deploy passava, mas partia quando
