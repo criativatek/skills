@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CriativaTek · Guia de setup — MCP, Plugins &amp; Skills</title>
-  <meta name="description" content="Guia de instalação de MCP, Plugins e Skills para o Claude Code — comandos prontos a copiar, curados pela CriativaTek.">
+  <title>CriativaTek · Guia de setup — por máquina, por projeto, pontual</title>
+  <meta name="description" content="Guia de setup do Claude Code para a CriativaTek, organizado por frequência: o que se instala uma vez por máquina, o que entra em cada projeto novo, e o que se liga só quando é preciso.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,18 +24,18 @@
   </div>
   <div class="wrap hero-inner">
     <span class="badge badge-hero"><span class="dot" aria-hidden="true"></span>CriativaTek · Setup do ambiente de desenvolvimento</span>
-    <h1>Guia de instalação — <span class="grad">MCP, Plugins &amp; Skills</span></h1>
-    <p>Tudo o que precisas para preparar o Claude Code em qualquer projeto:
-       servidores <strong>MCP</strong>, plugins e skills. Cada bloco tem descrição,
-       comando pronto a copiar e o que verificar a seguir.</p>
+    <h1>Setup do Claude Code — <span class="grad">por frequência</span></h1>
+    <p>Organizado pelo que interessa na prática: o que se instala <strong>uma vez por máquina</strong>,
+       o que entra <strong>em cada projeto novo</strong>, e o que se liga <strong>só quando é preciso</strong>
+       — e se desliga a seguir. Cada bloco diz o que faz à máquina antes de o correres.</p>
     <div class="hero-cta">
       <a href="#comecar" class="btn btn-primary">Começar instalação</a>
-      <a href="#plugins" class="btn btn-ghost">Ver skills disponíveis</a>
+      <a href="#medir" class="btn btn-ghost">Como medir o efeito</a>
     </div>
     <div class="hero-stats" id="heroStats">
-      <div class="stat"><strong data-count="12">0</strong><span>servidores MCP</span></div>
-      <div class="stat"><strong data-count="45">0</strong><span>skills prontas</span></div>
-      <div class="stat"><strong data-count="3">0</strong><span>categorias</span></div>
+      <div class="stat"><strong data-count="3">0</strong><span>frequências</span></div>
+      <div class="stat"><strong data-count="7">0</strong><span>skills globais</span></div>
+      <div class="stat"><strong data-count="1">0</strong><span>MCP transversal</span></div>
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
   </div>
@@ -46,7 +46,7 @@
   <div class="wrap toolbar-inner">
     <label class="search-box" for="siteSearch">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="siteSearch" aria-label="Pesquisar comandos, MCP e skills" placeholder="Pesquisar comandos, MCP, skills… ex: laravel, sql, dark mode" autocomplete="off">
+      <input type="search" id="siteSearch" aria-label="Pesquisar comandos, MCP e skills" placeholder="Pesquisar comandos, MCP, skills… ex: laravel, sql, subagentes" autocomplete="off">
       <kbd class="search-kbd">/</kbd>
     </label>
     <div class="filter-group" role="group" aria-label="Filtrar por prioridade">
@@ -56,12 +56,12 @@
       <button type="button" class="chip chip-rec" data-filter-priority="rec" aria-pressed="false">Recomendado</button>
       <button type="button" class="chip chip-opt" data-filter-priority="opt" aria-pressed="false">Opcional</button>
     </div>
-    <div class="filter-group" role="group" aria-label="Filtrar por categoria">
-      <span class="filter-label">Categoria</span>
+    <div class="filter-group" role="group" aria-label="Filtrar por frequência">
+      <span class="filter-label">Frequência</span>
       <button type="button" class="chip is-active" data-filter-cat="all" aria-pressed="true">Todas</button>
-      <button type="button" class="chip" data-filter-cat="prereq" aria-pressed="false">Configuração</button>
-      <button type="button" class="chip" data-filter-cat="mcp" aria-pressed="false">MCP</button>
-      <button type="button" class="chip" data-filter-cat="plugins" aria-pressed="false">Skills</button>
+      <button type="button" class="chip" data-filter-cat="maquina" aria-pressed="false">Por máquina</button>
+      <button type="button" class="chip" data-filter-cat="projeto" aria-pressed="false">Por projeto</button>
+      <button type="button" class="chip" data-filter-cat="pontual" aria-pressed="false">Pontual</button>
     </div>
     <span class="search-count" id="searchCount" aria-live="polite"></span>
   </div>
@@ -74,155 +74,178 @@
     <i class="toc-indicator" aria-hidden="true"></i>
     <strong>Nesta página</strong>
     <a href="#comecar">★ Por onde começar</a>
-    <a href="#prereq">1 · Pré-requisitos</a>
-    <a href="#mcp">2 · Servidores MCP</a>
-    <a href="#plugins">3 · Plugins &amp; Skills</a>
-    <a href="#graphify" class="sub">↳ Graphify</a>
-    <a href="#browser-harness" class="sub">↳ Browser Harness</a>
-    <a href="#gstack" class="sub">↳ gstack</a>
-    <a href="#verificar">4 · Verificar tudo</a>
-    <a href="#problemas">5 · Problemas comuns</a>
+    <a href="#maquina">A · Uma vez por máquina</a>
+    <a href="#orquestracao" class="sub">↳ Orquestração de modelos</a>
+    <a href="#claudemd" class="sub">↳ CLAUDE.md global</a>
+    <a href="#higiene" class="sub">↳ Higiene de sessão</a>
+    <a href="#skills-globais" class="sub">↳ Skills globais</a>
+    <a href="#projeto">B · Por projeto</a>
+    <a href="#pontual">C · Conforme a necessidade</a>
+    <a href="#medir">Como medir</a>
+    <a href="#verificar">Verificar tudo</a>
+    <a href="#problemas">Problemas comuns</a>
   </nav>
 
   <main>
 
     <!-- POR ONDE COMEÇAR -->
     <section id="comecar" class="rank-section">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>0 · Por onde começar</h2>
-      <p class="lead">Se só tiveres 10 minutos, fica-te por estas <strong>6 prioridades</strong> — ordenadas por impacto. Clica para ir direto ao bloco. O resto do guia fica para quando precisares.</p>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Por onde começar</h2>
+
+      <div class="note">
+        <strong>Esta página é executada, não lida.</strong> Colar a página inteira num agente instala
+        globais que já lá estão e liga servidores com credenciais que o projeto nunca vai usar.
+        Cola só a secção que corresponde ao que estás a fazer:
+        <strong>A</strong> numa máquina nova, <strong>B</strong> num projeto novo,
+        <strong>C</strong> quando precisares de uma ferramenta concreta.
+        Na secção C a regra é <strong>liga, usa, desliga</strong>.
+      </div>
+
+      <div class="note warn">
+        Há aqui <code class="inl">git clone</code> seguido de instaladores de terceiros, MCPs com
+        credenciais e variáveis de ambiente com chaves. Cada bloco executável tem, por cima, uma linha
+        a dizer <em>o que faz à máquina</em> — lê-a antes de correr. Se um repositório ligado mudar de
+        conteúdo, o agente executa a versão nova sem ninguém rever.
+      </div>
+
+      <p class="lead">Se só tiveres 10 minutos numa máquina nova, fica-te por estas <strong>6</strong>,
+        por ordem de impacto. O resto fica para quando precisares.</p>
       <ol class="rank-list">
-        <li><a href="#caveman" data-jump><span class="rank-n">1</span><span class="rank-body"><strong>Caveman</strong><span class="tag req">obrigatório</span><em>Corta drasticamente os tokens de output do Claude Code.</em></span></a></li>
-        <li><a href="#codeburn" data-jump><span class="rank-n">2</span><span class="rank-body"><strong>CodeBurn</strong><span class="tag req">obrigatório</span><em>Acompanha o custo/tokens gastos por projeto e modelo.</em></span></a></li>
-        <li><a href="#context7" data-jump><span class="rank-n">3</span><span class="rank-body"><strong>Context7</strong><span class="tag rec">recomendado</span><em>Documentação sempre atualizada diretamente no contexto.</em></span></a></li>
-        <li><a href="#chrome-devtools" data-jump><span class="rank-n">4</span><span class="rank-body"><strong>Chrome DevTools</strong><span class="tag rec">recomendado</span><em>Debug e performance no Chrome real.</em></span></a></li>
-        <li><a href="#skills-dev" data-jump><span class="rank-n">5</span><span class="rank-body"><strong>Skills de desenvolvimento</strong><span class="tag rec">recomendado</span><em>Arquitetura, TDD e produtividade num só bloco de comandos.</em></span></a></li>
-        <li><a href="#uiuxpromax" data-jump><span class="rank-n">6</span><span class="rank-body"><strong>UI/UX Pro Max</strong><span class="tag rec">recomendado</span><em>Decisões de design sistemáticas, orientadas por dados.</em></span></a></li>
+        <li><a href="#orquestracao" data-jump><span class="rank-n">1</span><span class="rank-body"><strong>Orquestração de modelos</strong><span class="tag req">obrigatório</span><em>Os 4 subagentes, cada um com o modelo e o orçamento de saída certos.</em></span></a></li>
+        <li><a href="#claudemd" data-jump><span class="rank-n">2</span><span class="rank-body"><strong>CLAUDE.md global</strong><span class="tag req">obrigatório</span><em>Diz ao agente quando delegar — por excepção, não por sistema.</em></span></a></li>
+        <li><a href="#skills-globais" data-jump><span class="rank-n">3</span><span class="rank-body"><strong>Skills globais</strong><span class="tag rec">recomendado</span><em>Sete. Tudo o resto instala-se por projeto.</em></span></a></li>
+        <li><a href="#context7" data-jump><span class="rank-n">4</span><span class="rank-body"><strong>Context7</strong><span class="tag rec">recomendado</span><em>O único MCP que compensa ter em todos os projetos.</em></span></a></li>
+        <li><a href="#higiene" data-jump><span class="rank-n">5</span><span class="rank-body"><strong>Higiene de sessão</strong><span class="tag rec">recomendado</span><em>Quatro sessões de 25 turnos custam uma fracção de uma de 100.</em></span></a></li>
+        <li><a href="#gstack" data-jump><span class="rank-n">6</span><span class="rank-body"><strong>gstack</strong><span class="tag rec">recomendado</span><em>Browser headless, ship/deploy, revisão de planos e memória local.</em></span></a></li>
       </ol>
+
+      <table>
+        <tr><th>Secção</th><th>Frequência</th><th>O que entra</th></tr>
+        <tr><td><a href="#maquina">A · Uma vez por máquina</a></td><td>uma vez</td><td>Claude Code, subagentes, <code class="inl">CLAUDE.md</code> global, MCP transversal, skills globais</td></tr>
+        <tr><td><a href="#projeto">B · Por projeto</a></td><td>a cada projeto novo</td><td>Laravel Boost, MySQL, skills de stack, hook de sessão, <code class="inl">CLAUDE.md</code> do projeto</td></tr>
+        <tr><td><a href="#pontual">C · Conforme a necessidade</a></td><td>pontual</td><td>Playwright, Firecrawl, Graphify, 21st.dev, marketing, design, imagem/vídeo</td></tr>
+      </table>
     </section>
 
-    <!-- PRÉ-REQUISITOS -->
-    <section id="prereq">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>1 · Pré-requisitos</h2>
-      <p class="lead">Confirma que tens as ferramentas base antes de instalar o resto.
-        Os comandos abaixo apenas <em>verificam a versão</em> — se algum falhar, instala essa ferramenta primeiro.</p>
+    <!-- A · UMA VEZ POR MÁQUINA -->
+    <section id="maquina">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>A · Uma vez por máquina</h2>
+      <p class="lead">Instala-se uma vez e fica. Se estás num projeto novo numa máquina que já usas,
+        <strong>salta esta secção inteira</strong> e vai directo à <a href="#projeto">B</a>.</p>
 
+      <!-- Pré-requisitos -->
       <div class="card">
         <h3>Verificar o que já tens</h3>
-        <p class="desc">Corre num terminal (PowerShell ou Bash). Cada linha deve devolver uma versão.</p>
+        <p class="desc">Corre num terminal. Cada linha deve devolver uma versão.</p>
+        <p class="effect">Não altera nada — só lê versões.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># Node.js 20+ (necessário para servidores MCP)</span>
+<pre><span class="cmt"># Node.js 20+ (necessário para servidores MCP e para o npx)</span>
 node --version
 npm --version
 
-<span class="cmt"># Claude Code CLI</span>
-claude --version</pre>
+<span class="cmt"># Claude Code CLI — 2.1.170+ para o alias `fable` nos subagentes</span>
+claude --version
+
+<span class="cmt"># o npx tem de correr: é ele que arranca metade dos MCPs</span>
+npx --yes skills@latest --version</pre>
         </div>
         <div class="note">
           <strong>Falta o Claude Code?</strong> Instala com
           <code class="inl">npm install -g @anthropic-ai/claude-code</code> e autentica com
-          <code class="inl">claude</code> (segue o login no browser).
-        </div>
-      </div>
-
-      <div class="card" id="caveman">
-        <h3>Caveman <span class="tag req">obrigatório</span></h3>
-        <p class="desc">Faz o Claude Code responder em estilo comprimido ("caveman" — sem artigos,
-          sem palavras de preenchimento, telegráfico) para cortar drasticamente os tokens de output,
-          mantendo código, paths e URLs intactos. <strong>Instala-se uma vez, globalmente</strong> —
-          fica ativo em todas as conversas, em todos os projetos.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude plugin marketplace add JuliusBrussee/caveman
-claude plugin install caveman@caveman</pre>
-        </div>
-        <div class="note">
-          <strong>Confirmar que ficou ativo:</strong> abre o Claude Code, escreve <code class="inl">/caveman</code>
-          e confirma respostas curtas, ou verifica <code class="inl">[CAVEMAN]</code> a laranja na statusline.
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Ponytail <span class="tag req">obrigatório</span></h3>
-        <p class="desc">Plugin que força a solução mais simples que funciona — questiona se a tarefa
-          precisa mesmo de existir (YAGNI), prefere stdlib/nativo a dependências novas, e corta
-          abstrações especulativas antes de escrever código. Complementa o Caveman: aquele comprime a
-          <em>resposta</em>, este comprime a <em>solução</em>.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude plugin marketplace add DietrichGebert/ponytail
-claude plugin install ponytail@ponytail</pre>
-        </div>
-        <div class="note">
-          <strong>Confirmar que ficou ativo:</strong> escreve <code class="inl">/ponytail-help</code>
-          ou verifica <code class="inl">[PONYTAIL]</code> na statusline.
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Codex (plugin) <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Liga o Codex CLI da OpenAI ao Claude Code como sub-agente de resgate — usa-se
-          quando o Claude fica bloqueado 2× seguidas na mesma tarefa (debugging teimoso, segunda opinião
-          de implementação). Não substitui o fluxo normal, é só para quando este empanca.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude plugin marketplace add openai/codex-plugin-cc
-claude plugin install codex@openai-codex</pre>
+          <code class="inl">claude</code> (segue o login no browser). Se a versão for inferior a
+          2.1.170, corre <code class="inl">claude update</code> antes de criar os subagentes.
         </div>
         <div class="note warn">
-          Instável em sandbox Windows — evita modo autónomo, corre em conversa interativa. Se falhar,
-          aplica o fix diretamente em vez de insistir.
+          <strong>Se o último comando falhar com</strong>
+          <code class="inl">Class extends value undefined is not a constructor or null</code>,
+          o problema é o Node, não o pacote — vê
+          <a href="#problemas">Problemas comuns</a>. Acontece com o nvm do Herd, e parte também o
+          Chrome DevTools MCP e tudo o resto que arranque por <code class="inl">npx</code>.
         </div>
       </div>
 
-      <div class="card" id="codeburn">
-        <h3>CodeBurn <span class="tag req">obrigatório</span></h3>
-        <p class="desc">Dashboard local (terminal) que lê os logs de sessão e mostra custo/tokens gastos por
-          projeto, modelo e tarefa, em 31 ferramentas diferentes (Claude Code, Cursor, Codex, Gemini…). Corre
-          100% local — sem API key, nada sai da máquina. Usa-se para acompanhar o gasto em IA por
-          projeto/cliente da CriativaTek.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>npx codeburn</pre>
-        </div>
-        <div class="note">
-          Corre em qualquer pasta — não precisa de instalação prévia nem de estar dentro de um projeto específico.
-        </div>
-      </div>
-
+      <!-- Orquestração de modelos -->
       <div class="card" id="orquestracao">
         <h3>Orquestração de modelos <span class="tag req">obrigatório</span></h3>
-        <p class="desc">Configura o Claude Code para delegar automaticamente a subagentes com o modelo certo
-          para cada tipo de tarefa — pesquisa rápida em Haiku, implementação em Sonnet, decisões difíceis em
-          Opus, revisão final em Fable — em vez de correr tudo no modelo principal. Reduz custo (tarefas
-          simples não gastam Opus/Fable) e melhora a qualidade (a revisão final usa sempre um modelo
-          independente e forte).</p>
+        <p class="desc">Configura o Claude Code para delegar a subagentes com o modelo certo para cada tipo
+          de tarefa. <strong>Delegar bem reduz custo e melhora a qualidade; delegar por sistema faz o
+          contrário.</strong></p>
+
+        <div class="note">
+          <strong>O que se esquece:</strong> no contexto principal o que pesa é sobretudo o
+          <em>relatório devolvido</em> — e esse é relido em todos os turnos seguintes. Um relatório de
+          8k no turno 10 é pago outra vez em cada um dos 90 turnos que se seguem. Por isso cada agente
+          abaixo tem um <strong>orçamento de saída</strong> escrito na definição.
+        </div>
+
+        <h4>Quem recebe o pedido primeiro</h4>
+        <p class="desc" style="margin:0 0 8px">Não há roteador antes do modelo principal. O pedido entra
+          na sessão, e é o <strong>modelo principal que decide</strong> se delega, a quem, e o que faz
+          com o que volta.</p>
+        <div class="codeblock" data-raw>
+          <button class="copy">Copiar</button>
+<pre>Pedido
+  ↓
+Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet no dia a dia)
+  ├── explorer     · Haiku  · levantamento de contexto
+  ├── implementer  · Sonnet · trabalho paralelo ou mecânico
+  ├── architect    · Fable  · decisões difíceis de reverter
+  └── reviewer     · Opus   · revisão independente</pre>
+        </div>
+        <p class="desc"><strong>O coordenador faz o juízo mais difícil da cadeia</strong> — decidir se
+          vale a pena delegar — e delegar mal custa mais do que não delegar. Com um principal em Sonnet,
+          o <code class="inl">implementer</code> continua a valer pelo <strong>isolamento de
+          contexto</strong>: uma tarefa secundária que inundaria a conversa principal corre à parte e
+          devolve só o essencial. O que não compensa é chamá-lo para a tarefa seguinte de um trabalho já
+          em curso — aí reexplicar o contexto custa mais do que se poupa.</p>
+
+        <div class="note">
+          <strong>O Fable está no <code class="inl">architect</code>, não no
+          <code class="inl">reviewer</code>.</strong> No Max, o Fable conta para o mesmo balde de
+          utilização, limitado a 50% do limite semanal — é um tecto dentro do plano, não utilização
+          adicional. Isso torna decisivo <em>qual</em> agente o usa: o <code class="inl">architect</code>
+          dispara menos vezes e nas situações de maior consequência. O <code class="inl">reviewer</code>
+          é chamado muito mais vezes, e a maior parte delas em alterações banais — em Fable, gastava
+          metade do plano a rever formulários e CSS. Metade do limite semanal está incluída: não a gastar
+          também é desperdício, mas gasta-se onde a decisão é difícil de reverter, não onde é só trabalho.
+        </div>
 
         <ol class="steps">
           <li>
-            <h4>Criar os 4 subagentes <span style="color:var(--fg-dim); font-weight:400">— global, uma vez</span></h4>
-            <p class="desc" style="margin:0 0 8px">Corre num terminal Bash (Git Bash no Windows, ou Terminal no macOS/Linux). Fica disponível em todos os projetos.</p>
+            <h4>Criar os 4 subagentes</h4>
+            <p class="effect">Escreve 4 ficheiros em <code class="inl">~/.claude/agents/</code>. Sobrepõe-se
+              a ficheiros com o mesmo nome que já lá estejam.</p>
+            <p class="desc" style="margin:0 0 8px">Corre num terminal Bash (Git Bash no Windows, ou Terminal no macOS/Linux).</p>
             <div class="codeblock">
               <button class="copy">Copiar</button>
 <pre>mkdir -p ~/.claude/agents
 
-cat > ~/.claude/agents/explorer.md &lt;&lt;'MD'
+cat &gt; ~/.claude/agents/explorer.md &lt;&lt;'MD'
 ---
 name: explorer
-description: Usa proativamente este agente para procurar ficheiros, localizar referências, mapear dependências, compreender a estrutura do projeto e recolher contexto sem alterar código.
+description: Levantamento de contexto que não caiba em dois ou três Grep directos — mapear estrutura, localizar referências espalhadas, seguir dependências. Para uma pergunta pontual, pesquisa directamente em vez de chamar este agente.
 model: haiku
 effort: low
 tools: Read, Glob, Grep
 maxTurns: 25
 ---
-Explora rapidamente o projeto e devolve apenas informação concreta e relevante.
+Explora o projeto e devolve apenas informação concreta e relevante.
 Não escrevas nem alteres código.
+
+Máximo ~800 palavras — usa muito menos quando chega. O limite é um tecto, não um alvo.
+Localizações, não conteúdo: `ficheiro:linha` mais uma frase do que lá está.
+Cita código apenas quando a forma exacta é a resposta à pergunta, e nunca mais de
+10 linhas seguidas. Para o resto, diz onde está e deixa quem pediu ir ler.
+Se te pedirem para citar algo "na íntegra" ou "por inteiro", devolve as linhas que
+respondem à pergunta e indica o intervalo do resto. Um ficheiro inteiro no relatório
+é pago em todos os turnos seguintes da sessão.
 MD
 
-cat > ~/.claude/agents/implementer.md &lt;&lt;'MD'
+cat &gt; ~/.claude/agents/implementer.md &lt;&lt;'MD'
 ---
 name: implementer
-description: Usa proativamente este agente para implementar funcionalidades, corrigir problemas, refatorar código, criar testes e concluir tarefas normais de desenvolvimento.
+description: Duas ou mais tarefas independentes que podem correr em paralelo, ou trabalho mecânico repetido em muitos ficheiros. Não para a tarefa seguinte de um trabalho já em curso — nesse caso reexplicar o contexto custa mais do que poupa.
 model: sonnet
 effort: medium
 permissionMode: acceptEdits
@@ -230,152 +253,405 @@ maxTurns: 100
 ---
 Implementa a solução de forma autónoma e consistente com a arquitetura existente.
 Não interrompas para pedir confirmação sobre decisões técnicas reversíveis.
+
+No relatório final: o que mudou, onde, e o que ficou por fazer. Não recites o código
+que escreveste — quem te chamou vê o diff.
 MD
 
-cat > ~/.claude/agents/architect.md &lt;&lt;'MD'
+cat &gt; ~/.claude/agents/architect.md &lt;&lt;'MD'
 ---
 name: architect
-description: Usa proativamente este agente antes de decisões de arquitetura, alterações entre vários módulos, migrações importantes, integrações complexas, problemas de desempenho ou erros cuja causa não seja evidente.
-model: opus
-effort: high
-tools: Read, Glob, Grep, Bash
-disallowedTools: Write, Edit
-maxTurns: 50
----
-Age como arquiteto de software sénior — analisa causa raiz, impacto entre módulos, riscos e alternativas.
-Produz uma recomendação concreta para o agente implementador. Não alteres diretamente os ficheiros.
-MD
-
-cat > ~/.claude/agents/reviewer.md &lt;&lt;'MD'
----
-name: reviewer
-description: Usa proativamente este agente depois de alterações importantes e antes de considerar o trabalho concluído. Faz uma revisão independente e profunda da implementação.
+description: Antes de decisões de arquitetura, alterações entre vários módulos, migrações importantes, integrações complexas, problemas de desempenho, ou erros cuja causa não é evidente. Reserva-o para o que é difícil de reverter — é o agente mais caro da equipa. Contradiz quem te chamou quando os factos o justificarem.
 model: fable
 effort: high
 tools: Read, Glob, Grep, Bash
 disallowedTools: Write, Edit
+permissionMode: plan
+maxTurns: 50
+---
+Age como arquiteto de software sénior — analisa causa raiz, impacto entre módulos,
+riscos e alternativas. Produz uma recomendação concreta. Não alteres ficheiros.
+
+Verifica contra o código e os dados reais antes de recomendar. Se o enunciado que te
+deram assume algo falso, diz isso primeiro.
+Não repitas o enunciado — quem te chamou já o tem.
+Começa pelas conclusões e decisões. O caminho até lá só interessa quando muda a decisão.
+Máximo 1500 palavras — usa menos quando chega.
+MD
+
+cat &gt; ~/.claude/agents/reviewer.md &lt;&lt;'MD'
+---
+name: reviewer
+description: Quando quem escreveu já não tem olhos limpos — sessão longa, alteração grande, ou código que se vai fechar sem mais ninguém ver. Não a seguir a cada commit.
+model: opus
+effort: high
+tools: Read, Glob, Grep
+permissionMode: plan
 maxTurns: 60
 ---
-Faz uma revisão final independente — funcionalidade, segurança, desempenho, testes, casos limite.
-Apresenta problemas concretos com prioridade. Não alteres diretamente os ficheiros.
+Faz uma revisão final independente — funcionalidade, segurança, desempenho, testes,
+casos limite. Apresenta problemas concretos com prioridade. Não alteres ficheiros.
+
+Não corres testes: se precisares de resultados de testes ou do Git, pede-os a quem te
+chamou em vez de assumir.
+Não repitas o enunciado nem descrevas o que o código faz — quem te chamou já sabe.
+Só o que está errado, onde (`ficheiro:linha`) e porquê. Se não encontrares nada
+relevante, diz isso em duas linhas.
+Máximo 1000 palavras — usa menos quando chega.
 MD</pre>
             </div>
             <table>
               <tr><th>Subagente</th><th>Modelo</th><th>Effort</th><th>Quando é usado</th></tr>
-              <tr><td>explorer</td><td>Haiku</td><td>low</td><td>Pesquisas rápidas — ficheiros, referências, dependências</td></tr>
-              <tr><td>implementer</td><td>Sonnet</td><td>medium</td><td>Escrever código, testes, corrigir erros</td></tr>
-              <tr><td>architect</td><td>Opus</td><td>high</td><td>Decisões de arquitetura, bugs difíceis</td></tr>
-              <tr><td>reviewer</td><td>Fable</td><td>high</td><td>Revisão final antes de dar por concluído</td></tr>
+              <tr><td>explorer</td><td>Haiku</td><td>low</td><td>Levantamento de contexto amplo, não perguntas pontuais</td></tr>
+              <tr><td>implementer</td><td>Sonnet</td><td>medium</td><td>Tarefas paralelas ou trabalho mecânico repetido</td></tr>
+              <tr><td>architect</td><td>Fable</td><td>high</td><td>Decisões estruturais e difíceis de reverter</td></tr>
+              <tr><td>reviewer</td><td>Opus</td><td>high</td><td>Antes de fechar trabalho grande, não a cada commit</td></tr>
             </table>
+            <div class="note warn">
+              <strong><code class="inl">disallowedTools: Write, Edit</code> não impede escritas por
+              Bash</strong> — um <code class="inl">sed -i</code> ou um <code class="inl">&gt;</code>
+              passam à mesma. E o <code class="inl">permissionMode: plan</code> do subagente pode ser
+              sobreposto pelo modo da sessão principal (<code class="inl">acceptEdits</code>,
+              <code class="inl">bypassPermissions</code>). A única garantia é <strong>não dar a
+              ferramenta</strong>.<br><br>
+              Por isso o <code class="inl">reviewer</code> fica <strong>sem <code class="inl">Bash</code></strong>:
+              revê a ler, e os resultados de testes chegam de quem o chamou. O
+              <code class="inl">architect</code> mantém <code class="inl">Bash</code> — excepção
+              deliberada, porque a verificação contra dados reais é precisamente o que lhe dá valor.
+              Se costumas correr a sessão em <code class="inl">bypassPermissions</code>, tira-lhe o
+              <code class="inl">Bash</code> também e passa-lhe tu os resultados das queries.
+            </div>
           </li>
           <li>
-            <h4>Dizer ao Claude Code quando usar cada um <span style="color:var(--fg-dim); font-weight:400">— CLAUDE.md global</span></h4>
-            <p class="desc" style="margin:0 0 8px">Acrescenta isto a <code class="inl">~/.claude/CLAUDE.md</code> (cria o ficheiro se não existir). Não apagues o que já lá tiveres — só acrescenta ao fim.</p>
-            <div class="codeblock" data-raw>
+            <h4>Confirmar que a tabela não está a ser ignorada</h4>
+            <p class="effect">Lê e, se quiseres, remove uma variável de ambiente da sessão actual.</p>
+            <p class="desc" style="margin:0 0 8px">A variável <code class="inl">CLAUDE_CODE_SUBAGENT_MODEL</code>,
+              se estiver definida, <strong>sobrepõe-se ao <code class="inl">model:</code> de todos os
+              ficheiros acima</strong>.</p>
+            <div class="codeblock">
               <button class="copy">Copiar</button>
-<pre>## Orquestração de modelos
+<pre><span class="cmt"># ver o que está definido</span>
+$env:CLAUDE_CODE_SUBAGENT_MODEL
 
-Trabalha autonomamente até o objetivo estar concluído. Usa os subagentes especializados
-em `~/.claude/agents/` conforme o tipo de tarefa, em vez de fazer tudo com o modelo principal.
-
-## Equipa
-
-| Subagente | Modelo | Effort | Quando usar |
-|---|---|---|---|
-| `explorer` | Haiku | low | Pesquisas rápidas — localizar ficheiros, referências, dependências, mapear a estrutura do projeto. Não altera código. |
-| `implementer` | Sonnet | medium | Escrever código, editar ficheiros, criar/atualizar testes, corrigir erros encontrados. |
-| `architect` | Opus | high | Antes de decisões de arquitetura, alterações entre vários módulos, migrações importantes, integrações complexas, problemas de desempenho, ou quando a causa de um erro não é óbvia. Só analisa — não altera ficheiros. |
-| `reviewer` | Fable | high | Depois de alterações importantes, antes de dar o trabalho por concluído. Revisão final independente. Só analisa — não altera ficheiros. |
-
-## Regras de delegação
-
-- Usa `explorer` para qualquer pesquisa ou levantamento de contexto antes de escrever código.
-- Usa `architect` antes de decisões estruturais ou quando a abordagem não é óbvia — não avances com uma mudança grande sem passar por aqui primeiro.
-- Usa `implementer` para o trabalho de implementação em si.
-- Usa `reviewer` antes de fechar qualquer tarefa não-trivial. Depois da revisão, corrige autonomamente os problemas relevantes que encontrar.
-- Não peças confirmação para decisões técnicas reversíveis.
-- Corre testes, lint e análise estática antes de dar uma tarefa por concluída.
-- Termina só quando a implementação estiver funcional e revista.</pre>
+<span class="cmt"># remover, se não a queres</span>
+Remove-Item Env:CLAUDE_CODE_SUBAGENT_MODEL</pre>
             </div>
           </li>
         </ol>
 
         <div class="note warn">
-          Reinicia a sessão do Claude Code depois de criar estes ficheiros — o <code class="inl">CLAUDE.md</code>
-          só é lido no arranque de cada sessão nova, não a meio de uma conversa já em curso.
+          <strong>Reinicia a sessão depois de criar ou editar estes ficheiros.</strong> Os subagentes
+          escritos à mão em <code class="inl">~/.claude/agents/</code> são carregados no arranque; só as
+          alterações feitas pela interface <code class="inl">/agents</code> entram em vigor de imediato.
+          O mesmo vale para o <code class="inl">CLAUDE.md</code>. Confirma em
+          <code class="inl">/agents</code> que os quatro aparecem com os modelos certos.
+        </div>
+        <div class="note">
+          <code class="inl">model: fable</code> é alias oficial, a par de <code class="inl">sonnet</code>,
+          <code class="inl">opus</code> e <code class="inl">haiku</code> — requer Claude Code
+          <strong>2.1.170 ou superior</strong> (<code class="inl">claude update</code>).
+          A delegação é probabilística: o modelo lê as <em>descriptions</em> e decide. Para garantir que
+          um agente concreto corre, menciona-o — <code class="inl">@architect ...</code>.
         </div>
       </div>
 
-      <div class="card" id="gbrain">
-        <h3>GBrain <span class="tag req">obrigatório</span></h3>
-        <p class="desc">Memória persistente local (RAG) que fica disponível entre sessões e projetos —
-          poupa tokens porque o Claude deixa de precisar de reexplicar contexto ou reler o código todo
-          em cada conversa nova. Pesquisa semântica sobre código e notas via <code class="inl">gbrain search</code>
-          / <code class="inl">gbrain code-def</code>, registado como MCP para o agente consultar diretamente.
-          Requer o <a href="#gstack">gstack</a> instalado (secção 3).</p>
+      <!-- CLAUDE.md global -->
+      <div class="card" id="claudemd">
+        <h3>CLAUDE.md global <span class="tag req">obrigatório</span></h3>
+        <p class="desc">A tabela de subagentes não chega: é preciso dizer ao modelo principal
+          <em>quando</em> delegar. Este bloco delega <strong>por excepção</strong>.</p>
+        <p class="effect">Escreve em <code class="inl">~/.claude/CLAUDE.md</code>, que é lido no arranque de
+          todas as sessões, em todos os projetos.</p>
+        <div class="note warn">
+          <strong>Não é «acrescentar ao fim» às cegas.</strong> Se já tens regras de delegação
+          proactiva no ficheiro («lançar sub-agentes sempre que…», «usar o explorer para qualquer
+          pesquisa»), <strong>substitui-as</strong>. Duas instruções contraditórias no mesmo ficheiro
+          dão comportamento não determinístico — e não controlas qual delas ganha.
+        </div>
+        <div class="codeblock" data-raw>
+          <button class="copy">Copiar</button>
+<pre>## Orquestração de modelos
 
-        <ol class="steps">
-          <li>
-            <h4>Correr o assistente de instalação</h4>
-            <p class="desc" style="margin:0 0 8px">Dentro do Claude Code, com o gstack já instalado:</p>
-            <div class="codeblock">
-              <button class="copy">Copiar</button>
-<pre>/setup-gbrain</pre>
-            </div>
-            <div class="note">
-              Escolhe <strong>PGLite local</strong> para uso a solo (sem contas, ~30s, cérebro isolado
-              só nesta máquina) — Supabase/remoto só compensam se quiseres partilhar a memória entre
-              várias máquinas ou com a equipa.
-            </div>
-          </li>
-          <li>
-            <h4>Configurar a chave de embeddings</h4>
-            <p class="desc" style="margin:0 0 8px">Necessária para pesquisa semântica — usa uma destas antes de correr o assistente:</p>
-            <div class="codeblock">
-              <button class="copy">Copiar</button>
-<pre><span class="cmt"># recomendado para código</span>
-export VOYAGE_API_KEY=pa-...
+Trabalha autonomamente até o objetivo estar concluído. Delega aos subagentes de
+`~/.claude/agents/` **por excepção**, não por sistema.
 
-<span class="cmt"># alternativas</span>
-export OPENAI_API_KEY=sk-...
-export ZEROENTROPY_API_KEY=ze-...</pre>
-            </div>
-            <div class="note warn">
-              Sem nenhuma chave, o <code class="inl">/setup-gbrain</code> deixa avançar na mesma
-              (<code class="inl">--no-embedding</code>) mas fica sem pesquisa semântica até configurares uma.
-            </div>
-          </li>
-        </ol>
+Ao delegar, a execução do subagente conta para a utilização total; no contexto
+principal pesa sobretudo o relatório devolvido, que é relido em todos os turnos
+seguintes. Antes de chamar um subagente, pergunta "de que tamanho tem de ser a
+resposta para eu decidir?" e diz-lhe esse tamanho.
 
+| Subagente | Modelo | Quando |
+|---|---|---|
+| `explorer` | Haiku | Levantamento amplo de contexto. Para uma pergunta pontual, faz o Grep tu — um subagente devolve sempre mais do que um Grep. |
+| `implementer` | Sonnet | Duas ou mais tarefas independentes em paralelo, ou trabalho mecânico em muitos ficheiros. Não para a tarefa seguinte de um trabalho em curso. |
+| `architect` | Fable | Decisões estruturais, alterações entre módulos, migrações, erro de causa não óbvia. É o agente mais caro — reserva-o para o que é difícil de reverter. Só analisa. |
+| `reviewer` | Opus | Sessão longa, alteração grande, ou código que fecha sem mais ninguém ver. Não a cada commit. Só analisa. |
+
+Em zonas sensíveis — autenticação, pagamentos, dados pessoais, migrações, lançamento
+em produção — pede uma segunda passagem independente em vez de aceitar a primeira
+revisão. Essa escolha é minha, não tua: não a faças automaticamente.
+
+## Regras de trabalho
+
+- Diagnostica antes de ler. Uma query, um `grep -c`, um `artisan route:list | grep`
+  devolvem a resposta; ler o ficheiro devolve o material de onde se extrai a resposta.
+- `Read` com `offset`/`limit` quando já sabes onde está a resposta. Ficheiro inteiro
+  só quando é mesmo preciso.
+- Verifica contra dados reais antes de escrever código que dependa deles.
+- Planos curtos: o plano é pago ao escrever e outra vez ao aprovar.
+- Não peças confirmação para decisões técnicas reversíveis.
+- Corre testes, lint e análise estática antes de dar uma tarefa por concluída.
+
+## Documentação
+
+Documenta o que não se lê no código: decisões e o porquê, o que foge à convenção,
+armadilhas descobertas à força, acessos que não se adivinham.
+Não documentes o que o código já diz — o que cada método faz, a estrutura de pastas,
+listas de rotas ou modelos.
+Antes de fechar uma tarefa não-trivial, pergunta o que foi preciso descobrir que não
+estava escrito em lado nenhum, e escreve só isso.
+Mantém o CLAUDE.md do projeto dentro de um ecrã: é relido em todos os turnos de todas
+as sessões.</pre>
+        </div>
+      </div>
+
+      <!-- Higiene de sessão -->
+      <div class="card" id="higiene">
+        <h3>Higiene de sessão <span class="tag rec">recomendado</span></h3>
+        <p class="desc">O custo cresce com <strong>contexto carregado × número de turnos</strong>: tudo o
+          que entra no turno 10 é pago outra vez em cada turno seguinte. <strong>Quatro sessões de 25
+          turnos custam uma fracção de uma de 100</strong> — e o modelo responde melhor num contexto
+          limpo.</p>
+        <p class="effect">Nada a instalar. É um hábito, mais um ficheiro de notas por tarefa.</p>
+        <div class="note warn">
+          <strong>Não existe <code class="inl">/clear</code> automático.</strong> O que é automático é a
+          auto-compactação, que resume a conversa quando o contexto enche — isso não é limpar, é
+          <em>comprimir com perda</em>, e é precisamente o momento em que a qualidade cai. Os hooks de
+          sessão reagem a um <code class="inl">/clear</code>, mas nenhum o provoca.
+        </div>
+        <table>
+          <tr><th>Prática</th><th>Para quê</th></tr>
+          <tr><td><strong>Notas de tarefa em curso</strong></td><td>Antes de limpar, um ficheiro curto com o estado: onde estou, o que já verifiquei, o que falta. Não é documentação do projeto — é memória de tarefa.</td></tr>
+          <tr><td><code class="inl">claude -p "…"</code></td><td>Tarefas isoladas e scripts: corre e sai, contexto novo garantido.</td></tr>
+          <tr><td><a href="#hook-sessao">Hook de sessão</a></td><td>Repõe o estado automaticamente no arranque, para que limpar não custe nada. É configuração <strong>por projeto</strong> — ver secção B.</td></tr>
+        </table>
+      </div>
+
+      <!-- Context7 -->
+      <div class="card" id="context7">
+        <h3>Context7 <span class="tag rec">recomendado</span> <span class="tag">único MCP transversal</span></h3>
+        <p class="desc">Injeta documentação <em>atualizada</em> de qualquer biblioteca (Tailwind, Vue,
+          React, Laravel, Node…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.
+          É o único servidor que compensa ter ligado em quase todos os projetos.</p>
+        <p class="effect">Regista um servidor MCP remoto em <em>user scope</em> — fica activo em todos os projetos.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http context7 https://mcp.context7.com/mcp -s user</pre>
+        </div>
         <div class="note">
-          <strong>Confirmar que ficou ativo:</strong> <code class="inl">claude mcp list</code> deve mostrar
-          <code class="inl">gbrain ✓ Connected</code>. Reinicia o Claude Code para os tools
-          <code class="inl">mcp__gbrain__*</code> ficarem disponíveis.
+          <strong>O contexto já não é o argumento principal para restringir MCPs.</strong> A
+          <em>tool search</em> está activa por defeito: no arranque só carregam os nomes das ferramentas
+          e as instruções do servidor, e os esquemas completos entram só quando são precisos.
+          Acrescentar servidores tem hoje impacto pequeno na janela — muita literatura sobre o assunto
+          ainda descreve o comportamento antigo.
+        </div>
+        <div class="note warn">
+          <strong>As razões para restringir mantêm-se, mas são outras:</strong>
+          <strong>credenciais</strong> — um MCP com acesso à BD ou ao GitHub ligado em todos os projetos
+          é acesso que não precisas de ter aberto; <strong>precisão da escolha</strong> — acima de umas
+          dezenas de ferramentas disponíveis o agente escolhe pior entre alternativas parecidas;
+          <strong>relevância</strong> — instruções de servidores irrelevantes continuam a carregar no
+          arranque e a competir pela atenção do modelo.
+        </div>
+      </div>
+
+      <!-- Skills globais -->
+      <div class="card" id="skills-globais">
+        <h3>Skills globais <span class="tag rec">recomendado</span></h3>
+        <p class="desc">De cada skill instalada fica <strong>sempre carregado o nome e a
+          descrição</strong> — é assim que o agente sabe que existe. O corpo só entra quando é invocada,
+          e aí fica até ao fim da sessão. Global só para o que é transversal a quase todos os projetos:
+          <strong>sete</strong>. Stack, Playwright, design e marketing instalam-se por projeto.</p>
+        <p class="effect">Escreve pastas em <code class="inl">~/.claude/skills/</code> e regista-as em
+          <code class="inl">~/.claude/skills-lock.json</code>. Código de terceiros que corre com as
+          permissões do agente.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/github/awesome-copilot --skill git-commit -g
+npx skills add https://github.com/github/awesome-copilot --skill refactor -g
+npx skills add https://github.com/vercel-labs/skills --skill find-skills -g
+npx skills add https://github.com/obra/superpowers --skill systematic-debugging -g
+npx skills add https://github.com/obra/superpowers --skill writing-plans -g
+npx skills add https://github.com/obra/superpowers --skill executing-plans -g
+npx skills add https://github.com/obra/superpowers --skill verification-before-completion -g</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>O que faz</th></tr>
+          <tr><td>git-commit</td><td>Mensagens de commit a partir das alterações</td></tr>
+          <tr><td>refactor</td><td>Refatorar preservando o comportamento</td></tr>
+          <tr><td>find-skills</td><td>Descobrir e instalar outras skills</td></tr>
+          <tr><td>systematic-debugging</td><td>Debugging sistemático — usa esta e dispensa a <code class="inl">diagnose</code></td></tr>
+          <tr><td>writing-plans</td><td>Planos de implementação estruturados</td></tr>
+          <tr><td>executing-plans</td><td>Executar planos passo a passo</td></tr>
+          <tr><td>verification-before-completion</td><td>Verificar antes de dar por concluído</td></tr>
+        </table>
+        <div class="note warn">
+          <strong>O <code class="inl">git-commit</code> e o <code class="inl">refactor</code> imprimem</strong>
+          <code class="inl">PromptScript does not support global skill installation</code>
+          <strong>e instalam à mesma.</strong> O <code class="inl">SKILL.md</code> entra em
+          <code class="inl">~/.claude/skills/</code>; o que falha é um PromptScript acessório do mesmo
+          pacote. Confirma com <code class="inl">npx skills list</code> em vez de acreditar no erro.
+        </div>
+        <div class="note">
+          <strong>O que não pôr aqui:</strong> <code class="inl">full-output-enforcement</code> (contradiz
+          directamente os orçamentos de saída dos subagentes),
+          <code class="inl">subagent-driven-development</code> e
+          <code class="inl">dispatching-parallel-agents</code> (empurram para delegar por sistema, quando
+          a configuração acima delega por excepção). Se já os tens instalados, remove-os — uma das
+          instruções vai perder e não controlas qual.
+        </div>
+      </div>
+
+      <!-- gstack -->
+      <div class="card" id="gstack">
+        <h3>gstack <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
+        <p class="desc">Suite grande de skills para todo o ciclo de engenharia com IA — browser headless
+          rápido (<code class="inl">/browse</code>), revisão de planos por perfis (CEO, design, eng, devex),
+          ship/deploy (<code class="inl">/ship</code>, <code class="inl">/land-and-deploy</code>,
+          <code class="inl">/canary</code>), debugging sistemático (<code class="inl">/investigate</code>),
+          pentesting autónomo (<code class="inl">/shannon</code>) e memória persistente local
+          (<code class="inl">/setup-gbrain</code>). Um repositório, um instalador.</p>
+        <p class="effect">Clona um repositório de terceiros para <code class="inl">~/.claude/skills/gstack</code>
+          e corre o instalador dele. Instala ~55 skills de uma vez. <strong>Lê o <code class="inl">setup</code>
+          antes de correr.</strong></p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
+cd ~/.claude/skills/gstack && ./setup</pre>
+        </div>
+        <div class="note warn">
+          Sobrepõe-se ao Playwright e ao Chrome DevTools para tarefas de browser — usa o gstack para
+          QA/dogfooding rápido do dia a dia, e o Playwright quando precisas de testes E2E formais.
+          A <code class="inl">/investigate</code> do gstack sobrepõe-se à
+          <code class="inl">systematic-debugging</code>: escolhe uma e habitua-te a ela.
+        </div>
+      </div>
+
+      <!-- GBrain -->
+      <div class="card" id="gbrain">
+        <h3>GBrain <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Memória persistente local (RAG) entre sessões e projetos — o Claude deixa de
+          precisar de reexplicar contexto ou reler o código todo em cada conversa nova. Pesquisa semântica
+          sobre código e notas via <code class="inl">gbrain search</code> /
+          <code class="inl">gbrain code-def</code>, registada como MCP. Requer o
+          <a href="#gstack">gstack</a>.</p>
+        <p class="effect">Cria uma base de dados local em <code class="inl">~/.gbrain/</code> e regista um MCP em user scope.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>/setup-gbrain</pre>
+        </div>
+        <div class="note">
+          Escolhe <strong>PGLite local</strong> para uso a solo (sem contas, ~30s, cérebro isolado nesta
+          máquina). Supabase/remoto só compensam para partilhar a memória entre máquinas ou com a equipa.
+          Chave de embeddings antes de correr: <code class="inl">VOYAGE_API_KEY</code> (recomendada para
+          código), ou <code class="inl">OPENAI_API_KEY</code>. Sem chave o assistente deixa avançar
+          (<code class="inl">--no-embedding</code>) mas fica sem pesquisa semântica.
+        </div>
+        <div class="note warn">
+          <strong><code class="inl">gbrain ✗ Failed to connect</code> em Windows</strong> quase sempre é
+          um processo <code class="inl">gbrain serve</code> órfão a segurar o lock do PGLite — mata-o e
+          o servidor volta. Ver <a href="#problemas">Problemas comuns</a>.
+        </div>
+      </div>
+
+      <!-- CodeBurn -->
+      <div class="card" id="codeburn">
+        <h3>CodeBurn <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Dashboard local (terminal) que lê os logs de sessão e mostra custo/tokens gastos
+          por projeto, modelo e tarefa, em 31 ferramentas diferentes (Claude Code, Cursor, Codex,
+          Gemini…). Corre 100% local — sem API key, nada sai da máquina. Complementa o
+          <a href="#medir"><code class="inl">/usage</code></a>: aquele é do plano, este é por
+          projeto/cliente.</p>
+        <p class="effect">Não instala nada — <code class="inl">npx</code> corre e sai. Lê os logs de sessão locais.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx codeburn</pre>
+        </div>
+      </div>
+
+      <!-- Caveman -->
+      <div class="card" id="caveman">
+        <h3>Caveman <span class="tag opt">opcional</span></h3>
+        <p class="desc">Faz o Claude Code responder em estilo comprimido — sem artigos, sem palavras de
+          preenchimento, telegráfico — mantendo código, paths e URLs intactos.</p>
+        <p class="effect">Instala um plugin e um marketplace no Claude Code. Activa-se em todas as conversas, em todos os projetos.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add JuliusBrussee/caveman
+claude plugin install caveman@caveman</pre>
+        </div>
+        <div class="note warn">
+          <strong>Deixou de ser obrigatório, e vale a pena perceber porquê.</strong> Numa sessão medida,
+          o output foi 838k de ~373M de tokens — <em>fracção de por cento</em> do total. Em troca degrada
+          explicações e raciocínio. Se o objectivo é poupar, o ganho está no <em>contexto</em>
+          (<a href="#higiene">higiene de sessão</a>) e nos <a href="#orquestracao">orçamentos dos
+          subagentes</a>, não na compressão da resposta. Usa-o se gostas do estilo — não como medida de
+          custo.
+        </div>
+      </div>
+
+      <!-- Ponytail -->
+      <div class="card">
+        <h3>Ponytail <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Força a solução mais simples que funciona — questiona se a tarefa precisa mesmo de
+          existir (YAGNI), prefere stdlib/nativo a dependências novas, e corta abstrações especulativas
+          antes de escrever código. Ao contrário do Caveman, mexe no que <em>é construído</em>, não em
+          como se fala — e isso é onde o custo real está.</p>
+        <p class="effect">Instala um plugin e um marketplace no Claude Code, activo em todos os projetos.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail</pre>
+        </div>
+      </div>
+
+      <!-- Browser Harness -->
+      <div class="card" id="browser-harness">
+        <h3>Browser Harness <span class="tag opt">opcional</span></h3>
+        <p class="desc">Liga o Claude ao Chrome real via CDP, sem abstração — quando falta alguma
+          capacidade, é o próprio agente que escreve o código em runtime e vai guardando "skills" por site.
+          Usa-o quando o gstack e o Playwright se arrastam em sites difíceis.</p>
+        <p class="effect">Instala uma ferramenta Python via <code class="inl">uv</code> e regista uma skill. Pede acesso ao teu Chrome.</p>
+        <div class="note">
+          Cola este pedido numa conversa do Claude Code (não é um comando de terminal):
+        </div>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>Instala ou atualiza o browser-harness para a versão estável mais recente com uv usando
+Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao meu browser.</pre>
+        </div>
+        <div class="note warn">
+          Terceira ferramenta de browser a par do gstack e do Playwright. <strong>Escolhe uma como
+          predefinição</strong> e guarda esta para os casos em que a predefinida falha.
         </div>
       </div>
       <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
-    <!-- MCP -->
-    <section id="mcp">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>2 · Servidores MCP</h2>
-      <p class="lead">MCP (<em>Model Context Protocol</em>) liga o Claude a ferramentas externas
-        — ficheiros, documentação, browser, base de dados. Instala-se com
-        <code class="inl">claude mcp add</code>. Usa <code class="inl">-s user</code> para ficar
-        disponível em <strong>todos os projetos</strong>, ou <code class="inl">-s project</code>
-        (gera <code class="inl">.mcp.json</code> partilhável) só neste.</p>
-
-      <div class="note">
-        <strong>Sintaxe geral:</strong>
-        <code class="inl">claude mcp add &lt;nome&gt; [opções] -- &lt;comando&gt;</code> para servidores locais,
-        ou <code class="inl">claude mcp add --transport http &lt;nome&gt; &lt;url&gt;</code> para remotos.
-      </div>
+    <!-- B · POR PROJETO -->
+    <section id="projeto">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>B · Por projeto</h2>
+      <p class="lead">Corre na raiz do projeto, uma vez por projeto novo. Tudo aqui usa
+        <code class="inl">-s project</code> — as credenciais são deste projeto e não têm de estar abertas
+        nos outros.</p>
 
       <!-- Laravel Boost -->
       <div class="card">
-        <h3>Laravel Boost <span class="tag">só para Laravel</span></h3>
-        <p class="desc">Servidor MCP oficial do Laravel. Dá ao Claude conhecimento das rotas,
-          modelos, migrations, config e docs da versão exata que usas.</p>
+        <h3>Laravel Boost <span class="tag rec">todo o projeto Laravel</span></h3>
+        <p class="desc">Servidor MCP oficial do Laravel: rotas, modelos, migrations, config e docs da versão
+          exacta que usas. <strong>Substitui grande parte da exploração manual</strong> — com o Boost
+          ligado, o <code class="inl">explorer</code> raramente é preciso num Laravel.</p>
+        <p class="effect">Instala um pacote Composer de dev e escreve config MCP na raiz do projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre><span class="cmt"># corre na raiz do projeto Laravel</span>
@@ -384,33 +660,13 @@ php artisan boost:install</pre>
         </div>
       </div>
 
-      <!-- Context7 -->
-      <div class="card" id="context7">
-        <h3>Context7 <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Injeta documentação <em>atualizada</em> de qualquer biblioteca (Tailwind, Vue, React, Laravel, Node…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude mcp add --transport http context7 https://mcp.context7.com/mcp -s user</pre>
-        </div>
-      </div>
-
-      <!-- GitHub -->
-      <div class="card">
-        <h3>GitHub <span class="tag">útil</span></h3>
-        <p class="desc">Ler/abrir issues e PRs, navegar repositórios e rever código direto do GitHub.
-          Requer um token (<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">cria um PAT aqui</a>).</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
-  -H "Authorization: Bearer SEU_GITHUB_TOKEN" -s user</pre>
-        </div>
-      </div>
-
       <!-- MySQL -->
       <div class="card">
-        <h3>MySQL <span class="tag rec">recomendado em projetos com BD</span></h3>
-        <p class="desc">Liga o Claude diretamente à base de dados do projeto — inspecionar tabelas,
-          correr queries de leitura. Define as credenciais da tua BD local.</p>
+        <h3>MySQL <span class="tag rec">projetos com BD</span></h3>
+        <p class="desc">Liga o Claude à base de dados do projeto — inspecionar tabelas, correr queries de
+          leitura. Verificar contra dados reais antes de escrever código que deles depende é metade do
+          valor do <code class="inl">architect</code>.</p>
+        <p class="effect">Escreve <code class="inl">.mcp.json</code> na raiz do projeto, <strong>com as credenciais da BD lá dentro</strong>.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre>claude mcp add mysql -s project \
@@ -419,572 +675,591 @@ php artisan boost:install</pre>
   -- npx -y @benborla29/mcp-server-mysql</pre>
         </div>
         <div class="note warn">
-          Aponta para a BD <strong>local</strong>, nunca produção. De preferência usa um utilizador
-          só de leitura para evitar escritas acidentais.
+          Aponta para a BD <strong>local</strong>, nunca produção, e de preferência com um utilizador
+          <strong>só de leitura</strong>. O <code class="inl">.mcp.json</code> fica versionado —
+          não metas lá passwords a sério.
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <div class="card">
+        <h3>GitHub <span class="tag opt">só onde revês PRs pelo agente</span></h3>
+        <p class="desc">Ler/abrir issues e PRs, navegar repositórios e rever código. Só nos projetos onde
+          realmente fazes isso pelo agente.</p>
+        <p class="effect">Regista um MCP remoto com um token de acesso ao teu GitHub.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http github https://api.githubcopilot.com/mcp/ \
+  -H "Authorization: Bearer SEU_GITHUB_TOKEN" -s project</pre>
+        </div>
+        <div class="note warn">
+          <strong>Nunca ponhas o token no <code class="inl">env</code> do
+          <code class="inl">~/.claude/settings.json</code></strong> — dali é injectado em todas as sessões
+          e todos os projetos, e fica em claro no disco. Prefere <code class="inl">gh auth login</code>
+          (o MCP lê o <code class="inl">gh</code> CLI) ou uma variável de ambiente do sistema
+          operativo. Se já lá tiveres um, <strong>revoga-o primeiro</strong> e só depois limpa o
+          ficheiro — limpar não invalida nada.
         </div>
       </div>
 
       <!-- Sentry -->
       <div class="card">
-        <h3>Sentry <span class="tag">produção</span></h3>
-        <p class="desc">Deixa o Claude ver erros e issues de produção para diagnóstico.
-          Autentica via OAuth no browser ao ligar.</p>
+        <h3>Sentry <span class="tag opt">só com produção monitorizada</span></h3>
+        <p class="desc">Deixa o Claude ver erros e issues de produção para diagnóstico. Autentica via OAuth
+          no browser ao ligar.</p>
+        <p class="effect">Regista um MCP remoto com acesso de leitura aos erros de produção deste projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add --transport http sentry https://mcp.sentry.dev/mcp -s user</pre>
+<pre>claude mcp add --transport http sentry https://mcp.sentry.dev/mcp -s project</pre>
         </div>
       </div>
 
-      <!-- Playwright -->
+      <!-- Skills de stack -->
       <div class="card">
-        <h3>Playwright <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Controla um browser real — abrir páginas, clicar, preencher formulários e
-          tirar screenshots. Ótimo para validar UI e backoffice.</p>
+        <h3>Skills de stack <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Instala só as que fazem sentido para a linguagem/framework deste projeto. Sem
+          <code class="inl">-g</code>: se ficarem globais, carregam a descrição no arranque de projetos
+          onde não servem para nada.</p>
+        <p class="effect">Escreve pastas em <code class="inl">.claude/skills/</code> dentro do projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add playwright -s user -- npx -y @playwright/mcp@latest</pre>
+<pre>npx skills add https://github.com/jeffallan/claude-skills --skill laravel-specialist
+npx skills add https://github.com/jeffallan/claude-skills --skill php-pro
+npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns
+npx skills add https://github.com/mattpocock/skills --skill codebase-design
+npx skills add https://github.com/mattpocock/skills --skill tdd</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
+          <tr><td>laravel-specialist</td><td>Convenções e padrões Laravel</td><td><a href="https://github.com/jeffallan/claude-skills" target="_blank" rel="noopener">jeffallan/claude-skills</a></td></tr>
+          <tr><td>php-pro</td><td>PHP moderno — tipos, atributos, performance</td><td>jeffallan/claude-skills</td></tr>
+          <tr><td>sql-optimization-patterns</td><td>Índices, queries N+1, performance</td><td><a href="https://github.com/wshobson/agents" target="_blank" rel="noopener">wshobson/agents</a></td></tr>
+          <tr><td>codebase-design</td><td>Módulos profundos — muito comportamento atrás de uma interface pequena e testável</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
+          <tr><td>tdd</td><td>Escrever o teste antes do código</td><td>mattpocock/skills</td></tr>
+        </table>
+        <div class="note">
+          Escolhe <strong>uma</strong> skill de arquitetura: <code class="inl">codebase-design</code>
+          <em>ou</em> <code class="inl">architecture-designer</code>. Duplicados custam a descrição no
+          arranque e ainda fazem o agente escolher mal entre as duas.
+        </div>
+      </div>
+
+      <!-- Hook de sessão -->
+      <div class="card" id="hook-sessao">
+        <h3>Hook de sessão <span class="tag rec">recomendado</span></h3>
+        <p class="desc">Este hook automatiza o <em>custo</em> de limpar, não o limpar: injecta contexto
+          fresco no arranque de cada sessão — o stdout do hook entra directamente no contexto do agente —
+          para que <code class="inl">/clear</code> não custe nada.</p>
+        <p class="effect">Corre comandos de shell no arranque de todas as sessões deste projeto, e o output entra no contexto.</p>
+        <div class="codeblock" data-raw>
+          <button class="copy">Copiar</button>
+<pre>{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git branch --show-current &amp;&amp; git status --short &amp;&amp; cat .claude/session-context.md 2>/dev/null"
+          }
+        ]
+      }
+    ]
+  }
+}</pre>
+        </div>
+        <div class="note warn">
+          <strong>Põe isto no <code class="inl">settings.json</code> do projeto, nunca no global.</strong>
+          O stdout do hook entra directamente no contexto principal: um hook global que faz
+          <code class="inl">cat</code> a um ficheiro do repositório deixa <em>qualquer</em> projeto —
+          incluindo código de cliente ou uma dependência clonada — injectar conteúdo à escolha na tua
+          sessão. Ficheiro com nome controlado (<code class="inl">.claude/session-context.md</code>), e só
+          em projetos em que confias. Mantém o hook rápido: corre em todas as sessões.
+        </div>
+      </div>
+
+      <!-- CLAUDE.md do projeto -->
+      <div class="card">
+        <h3>CLAUDE.md do projeto <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Gera a base com <code class="inl">/init</code> e depois <strong>corta</strong>.
+          Dentro de um ecrã. Só o que o agente não consegue inferir do código: as decisões e o porquê,
+          o que foge à convenção, as armadilhas já descobertas, os acessos.</p>
+        <p class="effect">Escreve <code class="inl">CLAUDE.md</code> na raiz do projeto — relido em todos os turnos de todas as sessões.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>/init</pre>
+        </div>
+        <div class="note">
+          O que <strong>não</strong> pôr: o que cada método faz, a estrutura de pastas, listas de rotas ou
+          de modelos. Isso o agente lê do código, e no <code class="inl">CLAUDE.md</code> é pago em cada
+          turno de cada sessão.
+        </div>
+      </div>
+      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
+    </section>
+
+    <!-- C · CONFORME A NECESSIDADE -->
+    <section id="pontual">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>C · Conforme a necessidade</h2>
+      <div class="note warn">
+        <strong>Liga, usa, desliga.</strong> Tudo nesta secção entra com <code class="inl">-s project</code>
+        e sai quando a tarefa acaba — <code class="inl">claude mcp remove &lt;nome&gt;</code>.
+        Mesmo com a <em>tool search</em> a adiar as definições, manter ferramentas desnecessárias ligadas
+        aumenta a superfície de risco, o ruído e a probabilidade de escolhas erradas.
+      </div>
+
+      <table>
+        <tr><th>Ferramenta</th><th>Para quê</th><th>Ressalva</th></tr>
+        <tr><td><a href="#playwright">Playwright</a></td><td>Testes E2E, validação de UI</td><td>Uma ferramenta de browser de cada vez</td></tr>
+        <tr><td><a href="#chrome-devtools">Chrome DevTools</a></td><td>Performance, traces, Lighthouse</td><td>Alternativa ao Playwright, não complemento diário</td></tr>
+        <tr><td><a href="#firecrawl">Firecrawl</a></td><td>Ingerir documentação ou conteúdo externo</td><td>Pontual por definição</td></tr>
+        <tr><td><a href="#vinteprimeiro">21st.dev</a> / <a href="#shadcn">shadcn</a></td><td>Referências e componentes de UI</td><td>Só em projetos React/Tailwind</td></tr>
+        <tr><td><a href="#graphify">Graphify</a></td><td>Knowledge graph do projeto</td><td>Só em codebase grande e desconhecida</td></tr>
+        <tr><td><a href="#higgsfield">Higgsfield</a> / <a href="#banana">Banana</a></td><td>Imagem e vídeo</td><td>Marketing, não programação</td></tr>
+        <tr><td><a href="#design-marketing">Marketing e design</a></td><td>Copy, SEO, social, polimento visual</td><td>Nada que fazer num projeto Laravel</td></tr>
+        <tr><td><a href="#codex">Codex</a></td><td>Segunda opinião de família diferente, debugging teimoso</td><td>Valida CLI, permissões e sandbox num projeto secundário antes de lhe dar execução autónoma</td></tr>
+      </table>
+
+      <!-- Playwright -->
+      <div class="card" id="playwright">
+        <h3>Playwright <span class="tag opt">pontual</span></h3>
+        <p class="desc">Controla um browser real — abrir páginas, clicar, preencher formulários, tirar
+          screenshots. Para testes E2E formais. Para QA rápido do dia a dia, o
+          <code class="inl">/browse</code> do <a href="#gstack">gstack</a> é mais leve.</p>
+        <p class="effect">Regista um MCP que arranca um browser via <code class="inl">npx</code>. Descarrega binários de browser na primeira execução.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add playwright -s project -- npx -y @playwright/mcp@latest</pre>
+        </div>
+        <div class="note">
+          Skills que acompanham, só neste projeto:
+          <code class="inl">npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli</code>
+          e <code class="inl">--skill playwright-explore-website</code> do
+          <code class="inl">github/awesome-copilot</code>. Não instales também o
+          <code class="inl">playwright-generate-test</code> — sobrepõe-se ao
+          <code class="inl">playwright-explore-website</code>.
         </div>
       </div>
 
       <!-- Chrome DevTools -->
       <div class="card" id="chrome-devtools">
-        <h3>Chrome DevTools <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Oficial da equipa do Chrome. Complementa o Playwright: onde o Playwright serve para
-          <em>automação/testes E2E</em>, este é para <strong>debugging e performance</strong> — grava traces de
-          performance, corre auditorias Lighthouse, inspeciona pedidos de rede, tira heap snapshots de memória
-          e lê a consola, tudo no Chrome real.</p>
+        <h3>Chrome DevTools <span class="tag opt">pontual</span></h3>
+        <p class="desc">Oficial da equipa do Chrome. Onde o Playwright serve para <em>automação/testes</em>,
+          este é para <strong>debugging e performance</strong> — traces, auditorias Lighthouse, pedidos de
+          rede, heap snapshots e consola, no Chrome real.</p>
+        <p class="effect">Regista um MCP que se liga ao teu Chrome pela porta de debug 9222.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add chrome-devtools -s user -- npx -y chrome-devtools-mcp@latest</pre>
+<pre>claude mcp add chrome-devtools -s project -- npx -y chrome-devtools-mcp@latest</pre>
         </div>
         <div class="note">
-          Não precisa de API key. As ferramentas de performance enviam opcionalmente URLs à Google CrUX API —
-          para desativar, acrescenta <code class="inl">--no-performance-crux</code> ao fim do comando acima.
+          Não precisa de API key. As ferramentas de performance enviam opcionalmente URLs à Google CrUX
+          API — para desativar, acrescenta <code class="inl">--no-performance-crux</code>.
+        </div>
+        <div class="note warn">
+          Fica <code class="inl">✗ failed</code> por duas razões independentes: o Chrome não está a
+          escutar em <code class="inl">--remote-debugging-port=9222</code>, ou o
+          <code class="inl">npx</code> está partido nesta máquina. Verifica as duas antes de suspeitar do
+          servidor — ver <a href="#problemas">Problemas comuns</a>.
         </div>
       </div>
 
       <!-- Firecrawl -->
-      <div class="card">
-        <h3>Firecrawl <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Web scraping e crawling estruturado — extrai páginas em markdown/JSON,
-          rastreia sites inteiros (<code class="inl">crawl</code>, <code class="inl">map</code>), tira dados
-          estruturados com LLM (<code class="inl">extract</code>) e até lê PDFs. Diferente do
-          <code class="inl">WebFetch</code> nativo (uma página, resumida): aqui é o site todo, com dados limpos e reutilizáveis.
-          Útil para ingerir documentação externa, concorrência ou conteúdo para as skills de marketing.</p>
+      <div class="card" id="firecrawl">
+        <h3>Firecrawl <span class="tag opt">pontual</span></h3>
+        <p class="desc">Web scraping e crawling estruturado — extrai páginas em markdown/JSON, rastreia
+          sites inteiros, tira dados estruturados com LLM e lê PDFs. Diferente do
+          <code class="inl">WebFetch</code> nativo (uma página, resumida): aqui é o site todo, com dados
+          limpos e reutilizáveis.</p>
+        <p class="effect">Regista um MCP remoto que envia URLs — e o conteúdo delas — para um serviço externo.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add --transport http firecrawl https://mcp.firecrawl.dev/v2/mcp -s user</pre>
+<pre>claude mcp add --transport http firecrawl https://mcp.firecrawl.dev/v2/mcp -s project</pre>
         </div>
         <div class="note">
-          <strong>Tier gratuito:</strong> <code class="inl">scrape</code>, <code class="inl">search</code> e
-          <code class="inl">interact</code> funcionam sem API key (com rate-limit). Para <code class="inl">crawl</code>,
-          <code class="inl">extract</code> e <code class="inl">monitor</code> precisas de uma
-          <a href="https://www.firecrawl.dev/app/api-keys" target="_blank" rel="noopener">API key</a> — usa o endpoint
-          <code class="inl">https://mcp.firecrawl.dev/SEU_API_KEY/v2/mcp</code> em vez do de cima.
+          <strong>Tier gratuito:</strong> <code class="inl">scrape</code>, <code class="inl">search</code>
+          e <code class="inl">interact</code> funcionam sem API key (com rate-limit). Para
+          <code class="inl">crawl</code>, <code class="inl">extract</code> e
+          <code class="inl">monitor</code> precisas de
+          <a href="https://www.firecrawl.dev/app/api-keys" target="_blank" rel="noopener">API key</a> —
+          endpoint <code class="inl">https://mcp.firecrawl.dev/SEU_API_KEY/v2/mcp</code>.
         </div>
       </div>
 
       <!-- 21st.dev -->
       <div class="card" id="vinteprimeiro">
-        <h3>21st.dev <span class="tag rec">recomendado</span></h3>
+        <h3>21st.dev <span class="tag opt">pontual · React/Tailwind</span></h3>
         <p class="desc">Busca semântica sobre uma biblioteca curada de componentes React/Tailwind, temas e
-          templates reais (<a href="https://21st.dev/community/components" target="_blank" rel="noopener">21st.dev/community/components</a>),
-          mais lookup de logos SVG por nome. Serve para o agente <strong>ver referências reais antes de escrever
-          UI nova</strong>, em vez de inventar do zero — é o antídoto directo para o «AI slop» visual.
-          Complementa o UI/UX Pro Max (secção 3): aquele dá guidelines e paletas, este dá componentes já feitos.</p>
+          templates reais, mais lookup de logos SVG. Serve para o agente <strong>ver referências reais
+          antes de escrever UI nova</strong> — antídoto directo para o «AI slop» visual.</p>
+        <p class="effect">Regista um MCP remoto com uma chave de API. <strong>A chave fica em claro em <code class="inl">~/.claude.json</code>.</strong></p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add --scope user --transport http 21st https://21st.dev/api/mcp --header "x-api-key: SUA_CHAVE"</pre>
+<pre>claude mcp add --scope project --transport http 21st https://21st.dev/api/mcp --header "x-api-key: SUA_CHAVE"</pre>
         </div>
         <div class="note">
           <strong>Tier gratuito:</strong> busca semântica e lookup de logos são <em>ilimitados</em>;
-          instalar código de componentes está limitado a <strong>2 por dia</strong>. Pro
-          (<a href="https://21st.dev/pricing" target="_blank" rel="noopener">$20/mês</a>) só é preciso se
-          bateres nesse limite com frequência. Chave em
+          instalar código de componentes está limitado a <strong>2 por dia</strong>. Chave em
           <a href="https://21st.dev/settings" target="_blank" rel="noopener">21st.dev/settings</a>.
         </div>
         <div class="note warn">
-          A chave fica em claro no <code class="inl">~/.claude.json</code> — não commitar esse ficheiro.
-          Para componentes shadcn continua a usar o MCP oficial do shadcn (grátis, sem limite de instalações).
+          A chave fica em claro no <code class="inl">~/.claude.json</code> — não commitar esse ficheiro,
+          e mais uma razão para não deixar este servidor ligado permanentemente. Para verificar:
+          <code class="inl">Select-String -Path "$env:USERPROFILE\.claude.json" -Pattern 'x-api-key'</code>.
         </div>
       </div>
 
       <!-- shadcn -->
       <div class="card" id="shadcn">
-        <h3>shadcn <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Dá ao agente acesso directo ao registo do <a href="https://ui.shadcn.com" target="_blank" rel="noopener">shadcn/ui</a>:
+        <h3>shadcn <span class="tag opt">pontual · React/Tailwind</span></h3>
+        <p class="desc">Acesso directo ao registo do <a href="https://ui.shadcn.com" target="_blank" rel="noopener">shadcn/ui</a>:
           listar componentes, blocos e templates, procurar por nome ou função, e instalar em linguagem
-          natural («adiciona um formulário de login»). Sem API key e sem limite de instalações —
-          é o par natural do 21st.dev acima: <strong>21st para descobrir referências, shadcn para instalar</strong>.</p>
+          natural. Sem API key e sem limite. Par natural do 21st.dev:
+          <strong>21st para descobrir, shadcn para instalar</strong>.</p>
+        <p class="effect">Escreve <code class="inl">.mcp.json</code> na raiz do projeto. Precisa de <code class="inl">components.json</code>.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
 <pre><span class="cmt"># corre na raiz do projeto (precisa de components.json)</span>
 npx shadcn@latest mcp init --client claude</pre>
         </div>
-        <div class="note">
-          Ao contrário dos MCP acima, este é <strong>por projeto</strong> — escreve o
-          <code class="inl">.mcp.json</code> na raiz e lê os registos de
-          <code class="inl">components.json</code>. Repete o comando em cada projeto que use shadcn.
-          Registos privados autenticam-se por variáveis em <code class="inl">.env.local</code>.
-        </div>
       </div>
 
-      <!-- Browser Tools -->
-      <div class="card">
-        <h3>Browser Tools <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Screenshots, consola, erros de rede e auditorias (acessibilidade, performance,
-          SEO, boas práticas) diretamente do browser real — mais leve que o Chrome DevTools MCP para
-          checks rápidos de QA visual.</p>
+      <!-- Graphify -->
+      <div class="card" id="graphify">
+        <h3>Graphify <span class="tag opt">só em codebase grande e desconhecida</span></h3>
+        <p class="desc">Constrói um <em>knowledge graph</em> do projeto (código, schemas SQL, scripts, docs)
+          e ensina o Claude a consultar o grafo antes de fazer grep ficheiro a ficheiro.</p>
+        <p class="effect">Instala uma ferramenta Python global e, por projeto, gera uma pasta <code class="inl">graphify-out/</code>. Gerar o grafo <strong>custa uma passagem de LLM</strong>.</p>
+        <div class="note warn">
+          <strong>Desceu de «recomendado» para «conforme a necessidade».</strong> Só compensa em codebase
+          grande e desconhecida. Num Laravel a convenção já é o mapa e o <a href="#projeto">Boost</a> dá o
+          resto. O grafo custa uma passagem de LLM a gerar e <strong>desactualiza-se a cada
+          refactor</strong> — se não o regeneras, passa a mentir.
+        </div>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add browser-tools -s user -- npx -y @agentdeskai/browser-tools-mcp@latest</pre>
+<pre><span class="cmt"># uma vez, global — escolhe um gestor de pacotes Python</span>
+uv tool install graphifyy
+graphify install
+
+<span class="cmt"># dentro de cada projeto que queiras mapear, no Claude Code:</span>
+<span class="cmt"># /graphify .            (--update para só o que mudou)</span></pre>
+        </div>
+        <div class="note">
+          Faz commit de <code class="inl">graphify-out/</code> (excepto
+          <code class="inl">cost.json</code>) para a equipa arrancar com o mesmo mapa.
+          Repositório: <a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a>.
         </div>
       </div>
 
       <!-- Higgsfield -->
       <div class="card" id="higgsfield">
-        <h3>Higgsfield <span class="tag opt">opcional — conteúdo</span></h3>
-        <p class="desc">Geração de imagem e vídeo AI a partir do agente — Veo 3, Kling 3.0, Nano Banana Pro
-          e outros modelos, num único endpoint. Para criativos de anúncios, b-roll, product shots e motion.
-          Não é uma ferramenta de programação: só interessa a quem trabalha em marketing/conteúdo.</p>
+        <h3>Higgsfield <span class="tag opt">conteúdo, não programação</span></h3>
+        <p class="desc">Geração de imagem e vídeo AI — Veo 3, Kling 3.0, Nano Banana Pro e outros modelos,
+          num único endpoint. Para criativos de anúncios, b-roll, product shots e motion.</p>
+        <p class="effect">Regista um MCP remoto. Autentica por OAuth no browser — sem API key.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>claude mcp add --scope user --transport http higgsfield https://mcp.higgsfield.ai/mcp</pre>
+<pre>claude mcp add --scope project --transport http higgsfield https://mcp.higgsfield.ai/mcp</pre>
         </div>
         <div class="note">
-          <strong>Sem API key</strong> — autentica por OAuth no browser à primeira utilização. Corre
-          <code class="inl">/mcp</code> → <code class="inl">higgsfield</code> → <em>Authenticate</em>, e
-          reinicia a sessão. Tier gratuito: 10 créditos/dia. Planos desde
-          <a href="https://higgsfield.ai/pricing" target="_blank" rel="noopener">$15/mês</a> (200 créditos);
-          Plus $39/mês (1.000) para volume a sério. Referência de custo: Veo 3 de 8s com áudio ≈ 58 créditos,
-          Kling 3.0 de 8s a 720p ≈ 14.
+          Corre <code class="inl">/mcp</code> → <code class="inl">higgsfield</code> →
+          <em>Authenticate</em>, e reinicia a sessão. Tier gratuito: 10 créditos/dia. Referência de custo:
+          Veo 3 de 8s com áudio ≈ 58 créditos, Kling 3.0 de 8s a 720p ≈ 14.
         </div>
         <div class="note warn">
-          Se já o tiveres adicionado como connector no claude.ai, <strong>não corras o comando acima</strong> —
-          ficam dois registos do mesmo servidor e é fácil autenticar um e ver o outro a falhar. Escolhe um só.
+          Se já o tiveres como connector no claude.ai, <strong>não corras o comando acima</strong> —
+          ficam dois registos do mesmo servidor e é fácil autenticar um e ver o outro a falhar.
         </div>
       </div>
 
-      <!-- Filesystem -->
-      <div class="card">
-        <h3>Filesystem <span class="tag opt">opcional</span></h3>
-        <p class="desc">Acesso de leitura/escrita a uma pasta específica fora do projeto atual
-          (ex.: partilhar ficheiros entre projetos). Substitui <code class="inl">D:\HERD</code> abaixo
-          pelo caminho da pasta que queres partilhar.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude mcp add filesystem -s user -- npx -y @modelcontextprotocol/server-filesystem D:\HERD</pre>
-        </div>
-      </div>
-
-      <!-- Sequential Thinking -->
-      <div class="card">
-        <h3>Sequential Thinking <span class="tag opt">opcional</span></h3>
-        <p class="desc">Dá ao Claude um espaço estruturado para raciocínio passo-a-passo em problemas
-          complexos (modelação de dados, máquinas de estados, arquitetura).</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>claude mcp add sequential-thinking -s user -- npx -y @modelcontextprotocol/server-sequential-thinking</pre>
-        </div>
-      </div>
-
-      <div class="note warn">
-        <strong>Depois de adicionar:</strong> reinicia o Claude Code e corre
-        <code class="inl">claude mcp list</code> para confirmar o estado <code class="inl">✓ connected</code> de cada servidor.
-      </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
-    </section>
-
-    <!-- PLUGINS & SKILLS -->
-    <section id="plugins">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.44 7.85c-.05.32.06.65.29.88l1.57 1.57a2.4 2.4 0 0 1 0 3.4l-1.61 1.61a.98.98 0 0 1-.84.28c-.47-.07-.8-.48-.97-.93a2.5 2.5 0 1 0-3.21 3.21c.45.17.86.5.93.97a.98.98 0 0 1-.28.84l-1.61 1.61a2.4 2.4 0 0 1-3.4 0l-1.57-1.57a1.03 1.03 0 0 0-.88-.29c-.49.07-.84.5-1.02.97a2.5 2.5 0 1 1-3.24-3.24c.47-.18.9-.53.97-1.02a1.03 1.03 0 0 0-.29-.88L1.9 13.7a2.4 2.4 0 0 1 0-3.4l1.61-1.61c.24-.24.58-.35.92-.3.51.07.88.53 1.07 1.01a2.5 2.5 0 1 0 3.26-3.26c-.48-.19-.93-.56-1.01-1.07-.05-.34.06-.68.3-.92l1.53-1.52a2.4 2.4 0 0 1 3.4 0l1.57 1.57c.23.23.56.34.88.29.49-.07.84-.5 1.02-.97a2.5 2.5 0 1 1 3.24 3.24c-.47.18-.9.53-.97 1.02Z"/></svg>3 · Plugins &amp; Skills do Claude Code</h2>
-      <p class="lead">Skills adicionam comandos especializados ao Claude Code. Instalam-se via
-        <code class="inl">npx skills add</code>. Sem flag → instala <em>neste projeto</em>;
-        com <code class="inl">-g</code> → instala <strong>globalmente</strong> (todos os projetos).
-        Depois de instalar, reinicia o Claude Code e invoca cada skill com <code class="inl">/</code>.</p>
-
-      <!-- Skills de desenvolvimento -->
-      <div class="card" id="skills-dev">
-        <h3>Skills de desenvolvimento <span class="tag rec">recomendado</span></h3>
-        <p class="desc">Arquitetura, qualidade e produtividade — aplicam-se a qualquer projeto. Copia o bloco todo de uma vez:</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>npx skills add https://github.com/jeffallan/claude-skills --skill architecture-designer -g
-npx skills add https://github.com/jeffallan/claude-skills --skill feature-forge -g
-npx skills add https://github.com/vercel-labs/skills --skill find-skills -g
-npx skills add https://github.com/mattpocock/skills --skill improve-codebase-architecture
-npx skills add https://github.com/mattpocock/skills --skill codebase-design
-npx skills add https://github.com/softaworks/agent-toolkit --skill mermaid-diagrams -g
-npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli
-npx skills add https://github.com/currents-dev/playwright-best-practices-skill --skill playwright-best-practices -g
-npx skills add https://github.com/github/awesome-copilot --skill playwright-generate-test
-npx skills add https://github.com/github/awesome-copilot --skill playwright-explore-website
-npx skills add https://github.com/github/awesome-copilot --skill playwright-automation-fill-in-form
-npx skills add https://github.com/github/awesome-copilot --skill git-commit -g
-npx skills add https://github.com/github/awesome-copilot --skill refactor -g
-npx skills add https://github.com/mattpocock/skills --skill tdd -g
-npx skills add https://github.com/mattpocock/skills --skill diagnose -g
-npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns -g
-npx skills add https://github.com/upstash/context7 --skill context7-cli
-npx skills add https://github.com/anthropics/skills --skill webapp-testing -g
-npx skills add https://github.com/obra/superpowers --skill writing-plans -g
-npx skills add https://github.com/obra/superpowers --skill executing-plans -g
-npx skills add https://github.com/obra/superpowers --skill subagent-driven-development -g
-npx skills add https://github.com/obra/superpowers --skill dispatching-parallel-agents -g
-npx skills add https://github.com/obra/superpowers --skill using-git-worktrees -g
-npx skills add https://github.com/obra/superpowers --skill verification-before-completion -g
-npx skills add https://github.com/obra/superpowers --skill finishing-a-development-branch -g
-npx skills add https://github.com/obra/superpowers --skill requesting-code-review -g
-npx skills add https://github.com/obra/superpowers --skill brainstorming -g
-npx skills add https://github.com/obra/superpowers --skill systematic-debugging -g
-npx skills add https://github.com/obra/superpowers --skill using-superpowers -g
-npx skills add https://github.com/subsy/ralph-tui --skill ralph-tui-prd -g</pre>
-        </div>
-        <table>
-          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
-          <tr><td>architecture-designer <code class="inl">-g</code></td><td>Desenho de arquitetura — módulos, fronteiras, trade-offs <em style="color:var(--warn)">· sobrepõe-se a codebase-design; escolhe uma</em></td><td><a href="https://github.com/jeffallan/claude-skills" target="_blank" rel="noopener">jeffallan/claude-skills</a></td></tr>
-          <tr><td>feature-forge <code class="inl">-g</code></td><td>Funcionalidades ponta-a-ponta, do requisito ao código + testes</td><td>jeffallan/claude-skills</td></tr>
-          <tr><td>find-skills <code class="inl">-g</code></td><td>Descobrir e instalar outras skills</td><td><a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener">vercel-labs/skills</a></td></tr>
-          <tr><td>improve-codebase-architecture</td><td>Melhorar arquitetura de código existente</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
-          <tr><td>codebase-design <span class="tag rec">preferida</span></td><td>Módulos profundos — muito comportamento atrás de uma interface pequena e testável</td><td>mattpocock/skills</td></tr>
-          <tr><td>mermaid-diagrams <code class="inl">-g</code></td><td>Gerar diagramas Mermaid (arquitetura, fluxos, ERDs)</td><td><a href="https://github.com/softaworks/agent-toolkit" target="_blank" rel="noopener">softaworks/agent-toolkit</a></td></tr>
-          <tr><td>playwright-cli</td><td>Automação de browser via Playwright CLI (testes E2E, screenshots)</td><td><a href="https://github.com/microsoft/playwright-cli" target="_blank" rel="noopener">microsoft/playwright-cli</a></td></tr>
-          <tr><td>playwright-best-practices <code class="inl">-g</code></td><td>Boas práticas para testes Playwright robustos e estáveis</td><td><a href="https://github.com/currents-dev/playwright-best-practices-skill" target="_blank" rel="noopener">currents-dev</a></td></tr>
-          <tr><td>playwright-generate-test</td><td>Gerar testes Playwright a partir de cenários <em style="color:var(--warn)">· sobrepõe-se a playwright-explore-website</em></td><td><a href="https://github.com/github/awesome-copilot" target="_blank" rel="noopener">github/awesome-copilot</a></td></tr>
-          <tr><td>playwright-explore-website</td><td>Exploração automática de sites e geração de casos de teste</td><td>github/awesome-copilot</td></tr>
-          <tr><td>playwright-automation-fill-in-form</td><td>Automação de preenchimento de formulários com Playwright</td><td>github/awesome-copilot</td></tr>
-          <tr><td>git-commit <code class="inl">-g</code></td><td>Gerar mensagens de commit a partir das alterações</td><td>github/awesome-copilot</td></tr>
-          <tr><td>refactor <code class="inl">-g</code></td><td>Refatorar código com segurança, preservando o comportamento</td><td>github/awesome-copilot</td></tr>
-          <tr><td>tdd <code class="inl">-g</code></td><td>Test-driven development — escrever o teste antes do código</td><td><a href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a></td></tr>
-          <tr><td>diagnose <code class="inl">-g</code></td><td>Diagnosticar bugs e falhas de forma sistemática</td><td>mattpocock/skills</td></tr>
-          <tr><td>sql-optimization-patterns <code class="inl">-g</code></td><td>Padrões de otimização SQL — índices, queries N+1, performance</td><td><a href="https://github.com/wshobson/agents" target="_blank" rel="noopener">wshobson/agents</a></td></tr>
-          <tr><td>context7-cli</td><td>Docs atualizadas via CLI Context7 (complementa o MCP da secção 1)</td><td><a href="https://github.com/upstash/context7" target="_blank" rel="noopener">upstash/context7</a></td></tr>
-          <tr><td>webapp-testing <code class="inl">-g</code></td><td>Testar aplicações web de ponta a ponta</td><td><a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a></td></tr>
-          <tr><td>writing-plans <code class="inl">-g</code></td><td>Escrever planos de implementação estruturados</td><td><a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers</a></td></tr>
-          <tr><td>executing-plans <code class="inl">-g</code></td><td>Executar planos passo-a-passo</td><td>obra/superpowers</td></tr>
-          <tr><td>subagent-driven-development <code class="inl">-g</code></td><td>Desenvolvimento orientado por subagentes</td><td>obra/superpowers</td></tr>
-          <tr><td>dispatching-parallel-agents <code class="inl">-g</code></td><td>Despachar agentes em paralelo para tarefas independentes</td><td>obra/superpowers</td></tr>
-          <tr><td>using-git-worktrees <code class="inl">-g</code></td><td>Trabalhar com git worktrees em paralelo</td><td>obra/superpowers</td></tr>
-          <tr><td>verification-before-completion <code class="inl">-g</code></td><td>Verificar o trabalho antes de o dar por concluído</td><td>obra/superpowers</td></tr>
-          <tr><td>finishing-a-development-branch <code class="inl">-g</code></td><td>Fechar uma branch de desenvolvimento corretamente</td><td>obra/superpowers</td></tr>
-          <tr><td>requesting-code-review <code class="inl">-g</code></td><td>Pedir revisão de código de forma estruturada</td><td>obra/superpowers</td></tr>
-          <tr><td>brainstorming <code class="inl">-g</code></td><td>Gerar e explorar ideias de forma estruturada</td><td>obra/superpowers</td></tr>
-          <tr><td>systematic-debugging <code class="inl">-g</code></td><td>Debugging sistemático <em style="color:var(--warn)">· sobrepõe-se a diagnose (mattpocock)</em></td><td>obra/superpowers</td></tr>
-          <tr><td>using-superpowers <code class="inl">-g</code></td><td>Meta-skill para orquestrar as restantes skills superpowers</td><td>obra/superpowers</td></tr>
-          <tr><td>ralph-tui-prd <code class="inl">-g</code></td><td>Gerar PRD (documento de requisitos de produto)</td><td><a href="https://github.com/subsy/ralph-tui" target="_blank" rel="noopener">subsy/ralph-tui</a></td></tr>
-        </table>
-      </div>
-
-      <!-- Skills de conteúdo -->
-      <div class="card">
-        <h3>Skills de conteúdo / marketing <span class="tag">conteúdo</span></h3>
-        <p class="desc">Texto de marketing, copy de conversão e SEO. Copia o bloco todo de uma vez:</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>npx skills add https://github.com/vyralcontent/content-skills --skill viral-captions-and-ctas
-npx skills add https://github.com/coreyhaines31/marketingskills --skill copywriting
-npx skills add https://github.com/coreyhaines31/marketingskills --skill seo-audit -g
-npx skills add https://github.com/coreyhaines31/marketingskills --skill social-content -g
-npx skills add https://github.com/coreyhaines31/marketingskills --skill content-strategy -g</pre>
-        </div>
-        <table>
-          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
-          <tr><td>viral-captions-and-ctas</td><td>Legendas, texto no ecrã, hashtags e CTAs para vídeos</td><td><a href="https://github.com/vyralcontent/content-skills" target="_blank" rel="noopener">vyralcontent/content-skills</a></td></tr>
-          <tr><td>copywriting</td><td>Copy para homepages, landing e páginas de conversão</td><td><a href="https://github.com/coreyhaines31/marketingskills" target="_blank" rel="noopener">coreyhaines31/marketingskills</a></td></tr>
-          <tr><td>seo-audit <code class="inl">-g</code></td><td>Auditoria de SEO e melhorias de pesquisa</td><td>coreyhaines31/marketingskills</td></tr>
-          <tr><td>social-content <code class="inl">-g</code></td><td>Criar conteúdo para redes sociais</td><td>coreyhaines31/marketingskills</td></tr>
-          <tr><td>content-strategy <code class="inl">-g</code></td><td>Estratégia de conteúdo — planeamento e calendário editorial</td><td>coreyhaines31/marketingskills</td></tr>
-        </table>
-      </div>
-
-      <!-- Banana (geração de imagem) -->
+      <!-- Banana -->
       <div class="card" id="banana">
-        <h3>Banana — geração de imagem <span class="tag">conteúdo</span></h3>
-        <p class="desc">Skill que põe o Claude como <strong>director criativo</strong>: interpreta a intenção,
-          escolhe o domínio (cinema, produto, retrato, logo, UI…), constrói o prompt pela fórmula de 5 componentes
-          da Google e chama os modelos de imagem Gemini (Nano Banana). Texto-para-imagem, edição, sessões
-          multi-turno, batch e presets de marca. Complementa o <a href="#higgsfield">Higgsfield</a> (secção 2):
-          <strong>Banana para imagem, Higgsfield para vídeo</strong>.</p>
+        <h3>Banana — geração de imagem <span class="tag opt">conteúdo, não programação</span></h3>
+        <p class="desc">Skill que põe o Claude como <strong>director criativo</strong>: interpreta a
+          intenção, escolhe o domínio, constrói o prompt pela fórmula de 5 componentes da Google e chama
+          os modelos Gemini (Nano Banana). <strong>Banana para imagem, Higgsfield para vídeo.</strong></p>
+        <p class="effect">Clona um repositório de terceiros e corre o instalador dele; escreve uma chave de API numa variável de ambiente permanente. <strong>Lê o <code class="inl">install.sh</code> antes de correr.</strong></p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># clona e copia a skill para ~/.claude/skills/banana (lê o install.sh antes de correr)</span>
-git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
+<pre>git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
 cd banana-claude &amp;&amp; ./install.sh</pre>
         </div>
-        <p class="desc" style="margin:10px 0 4px">Depois, chave grátis da Google e variável de ambiente:</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># chave grátis: https://aistudio.google.com/apikey</span>
+<pre><span class="cmt"># chave em https://aistudio.google.com/apikey</span>
 setx GOOGLE_AI_API_KEY "a_tua_chave"</pre>
         </div>
         <div class="note warn">
-          <strong>A API de imagem do Gemini NÃO tem tier grátis</strong> — é paga por defeito. O «500 imagens/dia
-          grátis» é só do <a href="https://aistudio.google.com" target="_blank" rel="noopener">AI Studio web</a>
-          (o site), não da API que esta skill usa. Sem <em>billing</em> activo no projeto Google, cada geração
-          devolve <code class="inl">429 · limit: 0</code>. Activa billing em
-          <a href="https://console.cloud.google.com/billing" target="_blank" rel="noopener">console.cloud.google.com/billing</a>.
+          <strong>A API de imagem do Gemini NÃO tem tier grátis</strong> — é paga por defeito. O «500
+          imagens/dia grátis» é só do
+          <a href="https://aistudio.google.com" target="_blank" rel="noopener">AI Studio web</a>, não da
+          API que esta skill usa. Sem <em>billing</em> activo, cada geração devolve
+          <code class="inl">429 · limit: 0</code>.
         </div>
         <div class="note">
-          Preço por imagem (com billing): Nano Banana (<code class="inl">gemini-2.5-flash-image</code>) ≈ $0.039,
-          Nano Banana Pro (<code class="inl">gemini-3.1-flash-image</code>, default) ≈ $0.134 até 2K / $0.24 a 4K,
-          Imagen 4 Fast ≈ $0.02. <code class="inl">gemini-2.5-flash-image</code> desliga a 2 out 2026 — o default
-          já aponta para o sucessor. Scripts em Python stdlib (sem <code class="inl">pip install</code>); MCP
-          opcional, com fallback direto à API REST.
+          Preço por imagem (com billing): Nano Banana (<code class="inl">gemini-2.5-flash-image</code>)
+          ≈ $0.039, Nano Banana Pro (<code class="inl">gemini-3.1-flash-image</code>, default) ≈ $0.134
+          até 2K / $0.24 a 4K. <code class="inl">gemini-2.5-flash-image</code> desliga a 2 out 2026.
         </div>
         <div class="note warn">
           <strong>Windows:</strong> os scripts chamam <code class="inl">python3</code>, que não existe por
           defeito — cria um symlink uma vez:
           <code class="inl">New-Item -ItemType SymbolicLink -Path "$HOME\.bun\bin\python3.exe" -Target (Get-Command python).Source</code>
-          (precisa de Developer Mode). Sem isto a skill falha com <code class="inl">python3: not found</code>.
+          (precisa de Developer Mode).
         </div>
       </div>
 
-      <!-- Skills de design -->
-      <div class="card">
-        <h3>Skills de design <span class="tag">design</span></h3>
-        <p class="desc">Polimento de UI, estética de nível agência e artefactos visuais. Copia o bloco todo de uma vez:</p>
+      <!-- Design e marketing -->
+      <div class="card" id="design-marketing">
+        <h3>Skills de design e marketing <span class="tag opt">só em superfícies viradas ao cliente</span></h3>
+        <p class="desc">Copy, SEO, social e polimento visual. Aplicam-se a marketing e a interfaces viradas
+          ao cliente — <strong>não a lógica de app, backend ou automação</strong>.</p>
+        <p class="effect">Escreve pastas em <code class="inl">.claude/skills/</code> do projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre>npx skills add https://github.com/pbakaus/impeccable --skill polish -g
-npx skills add https://github.com/leonxlnx/taste-skill --skill high-end-visual-design
-npx skills add https://github.com/leonxlnx/taste-skill --skill full-output-enforcement -g
-npx skills add https://github.com/leonxlnx/taste-skill --skill redesign-existing-projects -g
-npx skills add https://github.com/anthropics/skills --skill canvas-design</pre>
-        </div>
-        <table>
-          <tr><th>Skill</th><th>O que faz</th><th>Repositório</th></tr>
-          <tr><td>polish <code class="inl">-g</code></td><td>Polimento final de interfaces — espaçamento, alinhamento, detalhe</td><td><a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">pbakaus/impeccable</a></td></tr>
-          <tr><td>high-end-visual-design</td><td>Estética de agência — tipografia, ícones, espaçamento, movimento</td><td><a href="https://github.com/leonxlnx/taste-skill" target="_blank" rel="noopener">leonxlnx/taste-skill</a></td></tr>
-          <tr><td>full-output-enforcement <code class="inl">-g</code></td><td>Garantir entregas completas, sem cortar resultados a meio</td><td>leonxlnx/taste-skill</td></tr>
-          <tr><td>redesign-existing-projects <code class="inl">-g</code></td><td>Redesenhar interfaces de projetos já existentes</td><td>leonxlnx/taste-skill</td></tr>
-          <tr><td>canvas-design</td><td>Artefactos visuais "qualidade de museu" em PDF/PNG</td><td><a href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a></td></tr>
-        </table>
-      </div>
+<pre><span class="cmt"># design</span>
+npx skills add https://github.com/pbakaus/impeccable --skill polish
+npx skills add https://github.com/leonxlnx/taste-skill --skill redesign-existing-projects
+npx skills add https://github.com/anthropics/skills --skill canvas-design
 
-      <!-- UI/UX Pro Max -->
-      <div class="card" id="uiuxpromax">
-        <h3>UI/UX Pro Max <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
-        <p class="desc">Base de dados de design pesquisável para o Claude consultar ao construir interfaces:
-          67 estilos de UI, 161 paletas de cores, 57 pares de fontes, 99 guidelines de UX e 25 tipos de gráficos,
-          mais um gerador de design system e verificações de acessibilidade (contraste, ARIA, touch targets).
-          <em style="color:var(--warn)">Sobrepõe-se ao bloco "Skills de design" acima — usa esta quando quiseres
-          decisões de design mais sistemáticas/orientadas por dados; usa as outras para polimento final.</em></p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>npm install -g ui-ux-pro-max-cli
-uipro init --ai claude</pre>
-        </div>
-        <p class="desc" style="margin:8px 0 0">
-          Repositório: <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill" target="_blank" rel="noopener">nextlevelbuilder/ui-ux-pro-max-skill</a>
-        </p>
-      </div>
-
-      <!-- Skills específicas por stack -->
-      <div class="card">
-        <h3>Skills específicas por stack <span class="tag opt">conforme o projeto</span></h3>
-        <p class="desc">Instala só as que fazem sentido para a linguagem/framework do projeto:</p>
-        <table class="cmd-table">
-          <tr><th>Stack</th><th>Skill</th><th>Comando</th></tr>
-          <tr><td>PHP / Laravel</td><td>laravel-specialist</td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npx skills add https://github.com/jeffallan/claude-skills --skill laravel-specialist</pre></div>
-          </td></tr>
-          <tr><td>PHP</td><td>php-pro</td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npx skills add https://github.com/jeffallan/claude-skills --skill php-pro</pre></div>
-          </td></tr>
-          <tr><td>SQL / BD</td><td>sql-optimization-patterns</td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npx skills add https://github.com/wshobson/agents --skill sql-optimization-patterns -g</pre></div>
-          </td></tr>
-          <tr><td>Playwright</td><td>playwright-cli</td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npx skills add https://github.com/microsoft/playwright-cli --skill playwright-cli</pre></div>
-          </td></tr>
-          <tr><td>Vídeo / motion graphics (Remotion)</td><td>remotion <span class="tag">oficial</span></td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npx skills add remotion-dev/skills</pre></div>
-          </td></tr>
-          <tr><td>React / animações UI</td><td>motion <span class="tag opt">biblioteca, não skill</span></td><td>
-            <div class="codeblock sm"><button class="copy">Copiar</button><pre>npm i motion</pre></div>
-            <span style="color:var(--fg-dim); font-size:.85rem">novo nome do <code class="inl">framer-motion</code> (import <code class="inl">from "motion/react"</code>); o pacote antigo ainda funciona mas é legado. Sem skill dedicada — usa o <a href="#mcp">Context7</a> para docs atualizadas.</span>
-          </td></tr>
-        </table>
-      </div>
-
-      <!-- Graphify -->
-      <div class="card" id="graphify">
-        <h3>Graphify <span class="tag rec">recomendado em codebases grandes</span> <span class="tag opt">instalação diferente</span></h3>
-        <p class="desc">Constrói um <em>knowledge graph</em> do projeto (código, schemas SQL, scripts, docs, diagramas) e ensina
-          o Claude a <strong>consultar o grafo antes de fazer grep</strong> ficheiro a ficheiro — reduz drasticamente os tokens
-          gastos a explorar codebases grandes. <strong>Não segue o padrão <code class="inl">npx skills add</code></strong> acima:
-          é uma ferramenta Python, instalada à parte, em dois passos distintos.</p>
-
-        <div class="note">
-          <strong>Como funciona:</strong> instala-se a ferramenta <strong>uma vez, de forma global</strong> (fica disponível
-          em todos os projetos). Depois, <strong>em cada projeto</strong> onde a queiras usar, corre-se o comando que gera o
-          grafo — o resultado fica gravado dentro desse próprio repositório.
-        </div>
-
-        <ol class="steps">
-          <li>
-            <h4>Instalar a ferramenta <span style="color:var(--fg-dim); font-weight:400">— uma vez, global</span></h4>
-            <p class="desc" style="margin:0 0 8px">Escolhe um gestor de pacotes Python. <code class="inl">uv</code> é o recomendado pelo projeto.</p>
-            <div class="codeblock">
-              <button class="copy">Copiar</button>
-<pre><span class="cmt"># instalar o CLI (escolhe um)</span>
-uv tool install graphifyy
-<span class="cmt"># pipx install graphifyy</span>
-<span class="cmt"># pip install graphifyy</span>
-
-<span class="cmt"># registar a skill no Claude Code, Cursor, etc.</span>
-graphify install</pre>
-            </div>
-            <div class="note">
-              Isto liga o comando <code class="inl">/graphify</code> no Claude Code. Se <code class="inl">graphify</code> não
-              for reconhecido depois de instalar com <code class="inl">uv</code>, corre <code class="inl">uv tool update-shell</code>
-              e reabre o terminal.
-            </div>
-          </li>
-          <li>
-            <h4>Gerar o grafo <span style="color:var(--fg-dim); font-weight:400">— dentro de cada projeto</span></h4>
-            <p class="desc" style="margin:0 0 8px">Dentro do Claude Code, na raiz do projeto que queres mapear:</p>
-            <div class="codeblock">
-              <button class="copy">Copiar</button>
-<pre>/graphify .
-
-<span class="cmt"># para atualizar só os ficheiros que mudaram, usa:</span>
-<span class="cmt"># /graphify . --update</span></pre>
-            </div>
-            <div class="note warn">
-              Faz <strong>commit</strong> da pasta <code class="inl">graphify-out/</code> ao repositório (exceto
-              <code class="inl">graphify-out/cost.json</code>, que é só local) — assim toda a equipa arranca com o mesmo mapa
-              em vez de o gerar cada um por si.
-            </div>
-          </li>
-        </ol>
-
-        <table>
-          <tr><th>Ficheiro gerado</th><th>Para quê</th></tr>
-          <tr><td><code class="inl">graphify-out/graph.html</code></td><td>Visualização interativa do grafo (abrir no browser)</td></tr>
-          <tr><td><code class="inl">graphify-out/GRAPH_REPORT.md</code></td><td>Resumo dos conceitos-chave e perguntas sugeridas</td></tr>
-          <tr><td><code class="inl">graphify-out/graph.json</code></td><td>Dados do grafo, para consulta programática</td></tr>
-        </table>
-
-        <p class="desc" style="margin:14px 0 0">
-          Repositório: <a href="https://github.com/safishamsi/graphify" target="_blank" rel="noopener">safishamsi/graphify</a>
-        </p>
-      </div>
-
-      <!-- Browser Harness -->
-      <div class="card" id="browser-harness">
-        <h3>Browser Harness <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
-        <p class="desc">Liga o Claude diretamente ao teu Chrome real via CDP (Chrome DevTools Protocol), sem abstração —
-          quando falta alguma capacidade, é o <strong>próprio agente que escreve o código necessário</strong> em runtime
-          e vai guardando "skills" por site (fluxos, seletores). Complementa o Playwright/Chrome DevTools MCP: usa-o
-          quando esses se arrastam em sites difíceis ou fluxos muito específicos. Também não segue o padrão
-          <code class="inl">npx skills add</code> — instala-se via Python (<code class="inl">uv</code>).</p>
-
-        <div class="note">
-          <strong>Como instalar:</strong> cola este pedido diretamente numa conversa do Claude Code (não é um comando de terminal):
-        </div>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>Instala ou atualiza o browser-harness para a versão estável mais recente com uv usando
-Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao meu browser.</pre>
-        </div>
-        <p class="desc" style="margin:8px 0 0">Depois, ativa o modo remoto de debug no Chrome e aceita a ligação quando pedido.</p>
-
-        <div class="note warn">
-          Não precisa de API key para uso local (liga-se diretamente ao teu Chrome via
-          <code class="inl">--remote-debugging-port</code>). Existe uma cloud opcional da Browser Use (tier gratuito,
-          3 browsers em simultâneo) só se precisares de correr sem Chrome local.
-        </div>
-
-        <p class="desc" style="margin:14px 0 0">
-          Repositório: <a href="https://github.com/browser-use/browser-harness" target="_blank" rel="noopener">browser-use/browser-harness</a>
-        </p>
-      </div>
-
-      <!-- gstack -->
-      <div class="card" id="gstack">
-        <h3>gstack <span class="tag rec">recomendado</span> <span class="tag opt">instalação diferente</span></h3>
-        <p class="desc">Suite grande de skills para todo o ciclo de engenharia com IA — browser headless
-          rápido (<code class="inl">/browse</code>, mais leve que Playwright/Chrome DevTools MCP para QA
-          e dogfooding), revisão de planos por perfis (CEO, design, eng, devex), ship/deploy
-          (<code class="inl">/ship</code>, <code class="inl">/land-and-deploy</code>, <code class="inl">/canary</code>),
-          debugging sistemático (<code class="inl">/investigate</code>), pentesting autónomo
-          (<code class="inl">/shannon</code>) e uma memória persistente local (<code class="inl">/setup-gbrain</code>)
-          que o browser e as outras skills gstack consultam entre sessões. Um repositório, um instalador.</p>
-        <div class="codeblock">
-          <button class="copy">Copiar</button>
-<pre>git clone --single-branch --depth 1 https://github.com/garrytan/gstack.git ~/.claude/skills/gstack
-cd ~/.claude/skills/gstack && ./setup</pre>
+<span class="cmt"># marketing e conteúdo</span>
+npx skills add https://github.com/coreyhaines31/marketingskills --skill copywriting
+npx skills add https://github.com/coreyhaines31/marketingskills --skill seo-audit
+npx skills add https://github.com/coreyhaines31/marketingskills --skill content-strategy
+npx skills add https://github.com/vyralcontent/content-skills --skill viral-captions-and-ctas</pre>
         </div>
         <div class="note warn">
-          Sobrepõe-se ao Playwright MCP e ao Browser Harness acima para tarefas de browser — usa o
-          gstack para QA/dogfooding rápido do dia a dia, e Playwright/Browser Harness quando precisas de
-          testes E2E formais ou de um site que resiste à automação normal.
+          <strong>Não instales a <code class="inl">full-output-enforcement</code></strong> que vem no mesmo
+          repositório das de design — contradiz directamente os orçamentos de saída dos
+          <a href="#orquestracao">subagentes</a>.
         </div>
-        <p class="desc" style="margin:14px 0 0">
-          Repositório: <a href="https://github.com/garrytan/gstack" target="_blank" rel="noopener">garrytan/gstack</a>
-        </p>
+        <div class="note">
+          <strong>UI/UX Pro Max</strong> — base de dados de design pesquisável (67 estilos, 161 paletas,
+          57 pares de fontes, 25 tipos de gráficos) mais verificações de acessibilidade. Instalação
+          diferente: <code class="inl">npm install -g ui-ux-pro-max-cli</code> e depois
+          <code class="inl">uipro init --ai claude</code> no projeto. Sobrepõe-se às de design acima —
+          usa esta para decisões sistemáticas, as outras para polimento final.
+        </div>
       </div>
 
-      <!-- Skills built-in -->
+      <!-- Codex -->
+      <div class="card" id="codex">
+        <h3>Codex <span class="tag opt">segunda opinião</span></h3>
+        <p class="desc">Liga o Codex CLI da OpenAI ao Claude Code como sub-agente de resgate — para quando
+          o Claude fica bloqueado 2× seguidas na mesma tarefa. Vale pelo que a
+          <a href="#orquestracao">equipa de subagentes</a> não dá: uma família de modelos diferente.</p>
+        <p class="effect">Instala um plugin e um marketplace no Claude Code, e dá-lhe acesso ao Codex CLI local.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude plugin marketplace add openai/codex-plugin-cc
+claude plugin install codex@openai-codex</pre>
+        </div>
+        <div class="note warn">
+          Tem instalação nativa em Windows, mas <strong>valida CLI, permissões e sandbox num projeto
+          secundário</strong> antes de lhe permitires execução autónoma. Se falhar, aplica o fix
+          directamente em vez de insistir.
+        </div>
+      </div>
+
+      <!-- Filesystem -->
       <div class="card">
-        <h3>Skills já disponíveis no Claude Code</h3>
-        <p class="desc">Algumas capacidades são <em>skills</em> nativas — invocas com <code class="inl">/</code>:</p>
-        <table>
-          <tr><th>Skill</th><th>Para quê</th></tr>
-          <tr><td><code class="inl">/init</code></td><td>Gerar o <code class="inl">CLAUDE.md</code> com a documentação do projeto</td></tr>
-          <tr><td><code class="inl">/code-review</code></td><td>Rever o diff atual à procura de bugs e simplificações</td></tr>
-          <tr><td><code class="inl">/security-review</code></td><td>Revisão de segurança das alterações da branch</td></tr>
-          <tr><td><code class="inl">/deep-research</code></td><td>Investigação multi-fonte com verificação e fontes citadas</td></tr>
-        </table>
+        <h3>Filesystem <span class="tag opt">pontual</span></h3>
+        <p class="desc">Acesso de leitura/escrita a uma pasta específica fora do projeto atual — para
+          partilhar ficheiros entre projetos.</p>
+        <p class="effect">Dá ao agente acesso de escrita a uma pasta inteira do disco, fora do projeto.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add filesystem -s project -- npx -y @modelcontextprotocol/server-filesystem D:\HERD</pre>
+        </div>
+        <div class="note warn">
+          Aponta à pasta mais estreita que resolve o problema, não à raiz do disco. E desliga quando a
+          tarefa acabar.
+        </div>
       </div>
       <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
+    <!-- COMO MEDIR -->
+    <section id="medir">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Como medir</h2>
+      <p class="lead">Duas ferramentas, duas perguntas diferentes.</p>
+
+      <table>
+        <tr><th>Comando</th><th>Responde a</th></tr>
+        <tr><td><code class="inl">/usage</code></td><td><strong>O que já gastaste.</strong> Barras do plano com a repartição por skills, subagentes, plugins e servidores MCP. <code class="inl">d</code> / <code class="inl">w</code> alterna entre 24 horas e 7 dias.</td></tr>
+        <tr><td><code class="inl">/context all</code></td><td><strong>O que está a ocupar a janela agora.</strong> É aqui que se vê, sem teorizar, o que cada MCP, skill e ficheiro está mesmo a custar nesta sessão.</td></tr>
+      </table>
+
+      <div class="note warn">
+        <strong>Tira uma leitura de uma semana normal antes de aplicar seja o que for.</strong> Sem
+        baseline, daqui a duas semanas não se sabe se melhorou ou se só mudou o sítio onde se gasta.
+        Corre os dois comandos numa sessão de <em>trabalho real</em>, não numa sessão vazia — uma sessão
+        vazia mede o arranque, não o uso.
+      </div>
+
+      <p class="desc">Dois números a vigiar depois:</p>
+      <ol class="steps">
+        <li>
+          <h4>Volume devolvido por chamada a <code class="inl">Agent</code></h4>
+          <p class="desc" style="margin:0 0 8px">Agregando os <code class="inl">.jsonl</code> em
+            <code class="inl">~/.claude/projects/</code>. Com os orçamentos aplicados, a mediana deve
+            aproximar-se de <strong>1k tokens</strong> — mas o número que interessa é o
+            <strong>máximo</strong>: é a cauda de relatórios gigantes que faz o estrago, não a mediana.</p>
+          <div class="codeblock" data-raw>
+            <button class="copy">Copiar</button>
+<pre>$logs = Get-ChildItem "$env:USERPROFILE\.claude\projects" -Recurse -Filter *.jsonl |
+        Sort-Object LastWriteTime -Desc | Select-Object -First 150
+$sizes = @()
+foreach ($log in $logs) {
+  foreach ($line in [System.IO.File]::ReadLines($log.FullName)) {
+    if ($line -notlike '*"toolUseResult"*') { continue }
+    try { $entry = $line | ConvertFrom-Json } catch { continue }
+    if ($null -eq $entry.toolUseResult) { continue }
+    $json = $entry.toolUseResult | ConvertTo-Json -Depth 8 -Compress
+    if ($json -notlike '*subagent*' -and $entry.message.content.name -ne 'Task') { continue }
+    $sizes += $json.Length
+  }
+}
+$sorted = $sizes | Sort-Object
+"n       : $($sizes.Count)"
+"mediana : $($sorted[[int]($sizes.Count/2)])"
+"media   : $([math]::Round(($sizes|Measure-Object -Average).Average,0))"
+"p90     : $($sorted[[int]($sizes.Count*0.9)])"
+"maximo  : $($sorted[-1])"</pre>
+          </div>
+        </li>
+        <li>
+          <h4>Medidor semanal do Fable</h4>
+          <p class="desc" style="margin:0">O tecto técnico são <strong>50%</strong> do limite semanal.
+            Como referência operacional: se passar dos <strong>~20%</strong> numa semana normal, é sinal
+            de que o <code class="inl">architect</code> está a ser chamado para coisas que não são
+            decisões — e o problema estará nas regras de delegação, não no modelo. Ajusta o número ao teu
+            ritmo de trabalho.</p>
+        </li>
+      </ol>
+    </section>
+
     <!-- VERIFICAR -->
     <section id="verificar">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>4 · Verificar tudo</h2>
-      <p class="lead">Checklist final depois de instalar — confirma que cada peça responde.</p>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Verificar tudo</h2>
+      <p class="lead">Depois de instalar, reinicia o Claude Code e confirma que cada peça responde.
+        Verificação que não corre vale zero — os comandos abaixo são PowerShell.</p>
       <ol class="steps">
+        <li>
+          <h4>Subagentes com os modelos certos</h4>
+          <div class="codeblock"><button class="copy">Copiar</button><pre>Select-String -Path "$env:USERPROFILE\.claude\agents\*.md" -Pattern '^model:|^tools:'</pre></div>
+          <code class="inl">architect: fable</code>, <code class="inl">reviewer: opus</code>, e o
+          <code class="inl">tools:</code> do <code class="inl">reviewer</code> <strong>sem</strong>
+          <code class="inl">Bash</code>. Confirma também em <code class="inl">/agents</code>.
+        </li>
+        <li>
+          <h4>Nenhum segredo em claro</h4>
+          <div class="codeblock" data-raw><button class="copy">Copiar</button><pre>'settings.json','.mcp.json','CLAUDE.md' | ForEach-Object {
+  $p = "$env:USERPROFILE\.claude\$_"
+  if (Test-Path $p) { "$_ : " + @(Select-String -Path $p -Pattern 'ghp_','github_pat_','sk-ant-').Count }
+}
+"claude.json x-api-key : " + @(Select-String -Path "$env:USERPROFILE\.claude.json" -Pattern 'x-api-key').Count</pre></div>
+          Tudo a <code class="inl">0</code>. Scan <strong>por ficheiro nomeado</strong> — um
+          <code class="inl">grep -r</code> a <code class="inl">~/.claude</code> inteiro arrasta-se
+          minutos por causa dos <code class="inl">.jsonl</code> de sessão.
+          Tokens fine-grained começam por <code class="inl">github_pat_</code>, não
+          <code class="inl">ghp_</code>: procura os dois.
+        </li>
         <li>
           <h4>MCP ligado</h4>
           <div class="codeblock"><button class="copy">Copiar</button><pre>claude mcp list</pre></div>
-          Cada servidor deve aparecer com <code class="inl">✓ connected</code>.
+          Cada servidor com <code class="inl">✓ Connected</code>. Numa máquina só com a secção A feita,
+          isto deve ser <strong>uma linha</strong>: o Context7.
         </li>
         <li>
           <h4>Skills instaladas</h4>
           <div class="codeblock"><button class="copy">Copiar</button><pre>npx skills list</pre></div>
-          Lista as skills instaladas no projeto e globalmente.
+          Confirma o registo, não só as pastas — remover uma skill apagando a pasta pode deixar a entrada
+          no <code class="inl">skills-lock.json</code>.
+        </li>
+        <li>
+          <h4>Segredos no histórico do Git</h4>
+          <div class="codeblock" data-raw><button class="copy">Copiar</button><pre>git log --all -p | Select-String -Pattern 'ghp_[A-Za-z0-9]','github_pat_','sk-ant-'
+git log --all --diff-filter=A --name-only --pretty=format: | Sort-Object -Unique |
+  Select-String -Pattern '\.env$','\.mcp\.json$'</pre></div>
+          Se algum <code class="inl">.env</code> ou <code class="inl">.mcp.json</code> alguma vez foi
+          commitado, revogar a chave é obrigatório — apagar o ficheiro não a tira do histórico.
         </li>
       </ol>
     </section>
 
     <!-- PROBLEMAS -->
     <section id="problemas">
-      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>5 · Problemas comuns</h2>
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Problemas comuns</h2>
       <div class="card">
         <table>
-          <tr><th>Sintoma</th><th>Solução</th></tr>
+          <tr><th>Sintoma</th><th>Causa e solução</th></tr>
+          <tr>
+            <td><code class="inl">npx</code> falha com <code class="inl">Class extends value undefined is not a constructor or null</code></td>
+            <td>Não é a cache nem o pacote: é uma <strong>árvore do Node incoerente</strong>. Acontece com o
+                nvm do Herd quando uma pasta de versão (ex.: <code class="inl">nvm\v20.20.2</code>) foi
+                sobreposta por binários de outra versão — o <code class="inl">node.exe</code> lá dentro é
+                de outra major, e o <code class="inl">minizlib</code> do npm rebenta no
+                <code class="inl">require</code>. Confirma com
+                <code class="inl">&amp; "$env:USERPROFILE\.config\herd\bin\nvm\v20.20.2\node.exe" --version</code>:
+                se não devolver 20.x, é isso. Contorna correndo o comando com outra versão
+                (<code class="inl">nvm use 22.23.1</code>), ou reinstala a versão do nvm.
+                <strong>Parte também o Chrome DevTools MCP e tudo o que arranque por
+                <code class="inl">npx</code>.</strong></td>
+          </tr>
+          <tr>
+            <td>Os subagentes ignoram o <code class="inl">model:</code> dos ficheiros</td>
+            <td>A variável <code class="inl">CLAUDE_CODE_SUBAGENT_MODEL</code> sobrepõe-se a todos.
+                <code class="inl">$env:CLAUDE_CODE_SUBAGENT_MODEL</code> para ver,
+                <code class="inl">Remove-Item Env:CLAUDE_CODE_SUBAGENT_MODEL</code> para remover.</td>
+          </tr>
+          <tr>
+            <td>Alterei um ficheiro em <code class="inl">~/.claude/agents/</code> e nada mudou</td>
+            <td>São carregados no <strong>arranque</strong> da sessão. Reinicia. Só as alterações feitas
+                pela interface <code class="inl">/agents</code> entram de imediato. O mesmo vale para o
+                <code class="inl">CLAUDE.md</code>.</td>
+          </tr>
+          <tr>
+            <td><code class="inl">model: fable</code> não é reconhecido</td>
+            <td>Requer Claude Code <strong>2.1.170+</strong>. Corre <code class="inl">claude update</code>
+                e reinicia.</td>
+          </tr>
+          <tr>
+            <td><code class="inl">gbrain ✗ Failed to connect</code></td>
+            <td>Processo <code class="inl">gbrain serve</code> órfão a segurar o lock do PGLite.
+                <code class="inl">Get-Process gbrain | Stop-Process -Force</code> e volta a correr
+                <code class="inl">claude mcp list</code>. O binário arranca bem sozinho — o que falha é o
+                segundo a tentar o mesmo lock.</td>
+          </tr>
+          <tr>
+            <td><code class="inl">npx skills add</code> diz <code class="inl">PromptScript does not support global skill installation</code></td>
+            <td><strong>A skill instalou à mesma.</strong> O <code class="inl">SKILL.md</code> entra em
+                <code class="inl">~/.claude/skills/</code>; o que falha é um PromptScript acessório do
+                mesmo pacote. Confirma com <code class="inl">npx skills list</code>.</td>
+          </tr>
           <tr>
             <td>MCP fica <code class="inl">✗ failed</code></td>
-            <td>Confirma que o <code class="inl">npx</code> funciona; em Windows pode ser preciso
-                <code class="inl">cmd /c npx ...</code>. Vê logs com <code class="inl">claude --debug</code>.</td>
+            <td>Confirma primeiro que o <code class="inl">npx</code> funciona (linha 1 desta tabela).
+                Em Windows pode ser preciso <code class="inl">cmd /c npx ...</code>. Logs com
+                <code class="inl">claude --debug</code>.</td>
           </tr>
           <tr>
             <td><code class="inl">claude</code> não é reconhecido</td>
-            <td>Reinstala global: <code class="inl">npm install -g @anthropic-ai/claude-code</code> e reabre o terminal.</td>
+            <td>Reinstala global: <code class="inl">npm install -g @anthropic-ai/claude-code</code> e
+                reabre o terminal.</td>
           </tr>
           <tr>
             <td>GitHub MCP dá 401</td>
-            <td>Token inválido/expirado. Gera novo PAT com scopes <code class="inl">repo</code> e <code class="inl">read:org</code>.</td>
+            <td>Token inválido/expirado. Gera novo PAT com scopes <code class="inl">repo</code> e
+                <code class="inl">read:org</code> — e não o metas no
+                <code class="inl">settings.json</code>.</td>
           </tr>
           <tr>
             <td>Quero remover um servidor MCP</td>
-            <td><code class="inl">claude mcp remove &lt;nome&gt;</code></td>
-          </tr>
-          <tr>
-            <td>Ver detalhe de um servidor MCP</td>
-            <td><code class="inl">claude mcp get &lt;nome&gt;</code></td>
+            <td><code class="inl">claude mcp remove &lt;nome&gt;</code> ·
+                detalhe com <code class="inl">claude mcp get &lt;nome&gt;</code></td>
           </tr>
         </table>
       </div>

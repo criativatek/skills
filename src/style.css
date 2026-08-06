@@ -320,6 +320,17 @@ table.cmd-table td { vertical-align: middle }
 .note.warn { border-color: var(--warn) }
 .note strong { color: var(--fg) }
 
+/* Linha "o que isto faz à máquina", por cima de cada bloco executável.
+   A página é colada em agentes — tem de haver onde parar antes de correr. */
+/* Indentação pendurada em vez de flex: um item flex não encolhe abaixo do
+   conteúdo (min-width:auto), e os paths longos transbordavam a 375px. */
+.effect {
+  margin: 12px 0 8px; font-size: .84rem; color: var(--fg-faint);
+  padding-left: 16px; text-indent: -16px;
+}
+.effect::before { content: "▸ "; color: var(--accent-3); font-weight: 700 }
+.effect code.inl { font-size: .8rem; text-indent: 0 }
+
 /* ---------- steps ---------- */
 ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0 }
 ol.steps > li { position: relative; padding: 0 0 18px 44px; margin: 0 }
@@ -340,7 +351,11 @@ tbody tr, table:not(.cmd-table) tr {
   transition: background var(--dur-fast) var(--ease);
 }
 table tr:hover td { background: rgba(255,255,255,.02) }
-code.inl { font-family: var(--mono); font-size: .85em; background: var(--bg-soft); padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border) }
+code.inl {
+  font-family: var(--mono); font-size: .85em; background: var(--bg-soft);
+  padding: 1px 6px; border-radius: 5px; border: 1px solid var(--border);
+  overflow-wrap: break-word;
+}
 
 footer {
   border-top: 1px solid var(--border); padding: 32px 0; color: var(--fg-faint); font-size: .85rem;
@@ -377,6 +392,9 @@ footer {
 
 @media (max-width: 560px) {
   .filter-label { width: 100%; margin-bottom: 2px }
+  /* As tabelas de 3 colunas não cabem em 375px. Rolam dentro da própria caixa
+     em vez de empurrar a página inteira para o lado. */
+  main table { display: block; overflow-x: auto }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -131,7 +131,7 @@ var searchCount = document.getElementById('searchCount')
 var priorityChips = document.querySelectorAll('[data-filter-priority]')
 var categoryChips = document.querySelectorAll('[data-filter-cat]')
 var allCards = Array.from(document.querySelectorAll('main .card'))
-var filterableSections = ['prereq', 'mcp', 'plugins', 'problemas']
+var filterableSections = ['maquina', 'projeto', 'pontual', 'problemas']
 
 var filterState = { query: '', priority: 'all', category: 'all' }
 var wasFilterActive = false
@@ -279,12 +279,22 @@ function jumpFlash (id) {
   }, reduceMotion ? 0 : 550)
 }
 
-document.querySelectorAll('nav.toc a, .rank-list a').forEach(function (a) {
-  a.addEventListener('click', function () {
+document.querySelectorAll('nav.toc a, .rank-list a, main table a[href^="#"]').forEach(function (anchor) {
+  anchor.addEventListener('click', function () {
     resetFilters()
-    var id = a.getAttribute('href').replace('#', '')
-    if (a.hasAttribute('data-jump')) jumpFlash(id)
+    var id = anchor.getAttribute('href').replace('#', '')
+    if (anchor.hasAttribute('data-jump')) jumpFlash(id)
   })
 })
+
+// As secções passaram de #prereq/#mcp/#plugins para #maquina/#projeto/#pontual na v2.
+// Os anchors antigos circulam desde a v1 — redireciona em vez de deixar o link partido.
+var legacyAnchors = { prereq: 'maquina', mcp: 'maquina', plugins: 'maquina' }
+function redirectLegacyHash () {
+  var legacy = legacyAnchors[location.hash.replace('#', '')]
+  if (legacy) location.replace('#' + legacy)
+}
+window.addEventListener('hashchange', redirectLegacyHash)
+redirectLegacyHash()
 
 applyFilters()
