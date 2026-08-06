@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.1 — 2026-08-06
+- CI: `actions/checkout` e `actions/setup-node` de v4 para v5. O runner já avisava que o Node 20
+  destas actions está deprecado e a ser forçado para Node 24 — o deploy passava, mas partia quando
+  removessem o fallback.
+- CI: Node do build de 20 para 22 (LTS). O 20 chegou a fim de vida.
+
 ## 2.0.0 — 2026-08-06
 
 Reorganização do guia **por frequência** em vez de por tipo de ferramenta. A estrutura antiga
