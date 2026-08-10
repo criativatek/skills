@@ -1,6 +1,6 @@
 {
   "name": "skills-criativatek",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Guia de setup para programadores CriativaTek — organizado por frequência: por máquina, por projeto, pontual",
   "scripts": {
     "dev": "vite",

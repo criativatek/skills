@@ -996,7 +996,8 @@ setx GOOGLE_AI_API_KEY "a_tua_chave"</pre>
           imagens/dia grátis» é só do
           <a href="https://aistudio.google.com" target="_blank" rel="noopener">AI Studio web</a>, não da
           API que esta skill usa. Sem <em>billing</em> activo, cada geração devolve
-          <code class="inl">429 · limit: 0</code>.
+          <code class="inl">429 · limit: 0</code>. <strong>Se já pagas ChatGPT Plus, não montes isto</strong> —
+          o <a href="#codex">Codex</a> gera imagens dentro da subscrição que já tens.
         </div>
         <div class="note">
           Preço por imagem (com billing): Nano Banana (<code class="inl">gemini-2.5-flash-image</code>)
@@ -1046,7 +1047,7 @@ npx skills add https://github.com/vyralcontent/content-skills --skill viral-capt
 
       <!-- Codex -->
       <div class="card" id="codex">
-        <h3>Codex <span class="tag opt">segunda opinião</span></h3>
+        <h3>Codex — resgate e imagens <span class="tag opt">segunda opinião</span></h3>
         <p class="desc">Liga o Codex CLI da OpenAI ao Claude Code como sub-agente de resgate — para quando
           o Claude fica bloqueado 2× seguidas na mesma tarefa. Vale pelo que a
           <a href="#orquestracao">equipa de subagentes</a> não dá: uma família de modelos diferente.</p>
@@ -1060,6 +1061,30 @@ claude plugin install codex@openai-codex</pre>
           Tem instalação nativa em Windows, mas <strong>valida CLI, permissões e sandbox num projeto
           secundário</strong> antes de lhe permitires execução autónoma. Se falhar, aplica o fix
           directamente em vez de insistir.
+        </div>
+        <p class="desc" style="margin:14px 0 4px"><strong>Geração de imagem sem pagar à parte.</strong>
+          O Codex CLI traz a skill <code class="inl">$imagegen</code> (gpt-image-2) embutida — gera e edita
+          PNG para heros, mockups de UI, product shots e assets de site. Está <strong>incluída na subscrição
+          ChatGPT Plus/Pro/Business</strong>: sem API key e sem billing separado, ao contrário do
+          <a href="#banana">Banana</a>. Não precisa do plugin acima — basta o CLI autenticado com a conta
+          ChatGPT (<code class="inl">codex login</code>).</p>
+        <p class="effect">Escreve ficheiros de imagem na pasta onde corre.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>codex exec -s workspace-write --skip-git-repo-check 'Gera um hero 16:9 de &lt;descrição&gt;. Guarda em ./public/img/hero.png. Usa a skill $imagegen.'</pre>
+        </div>
+        <div class="note">
+          <strong>Diz o caminho de destino dentro do prompt.</strong> Sem isso o PNG fica em
+          <code class="inl">~/.codex/generated_images/&lt;uuid-da-sessão&gt;/</code> e tens de o ir buscar à mão.
+          E usa <strong>plicas simples</strong> — em bash, dentro de aspas duplas o
+          <code class="inl">$imagegen</code> expande para vazio e a skill nunca é chamada.
+        </div>
+        <div class="note warn">
+          Turnos de imagem gastam a quota do Plus <strong>3 a 5× mais depressa</strong> que os de texto —
+          para lotes grandes, define <code class="inl">OPENAI_API_KEY</code> e passas a preço de API em vez
+          de queimar a quota partilhada com o trabalho de código. O gpt-image-2 <strong>não faz
+          transparência</strong>: ícones e logos com alpha continuam a ser SVG. O 4K está em beta instável —
+          fica-te pelo 2K. Gradientes, padrões e blobs não se geram — fazem-se em CSS.
         </div>
       </div>
 

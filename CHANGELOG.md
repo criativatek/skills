@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0 — 2026-08-10
+- Codex: card passa a cobrir também **geração de imagem**. O Codex CLI traz a skill `$imagegen`
+  (gpt-image-2) embutida e incluída na subscrição ChatGPT Plus/Pro/Business — sem API key, sem
+  billing separado. Com o comando `codex exec`, o caminho de destino obrigatório no prompt (senão
+  o PNG fica em `~/.codex/generated_images/<uuid>/`) e o detalhe das plicas simples em bash.
+- Codex: avisos de custo e limite — turnos de imagem queimam a quota do Plus 3–5× mais depressa que
+  os de texto; sem transparência nativa (alpha continua a ser SVG); 4K em beta instável.
+- Banana: a nota do «sem tier grátis» passa a mandar quem já paga ChatGPT Plus para o Codex, em vez
+  de o deixar montar billing na Google para o mesmo resultado.
+
 ## 2.0.2 — 2026-08-06
 - Problemas comuns: a entrada do `Class extends value undefined` estava incompleta. Não parte só o
   `npx` — parte **toda a camada de rede do npm**: `npm view`, `npm install -g`, `claude update` e
