@@ -46,8 +46,12 @@
   <div class="wrap toolbar-inner">
     <label class="search-box" for="siteSearch">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="siteSearch" aria-label="Pesquisar comandos, MCP e skills" placeholder="Pesquisar comandos, MCP, skills… ex: laravel, sql, subagentes" autocomplete="off">
+      <input type="search" id="siteSearch" aria-label="Pesquisar skills, MCP e comandos"
+             placeholder="Pesquisar skills, MCP, comandos… ex: ui-ux-pro-max, mysql, subagentes"
+             autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"
+             aria-controls="searchSuggest">
       <kbd class="search-kbd">/</kbd>
+      <ul class="suggest" id="searchSuggest" role="listbox" aria-label="Skills e MCP encontrados" hidden></ul>
     </label>
     <div class="filter-group" role="group" aria-label="Filtrar por prioridade">
       <span class="filter-label">Prioridade</span>
@@ -83,10 +87,14 @@
     <a href="#pontual">C · Conforme a necessidade</a>
     <a href="#medir">Como medir</a>
     <a href="#verificar">Verificar tudo</a>
+    <a href="#catalogo">Catálogo A–Z</a>
     <a href="#problemas">Problemas comuns</a>
   </nav>
 
   <main>
+
+    <p class="no-match" id="noResults" hidden>Sem resultados para <b></b> — tenta outro termo,
+      ou vê o <a href="#catalogo">catálogo A–Z</a> com tudo o que este guia instala.</p>
 
     <!-- POR ONDE COMEÇAR -->
     <section id="comecar" class="rank-section">
@@ -635,7 +643,6 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
           predefinição</strong> e guarda esta para os casos em que a predefinida falha.
         </div>
       </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- B · POR PROJETO -->
@@ -796,7 +803,6 @@ npx skills add https://github.com/mattpocock/skills --skill tdd</pre>
           turno de cada sessão.
         </div>
       </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- C · CONFORME A NECESSIDADE -->
@@ -1103,7 +1109,6 @@ claude plugin install codex@openai-codex</pre>
           tarefa acabar.
         </div>
       </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
     <!-- COMO MEDIR -->
@@ -1216,6 +1221,30 @@ git log --all --diff-filter=A --name-only --pretty=format: | Sort-Object -Unique
     </section>
 
     <!-- PROBLEMAS -->
+    <section id="catalogo">
+      <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Catálogo A–Z</h2>
+      <p class="lead">Tudo o que este guia instala, por ordem alfabética — lido dos próprios comandos
+        das secções acima, por isso nunca fica dessincronizado. A caixa de pesquisa filtra esta
+        tabela como filtra o resto da página.</p>
+      <div class="card" id="catalogo-card">
+        <h3>Índice de skills, MCP e ferramentas <span class="tag" id="catalogoCount"></span></h3>
+        <div class="filter-group catalog-kinds" role="group" aria-label="Filtrar o catálogo por tipo">
+          <span class="filter-label">Tipo</span>
+          <button type="button" class="chip is-active" data-filter-kind="all" aria-pressed="true">Todos</button>
+          <button type="button" class="chip" data-filter-kind="skill" aria-pressed="false">Skill</button>
+          <button type="button" class="chip" data-filter-kind="mcp" aria-pressed="false">MCP</button>
+          <button type="button" class="chip" data-filter-kind="plugin" aria-pressed="false">Plugin</button>
+          <button type="button" class="chip" data-filter-kind="ferramenta" aria-pressed="false">Ferramenta</button>
+        </div>
+        <div class="catalog-scroll">
+          <table class="catalog">
+            <thead><tr><th>Nome</th><th>Tipo</th><th>Instalação</th><th>Onde</th></tr></thead>
+            <tbody id="catalogoBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section id="problemas">
       <h2><svg class="sec-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Problemas comuns</h2>
       <div class="card">
@@ -1310,7 +1339,6 @@ git log --all --diff-filter=A --name-only --pretty=format: | Sort-Object -Unique
           </tr>
         </table>
       </div>
-      <p class="no-match" hidden>Sem resultados nesta secção — tenta outro termo ou limpa os filtros.</p>
     </section>
 
   </main>

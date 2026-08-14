@@ -1,11 +1,13 @@
 {
   "name": "skills-criativatek",
-  "version": "2.1.0",
+  "version": "2.2.0",
+  "type": "module",
   "description": "Guia de setup para programadores CriativaTek — organizado por frequência: por máquina, por projeto, pontual",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test \"src/**/*.test.js\""
   },
   "devDependencies": {
     "vite": "^6.0.0"

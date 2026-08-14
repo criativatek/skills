@@ -1,5 +1,34 @@
 # Changelog
 
+## 2.2.0 — 2026-08-14
+- Pesquisa: passa a encontrar skills pelo nome. Escrever `ui-ux-pro-max` não dava nada porque o
+  índice era uma lista de selectores escolhidos à mão (`h3`, `.desc`, `h4`, `.note`,
+  `.codeblock pre`) e a comparação era `indexOf` sobre `toLowerCase()`. Agora indexa o cartão
+  inteiro e normaliza os dois lados: sem acentos e com `-` `_` `/` `.` tratados como separador.
+  `ui-ux-pro-max`, `uiuxpromax`, `ui ux pro max`, `UI/UX Pro Max` e `sessao` chegam todos ao sítio.
+- Pesquisa: tolerância a gralhas (`playwrigth`, `ui-ux-pro-mx`) por distância de edição contra a
+  melhor janela do nome — 1 edição entre 5 e 8 caracteres, 2 acima. Abaixo de 5 não há tolerância:
+  com 4 letras quase tudo fica a uma edição de quase tudo.
+- Pesquisa: um identificador escrito junto conta como um termo. `ui-ux-pro-max` deixou de bater em
+  cartões longos só por terem `ui`, `ux`, `pro` e `max` espalhados pelo texto.
+- Pesquisa: dropdown de sugestões com o nome da skill/MCP, o tipo, e o cartão onde vive. Setas,
+  Enter e Escape; activar salta para o cartão e dá-lhe um flash.
+- Pesquisa: o termo encontrado fica realçado no resultado — incluindo com acentos diferentes dos
+  escritos, e o nome da entidade quando a correspondência foi aproximada.
+- Pesquisa: escrever repõe os chips de prioridade e frequência. Estavam em AND com a query e
+  davam zero resultados sem dizer porquê.
+- Pesquisa: com filtro activo escondem-se as secções sem resultados e o conteúdo fora dos cartões
+  (leads, tabelas de introdução, listas de passos). Antes ficava no ecrã uma tabela inteira sem
+  relação com o termo, entre o utilizador e o resultado.
+- Pesquisa: estado vazio explícito com atalho para o catálogo, em vez de uma página em branco com
+  «0 resultados» na barra.
+- Pesquisa: cartões e notas que nunca tinham entrado no ecrã ficavam em `opacity: 0` ao serem
+  desfiltrados — o reveal é forçado no que passa a estar visível.
+- **Catálogo A–Z** — secção nova com as 44 skills, MCP, plugins e ferramentas que o guia instala,
+  com o comando e o link para o cartão. É gerado a partir dos próprios comandos da página, por
+  isso não pode ficar dessincronizado. Filtro por tipo.
+- Motor de correspondência isolado em `src/search.js`, sem DOM, com testes: `npm test`.
+
 ## 2.1.0 — 2026-08-10
 - Codex: card passa a cobrir também **geração de imagem**. O Codex CLI traz a skill `$imagegen`
   (gpt-image-2) embutida e incluída na subscrição ChatGPT Plus/Pro/Business — sem API key, sem
