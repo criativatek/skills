@@ -34,8 +34,8 @@
     </div>
     <div class="hero-stats" id="heroStats">
       <div class="stat"><strong data-count="3">0</strong><span>frequências</span></div>
-      <div class="stat"><strong data-count="7">0</strong><span>skills globais</span></div>
-      <div class="stat"><strong data-count="1">0</strong><span>MCP transversal</span></div>
+      <div class="stat"><strong data-count="8">0</strong><span>skills globais</span></div>
+      <div class="stat"><strong data-count="1">0</strong><span>MCP por máquina</span></div>
       <div class="stat"><strong data-count="100">0</strong><span>% comandos copiáveis</span></div>
     </div>
   </div>
@@ -83,6 +83,7 @@
     <a href="#claudemd" class="sub">↳ CLAUDE.md global</a>
     <a href="#higiene" class="sub">↳ Higiene de sessão</a>
     <a href="#skills-globais" class="sub">↳ Skills globais</a>
+    <a href="#task-observer" class="sub">↳ Task Observer</a>
     <a href="#projeto">B · Por projeto</a>
     <a href="#pontual">C · Conforme a necessidade</a>
     <a href="#medir">Como medir</a>
@@ -116,21 +117,22 @@
         conteúdo, o agente executa a versão nova sem ninguém rever.
       </div>
 
-      <p class="lead">Se só tiveres 10 minutos numa máquina nova, fica-te por estas <strong>6</strong>,
+      <p class="lead">Se só tiveres 10 minutos numa máquina nova, fica-te por estas <strong>7</strong>,
         por ordem de impacto. O resto fica para quando precisares.</p>
       <ol class="rank-list">
         <li><a href="#orquestracao" data-jump><span class="rank-n">1</span><span class="rank-body"><strong>Orquestração de modelos</strong><span class="tag req">obrigatório</span><em>Os 4 subagentes, cada um com o modelo e o orçamento de saída certos.</em></span></a></li>
         <li><a href="#claudemd" data-jump><span class="rank-n">2</span><span class="rank-body"><strong>CLAUDE.md global</strong><span class="tag req">obrigatório</span><em>Diz ao agente quando delegar — por excepção, não por sistema.</em></span></a></li>
-        <li><a href="#skills-globais" data-jump><span class="rank-n">3</span><span class="rank-body"><strong>Skills globais</strong><span class="tag rec">recomendado</span><em>Sete. Tudo o resto instala-se por projeto.</em></span></a></li>
-        <li><a href="#context7" data-jump><span class="rank-n">4</span><span class="rank-body"><strong>Context7</strong><span class="tag rec">recomendado</span><em>O único MCP que compensa ter em todos os projetos.</em></span></a></li>
-        <li><a href="#higiene" data-jump><span class="rank-n">5</span><span class="rank-body"><strong>Higiene de sessão</strong><span class="tag rec">recomendado</span><em>Quatro sessões de 25 turnos custam uma fracção de uma de 100.</em></span></a></li>
-        <li><a href="#gstack" data-jump><span class="rank-n">6</span><span class="rank-body"><strong>gstack</strong><span class="tag rec">recomendado</span><em>Browser headless, ship/deploy, revisão de planos e memória local.</em></span></a></li>
+        <li><a href="#task-observer" data-jump><span class="rank-n">3</span><span class="rank-body"><strong>Task Observer</strong><span class="tag req">obrigatório</span><em>Regista o que aprendeste à força. Cara: ~7k tokens por turno.</em></span></a></li>
+        <li><a href="#skills-globais" data-jump><span class="rank-n">4</span><span class="rank-body"><strong>Skills globais</strong><span class="tag rec">recomendado</span><em>Sete. Tudo o resto instala-se por projeto.</em></span></a></li>
+        <li><a href="#context7" data-jump><span class="rank-n">5</span><span class="rank-body"><strong>Context7</strong><span class="tag rec">recomendado</span><em>Docs actuais de qualquer biblioteca. O único MCP que se instala uma vez por máquina.</em></span></a></li>
+        <li><a href="#higiene" data-jump><span class="rank-n">6</span><span class="rank-body"><strong>Higiene de sessão</strong><span class="tag rec">recomendado</span><em>Quatro sessões de 25 turnos custam uma fracção de uma de 100.</em></span></a></li>
+        <li><a href="#gstack" data-jump><span class="rank-n">7</span><span class="rank-body"><strong>gstack</strong><span class="tag rec">recomendado</span><em>Browser headless, ship/deploy, revisão de planos e memória local.</em></span></a></li>
       </ol>
 
       <table>
         <tr><th>Secção</th><th>Frequência</th><th>O que entra</th></tr>
-        <tr><td><a href="#maquina">A · Uma vez por máquina</a></td><td>uma vez</td><td>Claude Code, subagentes, <code class="inl">CLAUDE.md</code> global, MCP transversal, skills globais</td></tr>
-        <tr><td><a href="#projeto">B · Por projeto</a></td><td>a cada projeto novo</td><td>Laravel Boost, MySQL, skills de stack, hook de sessão, <code class="inl">CLAUDE.md</code> do projeto</td></tr>
+        <tr><td><a href="#maquina">A · Uma vez por máquina</a></td><td>uma vez</td><td>Claude Code, subagentes, <code class="inl">CLAUDE.md</code> global, Context7, skills globais, Task Observer</td></tr>
+        <tr><td><a href="#projeto">B · Por projeto</a></td><td>a cada projeto novo</td><td>Motion, Laravel Boost, MySQL, skills de stack, hook de sessão, <code class="inl">CLAUDE.md</code> do projeto</td></tr>
         <tr><td><a href="#pontual">C · Conforme a necessidade</a></td><td>pontual</td><td>Playwright, Firecrawl, Graphify, 21st.dev, marketing, design, imagem/vídeo</td></tr>
       </table>
     </section>
@@ -447,10 +449,12 @@ as sessões.</pre>
 
       <!-- Context7 -->
       <div class="card" id="context7">
-        <h3>Context7 <span class="tag rec">recomendado</span> <span class="tag">único MCP transversal</span></h3>
+        <h3>Context7 <span class="tag rec">recomendado</span> <span class="tag">único MCP a escopo de utilizador</span></h3>
         <p class="desc">Injeta documentação <em>atualizada</em> de qualquer biblioteca (Tailwind, Vue,
           React, Laravel, Node…) diretamente no contexto. Acaba com respostas baseadas em versões antigas.
-          É o único servidor que compensa ter ligado em quase todos os projetos.</p>
+          É o único servidor que se instala <strong>uma vez por máquina</strong> — o
+          <a href="#motion">Motion</a> também entra em todos os projetos, mas a
+          <code class="inl">-s project</code>, com o resto da secção B.</p>
         <p class="effect">Regista um servidor MCP remoto em <em>user scope</em> — fica activo em todos os projetos.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
@@ -479,7 +483,8 @@ as sessões.</pre>
         <p class="desc">De cada skill instalada fica <strong>sempre carregado o nome e a
           descrição</strong> — é assim que o agente sabe que existe. O corpo só entra quando é invocada,
           e aí fica até ao fim da sessão. Global só para o que é transversal a quase todos os projetos:
-          <strong>sete</strong>. Stack, Playwright, design e marketing instalam-se por projeto.</p>
+          <strong>sete</strong> aqui, mais a <a href="#task-observer">Task Observer</a> a seguir — oito ao
+          todo. Stack, Playwright, design e marketing instalam-se por projeto.</p>
         <p class="effect">Escreve pastas em <code class="inl">~/.claude/skills/</code> e regista-as em
           <code class="inl">~/.claude/skills-lock.json</code>. Código de terceiros que corre com as
           permissões do agente.</p>
@@ -517,6 +522,43 @@ npx skills add https://github.com/obra/superpowers --skill verification-before-c
           <code class="inl">dispatching-parallel-agents</code> (empurram para delegar por sistema, quando
           a configuração acima delega por excepção). Se já os tens instalados, remove-os — uma das
           instruções vai perder e não controlas qual.
+        </div>
+      </div>
+
+      <!-- Task Observer -->
+      <div class="card" id="task-observer">
+        <h3>Task Observer <span class="tag req">obrigatório</span></h3>
+        <p class="desc">Observa a sessão em curso e regista o que aprendeste à força — correcções que
+          deste ao agente, padrões de trabalho, decisões que se repetem. Escreve num log estruturado e,
+          num ciclo de revisão separado, transforma esse log em skills novas ou melhoradas.
+          <strong>Não altera skills sozinha</strong>: propõe, tu decides.</p>
+        <p class="effect">Escreve <code class="inl">.agents/skills/task-observer/</code> com link simbólico
+          para o Claude Code, e um log em <code class="inl">skill-observations/</code>.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/rebelytics/one-skill-to-rule-them-all --skill task-observer -g</pre>
+        </div>
+        <table>
+          <tr><th>Momento</th><th>O que fazer</th></tr>
+          <tr><td>Durante a sessão</td><td>Nada — observa sozinha depois de invocada</td></tr>
+          <tr><td>Ao fechar</td><td>Perguntar <em>«alguma observação registada?»</em> antes do commit</td></tr>
+          <tr><td>Ciclo de revisão</td><td>Ler <code class="inl">skill-observations/log.md</code> e decidir o que vira skill</td></tr>
+        </table>
+        <div class="note warn">
+          <strong>Custa ~7k tokens em todos os turnos.</strong> O <code class="inl">SKILL.md</code> tem
+          <strong>24,9 KB</strong> e a skill foi feita para estar activa a sessão inteira — pela regra das
+          <a href="#skills-globais">skills globais</a>, o corpo entra quando é invocada e fica até ao fim.
+          Numa sessão longa isso é mais caro que qualquer outra skill deste guia (a
+          <code class="inl">motion</code>, para comparar, tem 4,5 KB e só carrega quando animas).
+          <strong>Se a sessão for curta ou mecânica, não a invoques.</strong>
+        </div>
+        <div class="note">
+          <strong>Sobrepõe-se a três coisas que já tens.</strong> A <code class="inl">learn</code> guarda
+          aprendizagens do projeto, o <a href="#gbrain">GBrain</a> dá memória persistente pesquisável, e a
+          regra de memória do <a href="#claudemd">CLAUDE.md global</a> já manda guardar decisões e
+          armadilhas antes de cada commit. O que esta acrescenta é fazê-lo <strong>sem lhe pedires</strong>
+          — e é essa a parte a vigiar, porque cada skill que ela propuser passa a custar nome e descrição
+          em todas as sessões seguintes. Aceita poucas.
         </div>
       </div>
 
@@ -651,6 +693,39 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
       <p class="lead">Corre na raiz do projeto, uma vez por projeto novo. Tudo aqui usa
         <code class="inl">-s project</code> — as credenciais são deste projeto e não têm de estar abertas
         nos outros.</p>
+
+      <!-- Motion -->
+      <div class="card" id="motion">
+        <h3>Motion <span class="tag req">obrigatório</span></h3>
+        <p class="desc">MCP oficial do <a href="https://motion.dev">Motion</a> (ex-Framer Motion). Duas
+          ferramentas: <code class="inl">search-motion-docs</code> e
+          <code class="inl">generate-css-easing</code>. A segunda é a que justifica o servidor — gera curvas
+          <code class="inl">linear()</code> de mola e bounce, que nenhuma pesquisa de documentação produz.</p>
+        <p class="effect">Acrescenta uma entrada ao <code class="inl">.mcp.json</code> do projeto. Servidor
+          remoto, sem token nem conta.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>claude mcp add --transport http motion https://mcp.motion.dev -s project</pre>
+        </div>
+        <div class="note">
+          <strong>Onde encaixa.</strong> A <a href="#design">emil-design-eng</a> decide <em>o quê</em>
+          animar, com que curva e a que velocidade; este MCP gera a curva e confirma a API da versão que
+          tens. O <a href="#context7">Context7</a> também serve docs do Motion — a parte que não duplica é
+          a geração de springs.
+        </div>
+        <div class="note warn">
+          <strong>O <code class="inl">MotionScore</code> é pago.</strong> As auditorias de
+          jank e layout thrash e o editor visual de transições estão noutro endpoint
+          (<code class="inl">https://mcp.motion.dev/plus</code>) e exigem Motion+. O comando acima é o free:
+          boas práticas, docs, exemplos e springs.
+        </div>
+        <div class="note">
+          Há também <code class="inl">npx motion-ai</code>, o instalador oficial — traz a skill
+          <code class="inl">motion</code>, um agente <code class="inl">motion-reviewer</code> e os dois
+          endpoints de uma vez. É interactivo e <strong>reescreve a configuração MCP no sítio</strong>;
+          a linha acima faz o essencial e vê-se o que faz.
+        </div>
+      </div>
 
       <!-- Laravel Boost -->
       <div class="card">

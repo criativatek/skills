@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.4.0 — 2026-08-14
+- **Task Observer** entra em `A · Uma vez por máquina` como **obrigatório**, e no top da secção
+  «Por onde começar» (que passa de 6 para 7). Observa a sessão, regista correcções e padrões num
+  log, e num ciclo de revisão separado propõe skills novas — sem alterar nenhuma sozinha.
+  `npx skills add https://github.com/rebelytics/one-skill-to-rule-them-all --skill task-observer -g`
+- Task Observer: o cartão diz o preço em números. O `SKILL.md` tem **24,9 KB** (~7k tokens) e a
+  skill foi feita para estar activa a sessão inteira — pela regra das skills globais, o corpo entra
+  quando é invocada e fica até ao fim. É a skill mais cara do guia; em sessões curtas ou mecânicas,
+  não invocar. E aponta a sobreposição com `learn`, GBrain e a regra de memória do CLAUDE.md global.
+- **Motion** entra em `B · Por projeto` como **obrigatório**.
+  `claude mcp add --transport http motion https://mcp.motion.dev -s project` — endpoint sondado,
+  sem token nem conta, duas ferramentas: `search-motion-docs` e `generate-css-easing`. A segunda é
+  a que justifica o servidor: gera curvas `linear()` de mola, que nenhuma pesquisa de documentação
+  produz. Docs do Motion já vinham pelo Context7.
+- Motion: ressalva de que o `MotionScore` (auditoria de jank e layout thrash) e o editor de
+  transições estão noutro endpoint (`/plus`) e exigem Motion+ pago. E de que o instalador oficial
+  `npx motion-ai` é interactivo e reescreve a configuração MCP no sítio — daí a linha manual.
+- Contador do hero passa de 7 para 8 skills globais; o cartão das skills globais aponta a oitava.
+
 ## 2.3.0 — 2026-08-14
 - **Correcção: a instalação da `impeccable` estava partida.** O repositório reestruturou-se e já não
   expõe as skills à unidade — `npx skills add …/impeccable --skill polish` devolve
