@@ -162,7 +162,9 @@ function mcpNameFromLine (line) {
 function entitiesFromLine (line) {
   var found = []
 
-  var skillMatch = line.match(/--skill\s+([a-z0-9][a-z0-9-]*)/)
+  // Ancorado ao `npx skills add`: um `--skill polish` citado numa frase — por exemplo a dizer que
+  // esse comando deixou de funcionar — não é uma instalação e não pode entrar no catálogo.
+  var skillMatch = line.match(/npx skills add\s+\S+.*?--skill\s+([a-z0-9][a-z0-9-]*)/)
   if (skillMatch) found.push({ name: skillMatch[1], kind: 'skill' })
 
   var pluginMatch = line.match(/claude plugin install\s+([a-z0-9][a-z0-9-]*)@/)
@@ -697,7 +699,7 @@ document.querySelectorAll('nav.toc a, .rank-list a, main table a[href^="#"]').fo
 
 // As secções passaram de #prereq/#mcp/#plugins para #maquina/#projeto/#pontual na v2.
 // Os anchors antigos circulam desde a v1 — redireciona em vez de deixar o link partido.
-var legacyAnchors = { prereq: 'maquina', mcp: 'maquina', plugins: 'maquina' }
+var legacyAnchors = { prereq: 'maquina', mcp: 'maquina', plugins: 'maquina', 'design-marketing': 'design' }
 function redirectLegacyHash () {
   var legacy = legacyAnchors[location.hash.replace('#', '')]
   if (legacy) location.replace('#' + legacy)

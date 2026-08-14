@@ -823,7 +823,8 @@ npx skills add https://github.com/mattpocock/skills --skill tdd</pre>
         <tr><td><a href="#vinteprimeiro">21st.dev</a> / <a href="#shadcn">shadcn</a></td><td>Referências e componentes de UI</td><td>Só em projetos React/Tailwind</td></tr>
         <tr><td><a href="#graphify">Graphify</a></td><td>Knowledge graph do projeto</td><td>Só em codebase grande e desconhecida</td></tr>
         <tr><td><a href="#higgsfield">Higgsfield</a> / <a href="#banana">Banana</a></td><td>Imagem e vídeo</td><td>Marketing, não programação</td></tr>
-        <tr><td><a href="#design-marketing">Marketing e design</a></td><td>Copy, SEO, social, polimento visual</td><td>Nada que fazer num projeto Laravel</td></tr>
+        <tr><td><a href="#design">Design</a></td><td>Decidir a linguagem visual e polir o que já existe</td><td>Interfaces viradas ao cliente, não backoffice</td></tr>
+        <tr><td><a href="#marketing">Marketing e conteúdo</a></td><td>Copy, SEO, social</td><td>Nada que fazer num projeto Laravel</td></tr>
         <tr><td><a href="#codex">Codex</a></td><td>Segunda opinião de família diferente, debugging teimoso</td><td>Valida CLI, permissões e sandbox num projeto secundário antes de lhe dar execução autónoma</td></tr>
       </table>
 
@@ -1018,24 +1019,54 @@ setx GOOGLE_AI_API_KEY "a_tua_chave"</pre>
         </div>
       </div>
 
-      <!-- Design e marketing -->
-      <div class="card" id="design-marketing">
-        <h3>Skills de design e marketing <span class="tag opt">só em superfícies viradas ao cliente</span></h3>
-        <p class="desc">Copy, SEO, social e polimento visual. Aplicam-se a marketing e a interfaces viradas
-          ao cliente — <strong>não a lógica de app, backend ou automação</strong>.</p>
+      <!-- Design -->
+      <div class="card" id="design">
+        <h3>Skills de design <span class="tag opt">só em superfícies viradas ao cliente</span></h3>
+        <p class="desc">Decidir a linguagem visual antes de escrever componentes, e melhorar o que já
+          existe depois. Aplicam-se a interfaces viradas ao cliente — <strong>não a backoffice, lógica
+          de app ou automação</strong>. Instala por camadas: a base, depois só o que o projeto pede.</p>
         <p class="effect">Escreve pastas em <code class="inl">.claude/skills/</code> do projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>
-<pre><span class="cmt"># design</span>
-npx skills add https://github.com/pbakaus/impeccable --skill polish
-npx skills add https://github.com/leonxlnx/taste-skill --skill redesign-existing-projects
-npx skills add https://github.com/anthropics/skills --skill canvas-design
+<pre><span class="cmt"># base — menu de verbos e fundação visual</span>
+npx skills add https://github.com/pbakaus/impeccable --skill impeccable
+npx skills add https://github.com/anthropics/skills --skill frontend-design
+npx skills add https://github.com/leonxlnx/taste-skill --skill high-end-visual-design
 
-<span class="cmt"># marketing e conteúdo</span>
-npx skills add https://github.com/coreyhaines31/marketingskills --skill copywriting
-npx skills add https://github.com/coreyhaines31/marketingskills --skill seo-audit
-npx skills add https://github.com/coreyhaines31/marketingskills --skill content-strategy
-npx skills add https://github.com/vyralcontent/content-skills --skill viral-captions-and-ctas</pre>
+<span class="cmt"># escolher uma linguagem visual — uma, não duas</span>
+npx skills add https://github.com/leonxlnx/taste-skill --skill minimalist-ui
+npx skills add https://github.com/leonxlnx/taste-skill --skill industrial-brutalist-ui
+
+<span class="cmt"># trabalhar sobre o que já existe</span>
+npx skills add https://github.com/leonxlnx/taste-skill --skill redesign-existing-projects
+npx skills add https://github.com/arvindrk/extract-design-system --skill extract-design-system
+npx skills add https://github.com/emilkowalski/skills --skill emil-design-eng
+
+<span class="cmt"># material gráfico</span>
+npx skills add https://github.com/anthropics/skills --skill canvas-design
+npx skills add https://github.com/leonxlnx/taste-skill --skill brandkit</pre>
+        </div>
+        <table>
+          <tr><th>Skill</th><th>Quando é a certa</th></tr>
+          <tr><td>impeccable</td><td>Página já existe e falta-lhe qualquer coisa. Um verbo por problema: <code class="inl">/impeccable critique</code>, <code class="inl">audit</code>, <code class="inl">polish</code>, <code class="inl">typeset</code>, <code class="inl">bolder</code>, <code class="inl">quieter</code>, <code class="inl">distill</code>, <code class="inl">harden</code>, <code class="inl">adapt</code> — 23 ao todo</td></tr>
+          <tr><td>frontend-design</td><td>Componente ou página do zero, sem ficar com cara de IA</td></tr>
+          <tr><td>high-end-visual-design</td><td>Fontes, espaçamento, sombras e cartões ao nível de agência — antes de decidir o resto</td></tr>
+          <tr><td>minimalist-ui</td><td>Editorial e sóbrio: monocromático quente, contraste tipográfico, bento flat</td></tr>
+          <tr><td>industrial-brutalist-ui</td><td>Grelha rígida, tipografia suíça, terminal militar. Dashboards densos e portfólios</td></tr>
+          <tr><td>redesign-existing-projects</td><td>Site que funciona mas parece genérico — audita e sobe o nível sem partir</td></tr>
+          <tr><td>extract-design-system</td><td>Roubar os tokens de um site público (cores, tipos, espaçamento) para arrancar</td></tr>
+          <tr><td>emil-design-eng</td><td>Animação e micro-interacção: curvas, molas, o que anima e a que velocidade</td></tr>
+          <tr><td>canvas-design</td><td>Posters e arte estática em <code class="inl">.png</code>/<code class="inl">.pdf</code></td></tr>
+          <tr><td>brandkit</td><td>Boards de identidade, sistemas de logo, guidelines de marca</td></tr>
+        </table>
+        <div class="note warn">
+          <strong>A <code class="inl">impeccable</code> deixou de se instalar à unidade.</strong> Os comandos
+          antigos (<code class="inl">--skill polish</code>, <code class="inl">--skill audit</code>, …) devolvem
+          agora <code class="inl">No matching skills found</code>: o repositório passou a expor
+          <strong>uma</strong> skill com os 23 verbos lá dentro, invocados por
+          <code class="inl">/impeccable &lt;verbo&gt;</code>. Se ainda tens as antigas soltas em
+          <code class="inl">~/.claude/skills/</code>, remove-as — duas versões do mesmo conselho carregadas
+          ao mesmo tempo e não controlas qual ganha.
         </div>
         <div class="note warn">
           <strong>Não instales a <code class="inl">full-output-enforcement</code></strong> que vem no mesmo
@@ -1043,11 +1074,45 @@ npx skills add https://github.com/vyralcontent/content-skills --skill viral-capt
           <a href="#orquestracao">subagentes</a>.
         </div>
         <div class="note">
+          <strong>Uma linguagem visual de cada vez.</strong> A <code class="inl">minimalist-ui</code> e a
+          <code class="inl">industrial-brutalist-ui</code> definem paletas e grelhas incompatíveis — instalar
+          as duas no mesmo projeto é pedir ao agente que escolha por ti. O
+          <code class="inl">taste-skill</code> traz ainda a <code class="inl">image-to-code</code> (só faz
+          sentido com o Codex) e a <code class="inl">stitch-design-taste</code> (só com o Google Stitch).
+        </div>
+        <div class="note">
           <strong>UI/UX Pro Max</strong> — base de dados de design pesquisável (67 estilos, 161 paletas,
           57 pares de fontes, 25 tipos de gráficos) mais verificações de acessibilidade. Instalação
           diferente: <code class="inl">npm install -g ui-ux-pro-max-cli</code> e depois
-          <code class="inl">uipro init --ai claude</code> no projeto. Sobrepõe-se às de design acima —
+          <code class="inl">uipro init --ai claude</code> no projeto. Sobrepõe-se às de cima —
           usa esta para decisões sistemáticas, as outras para polimento final.
+        </div>
+        <div class="note">
+          <strong>Não instales estas duas:</strong> a <code class="inl">dataviz</code> (gráficos e
+          dashboards) e a <code class="inl">artifact-design</code> já vêm embutidas no Claude Code.
+          E o <a href="#gstack">gstack</a> traz <code class="inl">/design-consultation</code>,
+          <code class="inl">/design-review</code>, <code class="inl">/design-html</code> e
+          <code class="inl">/design-shotgun</code> — se já o tens, usa essas para revisão e deixa as de
+          cima para a decisão visual.
+        </div>
+      </div>
+
+      <!-- Marketing e conteúdo -->
+      <div class="card" id="marketing">
+        <h3>Skills de marketing e conteúdo <span class="tag opt">só em superfícies viradas ao cliente</span></h3>
+        <p class="desc">Copy, SEO e social. <strong>Não são para lógica de app, backend ou automação</strong>
+          — aí continuam as de engenharia.</p>
+        <p class="effect">Escreve pastas em <code class="inl">.claude/skills/</code> do projeto.</p>
+        <div class="codeblock">
+          <button class="copy">Copiar</button>
+<pre>npx skills add https://github.com/coreyhaines31/marketingskills --skill copywriting
+npx skills add https://github.com/coreyhaines31/marketingskills --skill seo-audit
+npx skills add https://github.com/coreyhaines31/marketingskills --skill content-strategy
+npx skills add https://github.com/vyralcontent/content-skills --skill viral-captions-and-ctas</pre>
+        </div>
+        <div class="note">
+          A <code class="inl">seo-audit</code> é para páginas <strong>públicas</strong>. Num backoffice
+          atrás de login não tem nada para medir.
         </div>
       </div>
 

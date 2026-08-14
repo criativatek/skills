@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.3.0 — 2026-08-14
+- **Correcção: a instalação da `impeccable` estava partida.** O repositório reestruturou-se e já não
+  expõe as skills à unidade — `npx skills add …/impeccable --skill polish` devolve
+  `No matching skills found`. Passou a ser **uma** skill com os 23 verbos lá dentro, invocados por
+  `/impeccable <verbo>`. Comando corrigido e aviso para quem tem as antigas soltas em
+  `~/.claude/skills/`: duas versões do mesmo conselho carregadas ao mesmo tempo.
+- Design ganha cartão próprio (`#design`), separado de marketing. O guia cobria 3 skills de design;
+  o `leonxlnx/taste-skill` sozinho tem 13. Agora são 10, agrupadas por camada — base, linguagem
+  visual, trabalho sobre o existente, material gráfico — com tabela de quando cada uma é a certa.
+- Design: entram `frontend-design`, `high-end-visual-design`, `minimalist-ui`,
+  `industrial-brutalist-ui`, `extract-design-system`, `emil-design-eng` e `brandkit`. Todos os
+  comandos foram verificados por instalação real — os nomes das skills do `taste-skill` **não** são
+  os nomes das pastas (`minimalist-skill` instala-se como `minimalist-ui`).
+- Design: aviso de que `minimalist-ui` e `industrial-brutalist-ui` definem paletas e grelhas
+  incompatíveis — uma de cada vez. E que `dataviz` e `artifact-design` já vêm embutidas no Claude
+  Code, não se instalam.
+- Design: aponta a sobreposição com o gstack (`/design-consultation`, `/design-review`,
+  `/design-html`, `/design-shotgun`) em vez de a deixar por descobrir.
+- Marketing fica com copy, SEO, social e conteúdo, mais a ressalva de que a `seo-audit` só tem o que
+  medir em páginas públicas. `#design-marketing` redirecciona para `#design`.
+- Catálogo: a extracção do `--skill` passou a exigir `npx skills add` na mesma linha. Um comando
+  citado numa frase — a dizer que deixou de funcionar — estava a entrar no catálogo como instalação.
+
 ## 2.2.0 — 2026-08-14
 - Pesquisa: passa a encontrar skills pelo nome. Escrever `ui-ux-pro-max` não dava nada porque o
   índice era uma lista de selectores escolhidos à mão (`h3`, `.desc`, `h4`, `.note`,
