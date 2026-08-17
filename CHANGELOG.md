@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.5.0 — 2026-08-17
+- **Perfis de orquestração: Standard, Efficient e Quality.** O cartão de orquestração e o do
+  `CLAUDE.md` passam a ter um selector; escolher um perfil reescreve o diagrama, o bloco dos agentes,
+  a tabela de modelos e o bloco do `CLAUDE.md`. **Standard = o comportamento que já lá estava**, sem
+  uma vírgula mudada — fica escrito à mão no HTML e é o que se vê sem JS ou com o site a meio de um
+  deploy. Um teste compara o Standard gerado com o bloco antigo byte a byte e falha se divergirem.
+- **Instalador:** `curl -fsSL …/install/profile.sh | bash -s -- --profile quality --dry-run`. Escreve
+  os quatro agentes e o bloco do `CLAUDE.md`, guarda os anteriores em `agents/.bak-<data>/` e
+  **migra a secção `## Orquestração de modelos` que já exista sem marcadores** em vez de acrescentar
+  uma segunda política ao mesmo ficheiro. `--dry-run` lista o que altera e o que não altera, ambas
+  derivadas do que vai mesmo escrever. `--rollback` volta ao perfil anterior sem rede.
+- Perfis publicados como dados em `/profiles/*.json`: `base.json` tem os corpos dos agentes, cada
+  perfil só declara os overrides. As bandas de quota vivem em `quota-policy.json`, versionado à
+  parte — afinar os limiares deixa de obrigar a mexer nos perfis.
+- **Correcção:** faltava `data-raw` ao bloco dos agentes. Sem ele o botão Copiar apagava as linhas em
+  branco dos corpos dos quatro agentes; quem copiasse instalava prompts colados num só parágrafo.
+- Cartão do Codex: passa a dizer que é recurso protegido e onde se lê a quota — `rollout-*.jsonl`,
+  filtrando `limit_id: "codex"` e ignorando `primary: null`, porque o ficheiro mais recente é
+  muitas vezes de outro limite e não traz número.
+
 ## 2.4.0 — 2026-08-14
 - **Task Observer** entra em `A · Uma vez por máquina` como **obrigatório**, e no top da secção
   «Por onde começar» (que passa de 6 para 7). Observa a sessão, regista correcções e padrões num

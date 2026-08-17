@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "version": "1.0.0",
+  "unit": "remaining_percent",
+  "note": "Bandas provisórias: ainda não há uma tarefa medida ponta a ponta em nenhum dos motores. Versionadas à parte dos perfis precisamente para poderem mudar sem tocar no Standard.",
+  "kimi": {
+    "role": "primary-code-worker",
+    "bands": [
+      { "remaining_min": 10, "accept": "uso normal, sem restrição" },
+      { "remaining_min": 2, "accept": "continuar; evitar só começar tarefa gigantesca" },
+      { "remaining_min": 0, "accept": "terminar o que está em curso" }
+    ]
+  },
+  "codex": {
+    "role": "protected-specialist",
+    "bands": [
+      { "remaining_min": 60, "accept": "disponível, quando houver razão" },
+      { "remaining_min": 30, "accept": "só com vantagem clara sobre o Kimi" },
+      { "remaining_min": 0, "accept": "preservar — $imagegen e codex-rescue" }
+    ]
+  }
+}

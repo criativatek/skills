@@ -182,6 +182,28 @@ npx --yes skills@latest --version</pre>
           de tarefa. <strong>Delegar bem reduz custo e melhora a qualidade; delegar por sistema faz o
           contrário.</strong></p>
 
+        <div class="profile-picker" id="profilePicker" hidden>
+          <div class="profile-chips" role="group" aria-label="Perfil de orquestração"></div>
+          <p class="profile-summary" aria-live="polite"></p>
+        </div>
+
+        <p class="desc" style="margin:0 0 8px"><strong>Ou instala de uma vez.</strong> Escreve os quatro
+          agentes e o bloco do <code class="inl">CLAUDE.md</code> a partir do perfil escolhido. Corre
+          <code class="inl">--dry-run</code> primeiro: lista o que altera <em>e o que não altera</em>, sem
+          escrever nada.</p>
+        <div class="codeblock" data-raw>
+          <button class="copy">Copiar</button>
+<pre>curl -fsSL https://skills.criativatek.com/install/profile.sh | bash -s -- --profile standard --dry-run</pre>
+        </div>
+        <div class="note">
+          Tira o <code class="inl">--dry-run</code> para instalar. Guarda os agentes anteriores em
+          <code class="inl">~/.claude/agents/.bak-&lt;data&gt;/</code> e substitui <strong>só</strong> o bloco
+          entre marcadores do <code class="inl">CLAUDE.md</code> — se já lá tens a secção
+          <code class="inl">## Orquestração de modelos</code> sem marcadores, migra-a em vez de deixar duas
+          políticas contraditórias no mesmo ficheiro. <code class="inl">--rollback</code> volta ao perfil
+          anterior sem rede. Windows: Git Bash, como os outros blocos.
+        </div>
+
         <div class="note">
           <strong>O que se esquece:</strong> no contexto principal o que pesa é sobretudo o
           <em>relatório devolvido</em> — e esse é relido em todos os turnos seguintes. Um relatório de
@@ -195,7 +217,7 @@ npx --yes skills@latest --version</pre>
           com o que volta.</p>
         <div class="codeblock" data-raw>
           <button class="copy">Copiar</button>
-<pre>Pedido
+<pre id="profileFlow">Pedido
   ↓
 Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet no dia a dia)
   ├── explorer     · Haiku  · levantamento de contexto
@@ -227,9 +249,9 @@ Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet n
             <p class="effect">Escreve 4 ficheiros em <code class="inl">~/.claude/agents/</code>. Sobrepõe-se
               a ficheiros com o mesmo nome que já lá estejam.</p>
             <p class="desc" style="margin:0 0 8px">Corre num terminal Bash (Git Bash no Windows, ou Terminal no macOS/Linux).</p>
-            <div class="codeblock">
+            <div class="codeblock" data-raw>
               <button class="copy">Copiar</button>
-<pre>mkdir -p ~/.claude/agents
+<pre id="profileAgents">mkdir -p ~/.claude/agents
 
 cat &gt; ~/.claude/agents/explorer.md &lt;&lt;'MD'
 ---
@@ -310,13 +332,14 @@ relevante, diz isso em duas linhas.
 Máximo 1000 palavras — usa menos quando chega.
 MD</pre>
             </div>
-            <table>
+            <table id="profileTable">
               <tr><th>Subagente</th><th>Modelo</th><th>Effort</th><th>Quando é usado</th></tr>
               <tr><td>explorer</td><td>Haiku</td><td>low</td><td>Levantamento de contexto amplo, não perguntas pontuais</td></tr>
               <tr><td>implementer</td><td>Sonnet</td><td>medium</td><td>Tarefas paralelas ou trabalho mecânico repetido</td></tr>
               <tr><td>architect</td><td>Fable</td><td>high</td><td>Decisões estruturais e difíceis de reverter</td></tr>
               <tr><td>reviewer</td><td>Opus</td><td>high</td><td>Antes de fechar trabalho grande, não a cada commit</td></tr>
             </table>
+            <ul class="profile-notes" id="profileNotes" hidden></ul>
             <div class="note warn">
               <strong><code class="inl">disallowedTools: Write, Edit</code> não impede escritas por
               Bash</strong> — um <code class="inl">sed -i</code> ou um <code class="inl">&gt;</code>
@@ -378,9 +401,10 @@ Remove-Item Env:CLAUDE_CODE_SUBAGENT_MODEL</pre>
           pesquisa»), <strong>substitui-as</strong>. Duas instruções contraditórias no mesmo ficheiro
           dão comportamento não determinístico — e não controlas qual delas ganha.
         </div>
+        <p class="profile-active" id="claudemdProfileActive" hidden></p>
         <div class="codeblock" data-raw>
           <button class="copy">Copiar</button>
-<pre>## Orquestração de modelos
+<pre id="profileClaudemd">## Orquestração de modelos
 
 Trabalha autonomamente até o objetivo estar concluído. Delega aos subagentes de
 `~/.claude/agents/` **por excepção**, não por sistema.
@@ -1207,6 +1231,18 @@ claude plugin install codex@openai-codex</pre>
           Tem instalação nativa em Windows, mas <strong>valida CLI, permissões e sandbox num projeto
           secundário</strong> antes de lhe permitires execução autónoma. Se falhar, aplica o fix
           directamente em vez de insistir.
+        </div>
+        <div class="note">
+          <strong>Recurso protegido, não segundo implementador.</strong> Nos perfis de
+          <a href="#orquestracao">orquestração</a> o volume de programação tem destino próprio; o Codex
+          fica para onde tem vantagem clara — rescue, debugging difícil, validação independente e segunda
+          abordagem. A quota lê-se localmente antes de delegar: o número que o
+          <code class="inl">/status</code> mostra fica em
+          <code class="inl">~/.codex/sessions/**/rollout-*.jsonl</code>, no último evento
+          <code class="inl">token_count</code>. <strong>Filtra por
+          <code class="inl">limit_id: "codex"</code> e ignora registos com
+          <code class="inl">primary: null</code></strong> — o rollout mais recente é muitas vezes de outro
+          limite e não traz número nenhum.
         </div>
         <p class="desc" style="margin:14px 0 4px"><strong>Geração de imagem sem pagar à parte.</strong>
           O Codex CLI traz a skill <code class="inl">$imagegen</code> (gpt-image-2) embutida — gera e edita

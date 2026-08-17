@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "efficient",
+  "name": "Efficient",
+  "version": "1.0.0",
+  "extends": "base",
+  "summary": "Sonnet coordena e o Kimi absorve o volume. Opus e Fable ficam para o que não se resolve de outra maneira.",
+  "goal": "poupar utilização do Claude",
+  "mainModel": "Sonnet",
+  "claudemdGuidance": "Trabalha autonomamente até o objetivo estar concluído. Implementação, testes,\nmigrações e refactors mecânicos vão para o Kimi (`kimi -p \"…\"`) sempre que ele\ntiver quota. Opus e Fable só quando a decisão não se resolve sem eles.",
+  "agents": {
+    "explorer": {
+      "model": "haiku",
+      "effort": "low"
+    },
+    "implementer": {
+      "model": "sonnet",
+      "effort": "medium"
+    },
+    "architect": {
+      "model": "fable",
+      "effort": "high"
+    },
+    "reviewer": {
+      "model": "sonnet",
+      "effort": "medium"
+    }
+  },
+  "dispatch": {
+    "prefer": "kimi"
+  },
+  "notes": [
+    "O `reviewer` passa a Sonnet. Revisão em Opus continua disponível por pedido explícito — o que sai é a revisão em Opus por sistema.",
+    "O `architect` mantém-se em Fable, mas só para decisões mesmo difíceis de reverter: aqui a barreira é mais alta do que no Standard.",
+    "Codex fica preservado. Neste perfil o volume tem destino próprio, e gastá-lo em código é gastá-lo onde já há alternativa."
+  ]
+}

@@ -199,6 +199,22 @@ a:hover { text-decoration: underline }
 .chip.is-active { color: #06070b; background: var(--grad); border-color: transparent; font-weight: 600 }
 .search-count { font-size: .8rem; color: var(--fg-faint); margin-left: auto; white-space: nowrap }
 
+/* Selector de perfil de orquestração — herda o .chip da barra de filtros */
+.profile-picker { margin: 0 0 18px }
+.profile-chips { display: flex; align-items: center; gap: 6px; flex-wrap: wrap }
+.profile-chip {
+  font-family: var(--sans); font-size: .78rem; font-weight: 500; color: var(--fg-dim);
+  background: rgba(255,255,255,.03); border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 13px; cursor: pointer; transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.profile-chip:hover { color: var(--fg); border-color: var(--accent) }
+.profile-chip[aria-pressed="true"] { color: #06070b; background: var(--grad); border-color: transparent; font-weight: 600 }
+.profile-summary { font-size: .82rem; color: var(--fg-dim); margin: 8px 0 0; line-height: 1.5 }
+.profile-summary:empty { display: none }
+.profile-notes { margin: 12px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px }
+.profile-notes li { font-size: .82rem; color: var(--fg-dim); line-height: 1.55 }
+.profile-active { font-size: .78rem; color: var(--fg-faint); margin: 0 0 8px; font-family: var(--mono) }
+
 .is-hidden { display: none !important }
 .no-match { color: var(--fg-faint); font-size: .9rem; padding: 16px 4px 4px; font-style: italic }
 .no-match b { color: var(--fg); font-style: normal; font-family: var(--mono) }

@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "id": "quality",
+  "name": "Quality",
+  "version": "1.0.0",
+  "extends": "base",
+  "summary": "Opus coordena e fecha, Fable desafia a arquitectura mais cedo, o volume continua a sair do Kimi.",
+  "goal": "máxima qualidade em análise e revisão",
+  "mainModel": "Opus",
+  "claudemdGuidance": "Trabalha autonomamente até o objetivo estar concluído. Chama o `architect` cedo,\nantes de escrever, e não só quando algo corre mal. Volume de implementação sai\npara o Kimi (`kimi -p \"…\"`); tu integras e revês o que volta.",
+  "agents": {
+    "explorer": {
+      "model": "haiku",
+      "effort": "low"
+    },
+    "implementer": {
+      "model": "sonnet",
+      "effort": "medium"
+    },
+    "architect": {
+      "model": "fable",
+      "effort": "high"
+    },
+    "reviewer": {
+      "model": "opus",
+      "effort": "high"
+    }
+  },
+  "dispatch": {
+    "prefer": "kimi",
+    "codex": {
+      "role": "protected-specialist",
+      "alsoFor": "validação independente e segunda abordagem"
+    }
+  },
+  "notes": [
+    "Qualidade não é pôr o Opus a escrever tudo: Opus pensa, Fable desafia a arquitectura, Kimi executa volume, Codex valida onde acrescenta, Opus integra e revê. Opus a produzir código perde a validação independente, que é o que distingue este perfil.",
+    "O `architect` dispara mais cedo — antes de escrever, não depois de falhar. É a diferença prática face ao Standard, e não se lê na tabela de modelos.",
+    "Em zonas sensíveis, o Codex serve de segunda abordagem: correr a mesma tarefa num motor independente vale mais do que reler o próprio trabalho."
+  ]
+}

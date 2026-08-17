@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "id": "standard",
+  "name": "Standard",
+  "version": "1.0.0",
+  "extends": "base",
+  "summary": "O equilíbrio actual: delegar por excepção, Opus em trabalho complexo e Sonnet no dia a dia.",
+  "goal": "comportamento actual, congelado",
+  "mainModel": "Opus em trabalho complexo, Sonnet no dia a dia",
+  "claudemdGuidance": "Trabalha autonomamente até o objetivo estar concluído. Delega aos subagentes de\n`~/.claude/agents/` **por excepção**, não por sistema.",
+  "agents": {
+    "explorer": {
+      "model": "haiku",
+      "effort": "low"
+    },
+    "implementer": {
+      "model": "sonnet",
+      "effort": "medium"
+    },
+    "architect": {
+      "model": "fable",
+      "effort": "high"
+    },
+    "reviewer": {
+      "model": "opus",
+      "effort": "high"
+    }
+  },
+  "notes": []
+}

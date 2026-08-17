@@ -1,5 +1,6 @@
 import './style.css'
 import { fold, indexText, toTerms, bodyMatches, scoreName, compareByScore } from './search.js'
+import { initProfilePicker } from './profiles.js'
 
 var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -708,3 +709,6 @@ window.addEventListener('hashchange', redirectLegacyHash)
 redirectLegacyHash()
 
 applyFilters()
+
+// Depois do índice de pesquisa: o catálogo indexa o Standard, que é o que o HTML traz.
+initProfilePicker()
