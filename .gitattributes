@@ -1,0 +1,12 @@
+# O autocrlf do Windows converte no checkout. Um profile.sh com CRLF rebenta em
+# Linux e macOS com "bad interpreter: /usr/bin/env bash^M" — e o instalador é
+# servido tal como está no disco, sem passar por build.
+*.sh text eol=lf
+
+# As fixtures são o registo do que o site publicava, comparado byte a byte pelos
+# testes. Fins de linha convertidos no checkout tornam esse teste ruído.
+src/__fixtures__/** text eol=lf
+
+# Servidos verbatim de public/: o que está no repositório é o que a máquina
+# descarrega e escreve em ~/.claude.
+public/** text eol=lf
