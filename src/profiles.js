@@ -4,14 +4,13 @@
 // ou a meio de um deploy. Este ficheiro só reescreve os blocos quando se escolhe outro
 // perfil, e repõe o HTML original quando se volta ao Standard.
 //
-// O renderer vem de /install/render.mjs, o mesmo ficheiro que o profile.sh descarrega:
-// uma implementação só, para a página e o instalador não divergirem.
+// O renderer é o mesmo ficheiro que o profile.sh descarrega: uma implementação só,
+// para a página e o instalador não divergirem. Importado por caminho e empacotado
+// pelo Vite — buscá-lo por URL em runtime falhava em produção, onde o servidor
+// entrega .mjs como application/octet-stream e o browser recusa o módulo.
+import { resolveProfile, renderAgentsScript, renderClaudemdBlock, modelDisplayName } from '../public/install/render.mjs'
 
 var STORAGE_KEY = 'orquestracao-perfil'
-
-// Em variável de propósito: com a string literal o Rollup tenta resolver /install/
-// em build e falha. O ficheiro é servido de public/, não faz parte do bundle.
-var RENDERER_URL = '/install/render.mjs'
 
 var picker = document.getElementById('profilePicker')
 var chipContainer = picker && picker.querySelector('.profile-chips')
@@ -44,7 +43,7 @@ function fetchJson (path) {
   })
 }
 
-function renderFlow (resolved, modelDisplayName) {
+function renderFlow (resolved) {
   var lines = [
     'Pedido',
     '  ↓',
@@ -74,7 +73,7 @@ function padRight (text, width) {
   return padded
 }
 
-function updateTable (resolved, modelDisplayName) {
+function updateTable (resolved) {
   Array.from(tableElement.rows).forEach(function (row) {
     var agentName = row.cells[0] && row.cells[0].textContent.trim()
     var agent = resolved.agents[agentName]
@@ -94,7 +93,7 @@ function renderNotes (notes) {
   notesElement.hidden = notes.length === 0
 }
 
-function applyProfile (profileId, index, base, renderer) {
+function applyProfile (profileId, index, base) {
   var listed = index.profiles.find(function (entry) { return entry.id === profileId })
   summaryElement.textContent = listed ? listed.summary : ''
   activeElement.textContent = 'A mostrar o bloco do perfil ' + (listed ? listed.name : profileId) + '.'
@@ -118,11 +117,11 @@ function applyProfile (profileId, index, base, renderer) {
       throw new Error('versão de ' + profileId + ' não bate com o index')
     }
 
-    var resolved = renderer.resolveProfile(base, profile)
-    flowElement.textContent = renderFlow(resolved, renderer.modelDisplayName)
-    agentsElement.textContent = renderer.renderAgentsScript(resolved)
-    claudemdElement.textContent = renderer.renderClaudemdBlock(resolved)
-    updateTable(resolved, renderer.modelDisplayName)
+    var resolved = resolveProfile(base, profile)
+    flowElement.textContent = renderFlow(resolved)
+    agentsElement.textContent = renderAgentsScript(resolved)
+    claudemdElement.textContent = renderClaudemdBlock(resolved)
+    updateTable(resolved)
     renderNotes(resolved.notes)
   })
 }
@@ -148,22 +147,20 @@ export function initProfilePicker () {
   Promise.all([
     fetchJson('/profiles/index.json'),
     fetchJson('/profiles/base.json'),
-    import(/* @vite-ignore */ RENDERER_URL),
   ])
     .then(function (loaded) {
       var index = loaded[0]
       var base = loaded[1]
-      var renderer = loaded[2]
 
       function select (profileId) {
-        applyProfile(profileId, index, base, renderer)
+        applyProfile(profileId, index, base)
           .then(function () {
             try { localStorage.setItem(STORAGE_KEY, profileId) } catch (error) { /* modo privado */ }
           })
           .catch(function () {
             // Perfil em falta ou versão desalinhada a meio de um deploy: volta ao
             // que o HTML traz, em vez de deixar o cartão a meio.
-            applyProfile(index.default, index, base, renderer)
+            applyProfile(index.default, index, base)
           })
       }
 

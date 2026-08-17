@@ -1,6 +1,6 @@
 {
   "name": "skills-criativatek",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "type": "module",
   "description": "Guia de setup para programadores CriativaTek — organizado por frequência: por máquina, por projeto, pontual",
   "scripts": {

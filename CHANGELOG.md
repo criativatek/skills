@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.5.1 — 2026-08-17
+- **Correcção: o selector de perfis não aparecia em produção.** O servidor entrega `.mjs` como
+  `application/octet-stream` e o browser recusa importar módulos com esse MIME — o `import()`
+  dinâmico do renderer falhava só no site publicado, nunca no `vite preview`. O renderer passa a
+  ser importado por caminho e empacotado no bundle; o ficheiro em `/install/render.mjs` continua
+  publicado para o instalador o descarregar. Uma fonte, dois consumidores, sem depender do MIME.
+- `.gitattributes` força LF em `*.sh`, nas fixtures e em `public/`. Com `autocrlf`, um clone em
+  Windows punha CRLF no `profile.sh` e o `curl … | bash` rebentava em Linux e macOS com
+  *bad interpreter*.
+
 ## 2.5.0 — 2026-08-17
 - **Perfis de orquestração: Standard, Efficient e Quality.** O cartão de orquestração e o do
   `CLAUDE.md` passam a ter um selector; escolher um perfil reescreve o diagrama, o bloco dos agentes,
