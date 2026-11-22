@@ -2,14 +2,15 @@
   "schema": 1,
   "id": "efficient",
   "name": "Efficient",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "extends": "base",
   "summary": "Sonnet coordena e o Kimi absorve o volume. Opus e Fable ficam para o que não se resolve de outra maneira.",
   "goal": "poupar utilização do Claude",
   "mainModel": "Sonnet",
+  "mainEffort": { "model": "claude-sonnet-5-5", "level": "medium" },
   "claudemdGuidance": "Trabalha autonomamente até o objetivo estar concluído. Implementação, testes,\nmigrações e refactors mecânicos vão para o Kimi (`kimi -p \"…\"`) sempre que ele\ntiver quota. Opus e Fable só quando a decisão não se resolve sem eles.",
   "agents": {
-    "explorer": {
+    "Explore": {
       "model": "haiku",
       "effort": "low"
     },

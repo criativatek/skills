@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-import { applyManagedBlock } from '../public/install/apply.mjs'
+import { applyManagedBlock, staleAgentFiles, applyMainEffort } from '../public/install/apply.mjs'
 import { managedHeadings, resolveProfile, renderClaudemdBlock } from '../public/install/render.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -102,6 +102,47 @@ test('reinstalar duas vezes dá o mesmo ficheiro', function () {
 
   assert.equal(segunda.mode, 'substituído')
   assert.equal(segunda.content, primeira.content)
+})
+
+test('agente que saiu do perfil é removido, os do utilizador ficam', function () {
+  // Sem isto, renomear explorer -> Explore deixava os dois instalados em todas as máquinas.
+  const agentsDirectory = join('/home', 'x', '.claude', 'agents')
+  const previousFiles = [join(agentsDirectory, 'explorer.md'), join(agentsDirectory, 'reviewer.md')]
+  const plannedPaths = [join(agentsDirectory, 'Explore.md'), join(agentsDirectory, 'reviewer.md')]
+
+  assert.deepEqual(staleAgentFiles(previousFiles, plannedPaths, agentsDirectory), [join(agentsDirectory, 'explorer.md')])
+  assert.deepEqual(staleAgentFiles(null, plannedPaths, agentsDirectory), [], 'primeira instalação não remove nada')
+  assert.deepEqual(
+    staleAgentFiles([join('/outro', 'sitio', 'x.md')], plannedPaths, agentsDirectory), [],
+    'nunca remove fora da pasta de agentes'
+  )
+})
+
+test('effort do perfil vai para modelSettings do modelo principal, o resto do settings fica', function () {
+  // Um effortLevel no topo já não se aplica aos modelos 5.5 — só o modelSettings conta.
+  const settings = {
+    model: 'opus',
+    hooks: { Stop: [] },
+    modelSettings: { 'claude-opus-5-5': { effortLevel: 'xhigh', outro: 1 }, 'claude-sonnet-5-5': { effortLevel: 'low' } },
+  }
+
+  const result = applyMainEffort(settings, { model: 'claude-opus-5-5', level: 'high' })
+
+  assert.equal(result.modelSettings['claude-opus-5-5'].effortLevel, 'high')
+  assert.equal(result.modelSettings['claude-opus-5-5'].outro, 1)
+  assert.equal(result.modelSettings['claude-sonnet-5-5'].effortLevel, 'low')
+  assert.deepEqual(result.hooks, settings.hooks)
+  assert.equal(settings.modelSettings['claude-opus-5-5'].effortLevel, 'xhigh', 'não muta o original')
+
+  assert.equal(applyMainEffort({}, { model: 'claude-sonnet-5-5', level: 'medium' }).modelSettings['claude-sonnet-5-5'].effortLevel, 'medium')
+  assert.throws(function () { applyMainEffort({}, { model: 'claude-opus-5-5', level: 'max' }) }, /effort/)
+})
+
+test('todos os perfis publicados declaram um effort válido para o modelo principal', function () {
+  for (const profile of [standard, efficient, readJsonFile('public/profiles/quality.json')]) {
+    assert.match(profile.mainEffort.model, /^claude-/, `modelo em ${profile.id}`)
+    assert.ok(['low', 'medium', 'high', 'xhigh'].includes(profile.mainEffort.level), `nível em ${profile.id}`)
+  }
 })
 
 test('ficheiro vazio não rebenta', function () {

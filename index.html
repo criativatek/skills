@@ -219,8 +219,8 @@ npx --yes skills@latest --version</pre>
           <button class="copy">Copiar</button>
 <pre id="profileFlow">Pedido
   ↓
-Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet no dia a dia)
-  ├── explorer     · Haiku  · levantamento de contexto
+Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet no dia a dia, effort high)
+  ├── Explore      · Haiku  · levantamento de contexto
   ├── implementer  · Sonnet · trabalho paralelo ou mecânico
   ├── architect    · Fable  · decisões difíceis de reverter
   └── reviewer     · Opus   · revisão independente</pre>
@@ -253,9 +253,9 @@ Modelo principal da sessão — coordenador (Opus em trabalho complexo, Sonnet n
               <button class="copy">Copiar</button>
 <pre id="profileAgents">mkdir -p ~/.claude/agents
 
-cat &gt; ~/.claude/agents/explorer.md &lt;&lt;'MD'
+cat &gt; ~/.claude/agents/Explore.md &lt;&lt;'MD'
 ---
-name: explorer
+name: Explore
 description: Levantamento de contexto que não caiba em dois ou três Grep directos — mapear estrutura, localizar referências espalhadas, seguir dependências. Para uma pergunta pontual, pesquisa directamente em vez de chamar este agente.
 model: haiku
 effort: low
@@ -334,7 +334,7 @@ MD</pre>
             </div>
             <table id="profileTable">
               <tr><th>Subagente</th><th>Modelo</th><th>Effort</th><th>Quando é usado</th></tr>
-              <tr><td>explorer</td><td>Haiku</td><td>low</td><td>Levantamento de contexto amplo, não perguntas pontuais</td></tr>
+              <tr><td>Explore</td><td>Haiku</td><td>low</td><td>Levantamento de contexto amplo, não perguntas pontuais</td></tr>
               <tr><td>implementer</td><td>Sonnet</td><td>medium</td><td>Tarefas paralelas ou trabalho mecânico repetido</td></tr>
               <tr><td>architect</td><td>Fable</td><td>high</td><td>Decisões estruturais e difíceis de reverter</td></tr>
               <tr><td>reviewer</td><td>Opus</td><td>high</td><td>Antes de fechar trabalho grande, não a cada commit</td></tr>
@@ -397,7 +397,7 @@ Remove-Item Env:CLAUDE_CODE_SUBAGENT_MODEL</pre>
           todas as sessões, em todos os projetos.</p>
         <div class="note warn">
           <strong>Não é «acrescentar ao fim» às cegas.</strong> Se já tens regras de delegação
-          proactiva no ficheiro («lançar sub-agentes sempre que…», «usar o explorer para qualquer
+          proactiva no ficheiro («lançar sub-agentes sempre que…», «usar o Explore para qualquer
           pesquisa»), <strong>substitui-as</strong>. Duas instruções contraditórias no mesmo ficheiro
           dão comportamento não determinístico — e não controlas qual delas ganha.
         </div>
@@ -416,7 +416,7 @@ resposta para eu decidir?" e diz-lhe esse tamanho.
 
 | Subagente | Modelo | Quando |
 |---|---|---|
-| `explorer` | Haiku | Levantamento amplo de contexto. Para uma pergunta pontual, faz o Grep tu — um subagente devolve sempre mais do que um Grep. |
+| `Explore` | Haiku | Levantamento amplo de contexto. Para uma pergunta pontual, faz o Grep tu — um subagente devolve sempre mais do que um Grep. |
 | `implementer` | Sonnet | Duas ou mais tarefas independentes em paralelo, ou trabalho mecânico em muitos ficheiros. Não para a tarefa seguinte de um trabalho em curso. |
 | `architect` | Fable | Decisões estruturais, alterações entre módulos, migrações, erro de causa não óbvia. É o agente mais caro — reserva-o para o que é difícil de reverter. Só analisa. |
 | `reviewer` | Opus | Sessão longa, alteração grande, ou código que fecha sem mais ninguém ver. Não a cada commit. Só analisa. |
@@ -756,7 +756,7 @@ Python 3.12, regista a skill a partir de `browser-harness skill`, e liga-o ao me
         <h3>Laravel Boost <span class="tag rec">todo o projeto Laravel</span></h3>
         <p class="desc">Servidor MCP oficial do Laravel: rotas, modelos, migrations, config e docs da versão
           exacta que usas. <strong>Substitui grande parte da exploração manual</strong> — com o Boost
-          ligado, o <code class="inl">explorer</code> raramente é preciso num Laravel.</p>
+          ligado, o <code class="inl">Explore</code> raramente é preciso num Laravel.</p>
         <p class="effect">Instala um pacote Composer de dev e escreve config MCP na raiz do projeto.</p>
         <div class="codeblock">
           <button class="copy">Copiar</button>

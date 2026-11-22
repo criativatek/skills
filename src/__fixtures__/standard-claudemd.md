@@ -10,7 +10,7 @@ resposta para eu decidir?" e diz-lhe esse tamanho.
 
 | Subagente | Modelo | Quando |
 |---|---|---|
-| `explorer` | Haiku | Levantamento amplo de contexto. Para uma pergunta pontual, faz o Grep tu — um subagente devolve sempre mais do que um Grep. |
+| `Explore` | Haiku | Levantamento amplo de contexto. Para uma pergunta pontual, faz o Grep tu — um subagente devolve sempre mais do que um Grep. |
 | `implementer` | Sonnet | Duas ou mais tarefas independentes em paralelo, ou trabalho mecânico em muitos ficheiros. Não para a tarefa seguinte de um trabalho em curso. |
 | `architect` | Fable | Decisões estruturais, alterações entre módulos, migrações, erro de causa não óbvia. É o agente mais caro — reserva-o para o que é difícil de reverter. Só analisa. |
 | `reviewer` | Opus | Sessão longa, alteração grande, ou código que fecha sem mais ninguém ver. Não a cada commit. Só analisa. |

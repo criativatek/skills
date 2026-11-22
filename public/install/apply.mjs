@@ -5,8 +5,8 @@
 // para uma pasta temporária e chama `node apply.mjs`. Aqui só há leitura, escrita
 // e rede — a montagem dos blocos vive toda no render.mjs, partilhada com o site.
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, readdirSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, readdirSync, rmSync } from 'node:fs'
+import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { homedir } from 'node:os'
 
@@ -28,6 +28,9 @@ const statePath = join(claudeDirectory, 'profile-state.json')
 const resolvedPath = join(claudeDirectory, 'profile-resolved.json')
 const previousResolvedPath = join(claudeDirectory, 'profile-resolved.prev.json')
 const claudemdPath = join(claudeDirectory, 'CLAUDE.md')
+const settingsPath = join(claudeDirectory, 'settings.json')
+
+const EFFORT_LEVELS = ['low', 'medium', 'high', 'xhigh']
 
 // ---------------------------------------------------------------- utilitários
 
@@ -114,6 +117,38 @@ export function applyManagedBlock (existingContent, block, headings) {
   return { content: existingContent + separator + wrapped + '\n', mode: 'acrescentado no fim' }
 }
 
+// ------------------------------------------------------- agentes obsoletos e effort
+
+/**
+ * Agentes que a instalação anterior escreveu e que o perfil novo já não tem.
+ * Só dentro da pasta de agentes: o profile-state.json é editável à mão.
+ */
+export function staleAgentFiles (previousFiles, plannedPaths, agentsDirectoryPath) {
+  if (!previousFiles) return []
+  const planned = new Set(plannedPaths.map(function (path) { return resolve(path).toLowerCase() }))
+  const insideAgents = resolve(agentsDirectoryPath).toLowerCase() + (process.platform === 'win32' ? '\\' : '/')
+
+  return previousFiles.filter(function (path) {
+    const normalized = resolve(path).toLowerCase()
+    return normalized.startsWith(insideAgents) && !planned.has(normalized)
+  })
+}
+
+/**
+ * Effort do modelo principal. Vai para modelSettings.<id>.effortLevel — um effortLevel
+ * no topo do settings.json já não se aplica aos modelos 5.5. Devolve um objecto novo.
+ */
+export function applyMainEffort (settings, mainEffort) {
+  if (!EFFORT_LEVELS.includes(mainEffort.level)) {
+    throw new Error(`effort "${mainEffort.level}" inválido; aceites: ${EFFORT_LEVELS.join(', ')}`)
+  }
+
+  const modelSettings = Object.assign({}, settings.modelSettings)
+  modelSettings[mainEffort.model] = Object.assign({}, modelSettings[mainEffort.model], { effortLevel: mainEffort.level })
+
+  return Object.assign({}, settings, { modelSettings })
+}
+
 // ---------------------------------------------------------------- rede / origem
 
 async function fetchJson (baseUrl, path) {
@@ -184,7 +219,12 @@ function describePlan (plan, currentState) {
   lines.push('')
   lines.push('Vai alterar:')
   for (const write of plan.writes) lines.push(`  ${write.path}`)
+  const stale = staleAgentFiles(currentState && currentState.files, plan.writes.map(function (write) { return write.path }), agentsDirectory)
+  for (const path of stale) lines.push(`  ${path}  (removido — já não faz parte do perfil)`)
   lines.push(`  bloco ${BLOCK_START} de ${claudemdPath}`)
+  if (plan.resolved.mainEffort) {
+    lines.push(`  ${settingsPath}  (só modelSettings.${plan.resolved.mainEffort.model}.effortLevel = ${plan.resolved.mainEffort.level}, com cópia de segurança)`)
+  }
   lines.push(`  ${statePath}`)
   lines.push(`  ${resolvedPath}`)
   if (existsSync(claudemdPath)) lines.push(`  (cópia de segurança do CLAUDE.md actual)`)
@@ -200,7 +240,7 @@ function describePlan (plan, currentState) {
 // que já tem configuração. Ordem alfabética empurrava estes para fora do corte e
 // mostrava `cache/` em vez de `settings.json` — a lista ficava verdadeira e inútil.
 const REASSURING_ENTRIES = [
-  'settings.json', 'settings.local.json', '.mcp.json', 'skills', 'plugins', 'hooks', 'commands',
+  'settings.local.json', '.mcp.json', 'skills', 'plugins', 'hooks', 'commands',
 ]
 
 /**
@@ -208,8 +248,9 @@ const REASSURING_ENTRIES = [
  * não de uma lista fixa — uma lista fixa mente no dia em que o instalador crescer.
  */
 function untouchedNeighbours () {
+  // settings.json conta como escrito: muda uma chave, e dizer «intacto» seria mentira.
   const written = new Set([
-    'agents', 'CLAUDE.md', 'profile-state.json', 'profile-resolved.json', 'profile-resolved.prev.json',
+    'agents', 'CLAUDE.md', 'settings.json', 'profile-state.json', 'profile-resolved.json', 'profile-resolved.prev.json',
   ])
 
   if (!existsSync(claudeDirectory)) return []
@@ -250,6 +291,24 @@ function install (plan, currentState, now) {
 
   for (const write of plan.writes) writeTextFile(write.path, write.content)
 
+  // Já estão no .bak-<stamp> acima; ficar com eles duplicava agentes renomeados.
+  const removedAgents = staleAgentFiles(
+    currentState && currentState.files,
+    plan.writes.map(function (write) { return write.path }),
+    agentsDirectory
+  ).filter(function (path) { return existsSync(path) })
+  for (const path of removedAgents) rmSync(path)
+
+  let settingsBackupPath = null
+  if (plan.resolved.mainEffort) {
+    const existingSettings = readJsonFileIfExists(settingsPath) || {}
+    if (existsSync(settingsPath)) {
+      settingsBackupPath = join(claudeDirectory, `settings.json.bak-${stamp}`)
+      copyFileSync(settingsPath, settingsBackupPath)
+    }
+    writeTextFile(settingsPath, JSON.stringify(applyMainEffort(existingSettings, plan.resolved.mainEffort), null, 2) + '\n')
+  }
+
   const existingClaudemd = existsSync(claudemdPath) ? readFileSync(claudemdPath, 'utf8') : ''
 
   // O CLAUDE.md é escrito à mão e não vive em nenhum repositório. A migração da secção
@@ -275,7 +334,7 @@ function install (plan, currentState, now) {
     files: plan.writes.map(function (write) { return write.path }),
   }, null, 2) + '\n')
 
-  return { backupDirectory, claudemdBackupPath, claudemdMode: applied.mode }
+  return { backupDirectory, claudemdBackupPath, claudemdMode: applied.mode, removedAgents, settingsBackupPath }
 }
 
 // ---------------------------------------------------------------- entrada
@@ -343,6 +402,11 @@ async function main () {
 
   console.log(`Instalado o perfil ${plan.resolved.name} ${plan.resolved.version}.`)
   if (outcome.backupDirectory) console.log(`Agentes anteriores guardados em ${outcome.backupDirectory}`)
+  for (const path of outcome.removedAgents) console.log(`Removido (saiu do perfil): ${path}`)
+  if (plan.resolved.mainEffort) {
+    console.log(`Effort do modelo principal: ${plan.resolved.mainEffort.model} = ${plan.resolved.mainEffort.level}` +
+      (outcome.settingsBackupPath ? ` (settings.json anterior em ${outcome.settingsBackupPath})` : ''))
+  }
   console.log(`CLAUDE.md: bloco ${outcome.claudemdMode}.`)
   if (outcome.claudemdBackupPath) console.log(`CLAUDE.md anterior guardado em ${outcome.claudemdBackupPath}`)
   console.log('\nSó produz efeito em sessão nova — o CLAUDE.md é lido no arranque e os agentes ao spawn.')

@@ -47,7 +47,8 @@ function renderFlow (resolved) {
   var lines = [
     'Pedido',
     '  ↓',
-    'Modelo principal da sessão — coordenador (' + resolved.mainModel + ')',
+    'Modelo principal da sessão — coordenador (' + resolved.mainModel +
+      (resolved.mainEffort ? ', effort ' + resolved.mainEffort.level : '') + ')',
   ]
 
   var agentNames = Object.keys(resolved.agents)

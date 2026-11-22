@@ -102,6 +102,30 @@ test('todos os perfis publicados resolvem e renderizam', function () {
   }
 })
 
+test('o agente de exploracao chama-se Explore, para substituir o nativo do Claude Code', function () {
+  // Com outro nome, o plan mode continua a lancar o Explore nativo, que herda o modelo
+  // principal: em 2026-11 eram 2 928 chamadas em Opus contra 174 no explorer em Haiku.
+  const index = readJsonFile('public/profiles/index.json')
+
+  for (const listed of index.profiles) {
+    const resolved = resolveProfile(base, readJsonFile(`public/profiles/${listed.id}.json`))
+    assert.ok(resolved.agents.Explore, `Explore em ${listed.id}`)
+    assert.equal(resolved.agents.explorer, undefined, `explorer ainda em ${listed.id}`)
+    assert.equal(resolved.agents.Explore.model, 'haiku', `modelo do Explore em ${listed.id}`)
+  }
+})
+
+test('Quality manda o volume para o implementer, sem Kimi', function () {
+  const quality = readJsonFile('public/profiles/quality.json')
+  const resolved = resolveProfile(base, quality)
+  const block = renderClaudemdBlock(resolved)
+
+  assert.match(block, /para o `implementer` \(Sonnet\)/)
+  assert.doesNotMatch(block, /Kimi/)
+  assert.doesNotMatch([quality.summary, quality.claudemdGuidance, ...quality.notes].join('\n'), /Kimi|kimi/)
+  assert.equal(resolved.dispatch.kimi, undefined, 'kimi herdado da base continua no dispatch')
+})
+
 test('a tabela do CLAUDE.md segue o modelo do perfil, nao o da base', function () {
   const quality = Object.assign({}, standard, {
     id: 'quality',

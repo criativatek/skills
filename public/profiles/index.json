@@ -5,20 +5,20 @@
     {
       "id": "standard",
       "name": "Standard",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "summary": "O equilíbrio actual: delegar por excepção, Opus em trabalho complexo e Sonnet no dia a dia."
     },
     {
       "id": "efficient",
       "name": "Efficient",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "summary": "Sonnet coordena e o Kimi absorve o volume. Opus e Fable ficam para o que não se resolve de outra maneira."
     },
     {
       "id": "quality",
       "name": "Quality",
-      "version": "1.0.0",
-      "summary": "Opus coordena e fecha, Fable desafia a arquitectura mais cedo, o volume continua a sair do Kimi."
+      "version": "1.1.0",
+      "summary": "Opus coordena e fecha, Fable desafia a arquitectura mais cedo, o volume sai para o implementer em Sonnet."
     }
   ]
 }

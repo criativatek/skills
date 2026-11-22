@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.6.0 — 2026-11-22
+- **`explorer` passa a `Explore`, para substituir o agente nativo.** Com outro nome, o plan mode
+  continuava a lançar o Explore do Claude Code, que herda o modelo principal: em 60 dias foram
+  2 928 chamadas em Opus contra 174 no `explorer` em Haiku. Mesmo corpo, mesmo Haiku/low.
+- **Effort do modelo principal passa a fazer parte do perfil** (`mainEffort`: Quality e Standard
+  `high`, Efficient `medium`). O instalador escreve só `modelSettings.<modelo>.effortLevel` no
+  `settings.json`, com cópia de segurança — um `effortLevel` no topo já não se aplica aos modelos
+  5.5. Antes, 95% das chamadas iam em `xhigh` sem nenhum perfil o pedir.
+- **Quality: o volume sai para o `implementer` (Sonnet), não para o Kimi.** Em 60 dias o `kimi -p`
+  correu 2 vezes e o `implementer` 42; o bloco instalado já tinha sido corrigido à mão e reinstalar
+  repunha o Kimi. `null` no `dispatch` de um perfil retira um motor herdado da base.
+- **O instalador remove agentes que saíram do perfil** (ficam na cópia `agents/.bak-<data>/`). Sem
+  isto, o renomear deixava `explorer` e `Explore` instalados lado a lado.
+- `baseline-2026-11.md`: diagnóstico de 60 dias de sessões e os scripts para repetir a medição.
+
 ## 2.5.1 — 2026-08-17
 - **Correcção: o selector de perfis não aparecia em produção.** O servidor entrega `.mjs` como
   `application/octet-stream` e o browser recusa importar módulos com esse MIME — o `import()`

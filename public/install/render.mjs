@@ -50,12 +50,22 @@ export function resolveProfile (base, profile) {
     summary: profile.summary,
     goal: profile.goal,
     mainModel: profile.mainModel,
+    mainEffort: profile.mainEffort,
     claudemdGuidance: profile.claudemdGuidance,
     agents,
     claudemd: base.claudemd,
-    dispatch: Object.assign({}, base.dispatch, profile.dispatch || {}),
+    dispatch: mergeDispatch(base.dispatch, profile.dispatch),
     notes: profile.notes || [],
   }
+}
+
+// `null` no perfil retira um motor herdado da base (o Quality deixou de usar o Kimi).
+function mergeDispatch (baseDispatch, profileDispatch) {
+  const merged = Object.assign({}, baseDispatch, profileDispatch || {})
+  for (const [engine, value] of Object.entries(merged)) {
+    if (value === null) delete merged[engine]
+  }
+  return merged
 }
 
 /**

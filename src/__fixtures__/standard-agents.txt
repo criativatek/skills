@@ -1,8 +1,8 @@
 mkdir -p ~/.claude/agents
 
-cat > ~/.claude/agents/explorer.md <<'MD'
+cat > ~/.claude/agents/Explore.md <<'MD'
 ---
-name: explorer
+name: Explore
 description: Levantamento de contexto que não caiba em dois ou três Grep directos — mapear estrutura, localizar referências espalhadas, seguir dependências. Para uma pergunta pontual, pesquisa directamente em vez de chamar este agente.
 model: haiku
 effort: low
