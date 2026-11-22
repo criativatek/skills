@@ -24,6 +24,12 @@ MCP por projecto: meta-ads 1 180 de 1 184 usos no MK META ADS; metricool 143/143
 hurizonte 10/10; intermediar 6/6; mdist 100/115. Browser: claude-in-chrome 1 592,
 chrome-devtools 695, gstack `browse` 1, `webapp-testing` 0.
 
+### Primeira medição depois (2026-11-22, sessão nova `claude -p` em `d:\HERD\skills`)
+
+- 1.ª chamada: **56.9k** tokens (antes 72k neste projecto, −21%).
+- Explore: `isBuiltIn: false` (o do perfil) e as chamadas facturadas todas em `claude-haiku-5-5`.
+  O `pickedEffortModel` do `.meta.json` continua a dizer Opus — não é o modelo do agente.
+
 ## O que mudou no mesmo dia (fora deste repo)
 
 - `~/.claude/settings.json`: `skillOverrides` para 114 skills (`off` 18, `user-invocable-only` 87,
@@ -62,8 +68,11 @@ Get-ChildItem $projects -Recurse -Filter *.meta.json -File | Where-Object { $_.L
   ForEach-Object {
     $meta = Get-Content $_.FullName -Raw | ConvertFrom-Json
     $transcript = $_.FullName -replace '\.meta\.json$', '.jsonl'
-    $firstModel = if (Test-Path $transcript) { ($model.Match((Get-Content $transcript -Raw))).Groups[1].Value }
-    "$($meta.agentType) -> $firstModel"
+    # Só linhas facturadas: o transcript também cita o modelo do pai em entradas que não são chamadas.
+    $billed = if (Test-Path $transcript) {
+      [System.IO.File]::ReadLines($transcript) | Where-Object { $_.Contains('"type":"assistant"') -and $_.Contains('"usage"') } | Select-Object -First 1
+    }
+    "$($meta.agentType) -> $(if ($billed) { $model.Match($billed).Groups[1].Value })"
   } | Group-Object | Sort-Object Count -Descending | Format-Table Count, Name -AutoSize
 
 # 3 · Uso de cada servidor MCP por projecto

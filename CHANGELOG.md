@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.6.1 — 2026-11-22
+- `baseline-2026-11.md`: o script do modelo por subagente lia o primeiro `"model"` do transcript, que pode ser o
+  do pai citado numa entrada que não é chamada — passa a ler só linhas facturadas. Acrescenta a primeira
+  medição depois da 2.6.0: 1.ª chamada 56.9k (era 72k) e Explore em Haiku.
+
 ## 2.6.0 — 2026-11-22
 - **`explorer` passa a `Explore`, para substituir o agente nativo.** Com outro nome, o plan mode
   continuava a lançar o Explore do Claude Code, que herda o modelo principal: em 60 dias foram
